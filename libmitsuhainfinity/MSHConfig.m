@@ -69,6 +69,8 @@ void notificationCallback(CFNotificationCenterRef center, void * observer, CFStr
 
     if (self.colorMode == 2 && self.waveColor && self.subwaveColor) {
         [_view updateWaveColor:[self.waveColor copy] subwaveColor:[self.waveColor copy]];
+    } else if (self.calculatedColor) {
+        [_view updateWaveColor:[self.calculatedColor copy] subwaveColor:[self.calculatedColor copy]];
     }
 }
 
@@ -82,7 +84,8 @@ void notificationCallback(CFNotificationCenterRef center, void * observer, CFStr
         color = [NEPColorUtils averageColor:image withAlpha:self.dynamicColorAlpha];
     }
 
-    [self.view updateWaveColor:color subwaveColor:color];
+    self.calculatedColor = color;
+    [self.view updateWaveColor:[color copy] subwaveColor:[color copy]];
 }
 
 -(void)setDictionary:(NSDictionary *)dict {
@@ -177,6 +180,7 @@ void notificationCallback(CFNotificationCenterRef center, void * observer, CFStr
     if (self.view) {
         if (self.style != oldStyle) {
             [self initializeViewWithFrame:self.view.frame];
+            [[self view] start];
         } else {
             [self configureView];
         }

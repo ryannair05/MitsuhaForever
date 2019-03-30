@@ -20,6 +20,7 @@
 
 @property (nonatomic, strong) UIColor *waveColor;
 @property (nonatomic, strong) UIColor *subwaveColor;
+@property (nonatomic, strong) UIColor *calculatedColor;
 
 @property NSUInteger numberOfPoints;
 @property CGFloat fps;
