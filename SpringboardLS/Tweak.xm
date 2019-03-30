@@ -65,8 +65,12 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
     notify_register_check("com.apple.iokit.hid.displayStatus", &token);
     notify_get_state(token, &state);
     notify_cancel(token);
-    if ([mshConfig view] && !state) {
-        [[mshConfig view] stop];
+    if ([mshConfig view]) {
+        if (state) {
+            [[mshConfig view] start];
+        } else {
+            [[mshConfig view] stop];
+        }
     }
 }
 
