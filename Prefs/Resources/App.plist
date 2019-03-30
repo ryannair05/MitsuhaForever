@@ -18,7 +18,7 @@
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
-			<string></string>
+			<string>me.nepeta.mitsuhainfinity</string>
 			<key>label</key>
 			<string>Enabled</string>
 			<key>key</key>
