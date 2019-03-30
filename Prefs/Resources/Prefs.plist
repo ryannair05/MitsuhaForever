@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>headerCellClass</key>
+			<string>HBImageTableCell</string>
+			<key>icon</key>
+			<string>mitsuhainfinity.png</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBTwitterCell</string>
+			<key>label</key>
+			<string>Nepeta</string>
+			<key>user</key>
+			<string>NepetaDev</string>
+		</dict>
+
+		<!-- Apps -->
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Supported applications</string>
+			<key>footerText</key>
+			<string>Due to the changes to this tweak's structure, support for external applications is provided in separate tweaks.
+Repo: https://repo.nepeta.me/</string>
+			<key>isStaticText</key>
+			<true/>
+            <key>id</key>
+            <string>apps</string>
+		</dict>
+
+		<!-- Credits -->
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Other</string>
+			<key>footerText</key>
+			<string>Mitsuha Infinity</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>respring:</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Respring</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>restartmsd:</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Restart mediaserverd</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>resetPrefs:</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>isDestructive</key>
+			<true />
+			<key>confirmation</key>
+			<dict>
+				<key>prompt</key>
+				<string>Are you sure you want to reset all your Mitsuha Infinity preferences? This can not be undone.</string>
+				<key>title</key>
+				<string>OK</string>
+				<key>okTitle</key>
+				<string>OK</string>
+				<key>cancelTitle</key>
+				<string>Cancel</string>
+			</dict>
+			<key>label</key>
+			<string>Restore default settings and respring</string>
+		</dict>
+
+
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Github</string>
+			<key>subtitle</key>
+			<string>Source code</string>
+			<key>url</key>
+			<string>https://github.com/Nepeta/MitsuhaInfinity</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Donate to Nepeta</string>
+			<key>subtitle</key>
+			<string>MitsuhaXI, Mitsuha Infinity developer</string>
+			<key>url</key>
+			<string>https://nepeta.me/donate</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Donate to c0ldra1n</string>
+			<key>subtitle</key>
+			<string>original developer of Mitsuha for iOS 9 and 10</string>
+			<key>url</key>
+			<string>https://www.paypal.me/c0ldra1n</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Mitsuha, Mitsuha2 by c0ldra1n,
+MitsuhaXI, Mitsuha Infinity by Nepeta.</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>Mitsuha Infinity</string>
+</dict>
+</plist>

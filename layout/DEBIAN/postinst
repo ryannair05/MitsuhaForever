@@ -1,0 +1,5 @@
+#!/bin/bash
+
+killall -9 Music
+killall -9 Spotify
+exit 0

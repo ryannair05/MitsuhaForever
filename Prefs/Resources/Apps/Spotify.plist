@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>name</key>
+    <string>Spotify</string>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>me.nepeta.mitsuhainfinity</string>
+			<key>label</key>
+			<string>Ignore ColorFlow</string>
+			<key>key</key>
+			<string>MSHSpotifyIgnoreColorFlow</string>
+			<key>alternateColors</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>me.nepeta.mitsuhainfinity</string>
+			<key>label</key>
+			<string>Cover art bug fix</string>
+			<key>key</key>
+			<string>MSHSpotifyEnableCoverArtBugFix</string>
+			<key>alternateColors</key>
+			<true/>
+		</dict>
+	</array>
+</dict>
+</plist>
