@@ -41,6 +41,10 @@ void notificationCallback(CFNotificationCenterRef center, void * observer, CFStr
             [((MSHBarView*)_view) setBarSpacing:self.barSpacing];
             [((MSHBarView*)_view) setBarCornerRadius:self.barCornerRadius];
             break;
+        case 2:
+            self.view = [[MSHLineView alloc] initWithFrame:frame];
+            [((MSHLineView*)_view) setLineThickness:self.lineThickness];
+            break;
         default:
             self.view = [[MSHJelloView alloc] initWithFrame:frame];
     }
@@ -135,6 +139,7 @@ void notificationCallback(CFNotificationCenterRef center, void * observer, CFStr
 
     _barSpacing = [([dict objectForKey:@"barSpacing"] ?: @(5)) doubleValue];
     _barCornerRadius = [([dict objectForKey:@"barCornerRadius"] ?: @(0)) doubleValue];
+    _lineThickness = [([dict objectForKey:@"lineThickness"] ?: @(5)) doubleValue];
 
     _waveOffset = [([dict objectForKey:@"waveOffset"] ?: @(0)) doubleValue];
     _waveOffset = ([([dict objectForKey:@"negateOffset"] ?: @(false)) boolValue] ? _waveOffset * -1 : _waveOffset);

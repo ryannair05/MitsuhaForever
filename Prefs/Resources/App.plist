@@ -80,14 +80,16 @@
 			<array>
 				<integer>0</integer>
 				<integer>1</integer>
+				<integer>2</integer>
 			</array>
 			<key>validTitles</key>
 			<array>
 				<string>Wave</string>
 				<string>Bar</string>
+				<string>Line</string>
 			</array>
 			<key>alignment</key>
-			<string>2</string>
+			<string>3</string>
 			<key>PostNotification</key>
 			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
 		</dict>
@@ -177,6 +179,43 @@
 			<integer>0</integer>
 			<key>max</key>
 			<integer>30</integer>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<false/>
+			<key>PostNotification</key>
+			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Line</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Line thickness</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>label</key>
+			<string>Line thickness</string>
+			<key>default</key>
+			<integer>5</integer>
+			<key>defaults</key>
+			<string>me.nepeta.mitsuhainfinity</string>
+			<key>key</key>
+			<string>LineThickness</string>
+			<key>min</key>
+			<integer>1</integer>
+			<key>max</key>
+			<integer>10</integer>
 			<key>showValue</key>
 			<true/>
 			<key>isSegmented</key>

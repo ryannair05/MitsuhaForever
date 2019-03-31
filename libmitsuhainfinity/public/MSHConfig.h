@@ -1,6 +1,7 @@
 #import <Mitsuha/MSHView.h>
 #import <Mitsuha/MSHJelloView.h>
 #import <Mitsuha/MSHBarView.h>
+#import <Mitsuha/MSHLineView.h>
 
 @interface MSHConfig : NSObject
 
@@ -32,6 +33,7 @@
 
 @property CGFloat barSpacing;
 @property CGFloat barCornerRadius;
+@property CGFloat lineThickness;
 
 @property BOOL ignoreColorFlow;
 
