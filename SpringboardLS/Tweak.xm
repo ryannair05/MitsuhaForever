@@ -17,7 +17,7 @@ MSHConfig *mshConfig;
     MediaControlsPanelViewController *mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_mediaControlsPanelViewController"];
     [mcpvc.headerView.artworkView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
     
-    [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 15, self.view.frame.size.height)];
+    [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];
     self.mshView = [mshConfig view];
 
     if (!moveIntoPanel) {
