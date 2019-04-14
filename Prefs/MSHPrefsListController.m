@@ -89,4 +89,8 @@
     const char* args[] = {"killall", "mediaserverd", NULL};
     posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
 }
+
+- (bool)shouldReloadSpecifiersOnResume {
+    return false;
+}
 @end

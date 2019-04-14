@@ -48,4 +48,7 @@
 	[super setSpecifier:specifier];
 }
 
+- (bool)shouldReloadSpecifiersOnResume {
+    return false;
+}
 @end
