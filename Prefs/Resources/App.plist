@@ -301,11 +301,11 @@
 				<string>#000000:0.5</string>
 				<key>alpha</key>
 				<true/>
+				<key>PostNotification</key>
+				<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
 			</dict>
 			<key>label</key>
 			<string>Wave color</string>
-			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
 		</dict>
 
 		<dict>
