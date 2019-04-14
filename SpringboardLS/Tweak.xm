@@ -83,7 +83,7 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
     mshConfig.waveOffsetOffset = 500;
 
     if(mshConfig.enabled){
-        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, kNilOptions);
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
         //Check if Artsy is installed
         bool artsyEnabled = false;
         bool artsyLsEnabled = false;
