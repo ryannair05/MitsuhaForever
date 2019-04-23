@@ -1,8 +1,8 @@
 Package: me.nepeta.mitsuhainfinity
 Name: Mitsuha Infinity
-Depends: mobilesubstrate, org.thebigboss.libcolorpicker, io.ominousness.ass, ws.hbang.common (>= 1.11), me.nepeta.libmitsuha (>= 0.1.4), me.nepeta.libnepeta
+Depends: mobilesubstrate, org.thebigboss.libcolorpicker, io.ominousness.ass, ws.hbang.common (>= 1.11), me.nepeta.libmitsuha (>= 0.1.4), me.nepeta.libnepeta, firmware (>=11.0)
 Conflicts: io.c0ldra1n.mitsuha, io.c0ldra1n.mitsuha-beta, io.ominousness.mitsuhaxi
-Version: 0.1.4
+Version: 0.1.5
 Architecture: iphoneos-arm
 Description: Audio visualizer for iOS
 Maintainer: Nepeta
