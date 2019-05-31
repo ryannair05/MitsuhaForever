@@ -2,6 +2,7 @@
 #import <Mitsuha/MSHJelloView.h>
 #import <Mitsuha/MSHBarView.h>
 #import <Mitsuha/MSHLineView.h>
+#import <Mitsuha/MSHDotView.h>
 
 @interface MSHConfig : NSObject
 

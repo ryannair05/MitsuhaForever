@@ -45,6 +45,10 @@ void notificationCallback(CFNotificationCenterRef center, void * observer, CFStr
             self.view = [[MSHLineView alloc] initWithFrame:frame];
             [((MSHLineView*)_view) setLineThickness:self.lineThickness];
             break;
+        case 3:
+            self.view = [[MSHDotView alloc] initWithFrame:frame];
+            [((MSHDotView*)_view) setBarSpacing:self.barSpacing];
+            break;
         default:
             self.view = [[MSHJelloView alloc] initWithFrame:frame];
     }

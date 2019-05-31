@@ -81,15 +81,17 @@
 				<integer>0</integer>
 				<integer>1</integer>
 				<integer>2</integer>
+				<integer>3</integer>
 			</array>
 			<key>validTitles</key>
 			<array>
 				<string>Wave</string>
 				<string>Bar</string>
 				<string>Line</string>
+				<string>Dot</string>
 			</array>
 			<key>alignment</key>
-			<string>3</string>
+			<string>4</string>
 			<key>PostNotification</key>
 			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
 		</dict>
