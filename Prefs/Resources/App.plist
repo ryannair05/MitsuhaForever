@@ -46,7 +46,7 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>defaults</key>
 			<string>me.nepeta.mitsuhainfinity</string>
 			<key>label</key>

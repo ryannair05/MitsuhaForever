@@ -105,7 +105,7 @@ void notificationCallback(CFNotificationCenterRef center, void * observer, CFStr
     _enableCoverArtBugFix = [([dict objectForKey:@"enableCoverArtBugFix"] ?: @(NO)) boolValue];
     _disableBatterySaver = [([dict objectForKey:@"disableBatterySaver"] ?: @(NO)) boolValue];
     _enableFFT = [([dict objectForKey:@"enableFFT"] ?: @(NO)) boolValue];
-    _enableAutoHide = [([dict objectForKey:@"enableAutoHide"] ?: @(NO)) boolValue];
+    _enableAutoHide = [([dict objectForKey:@"enableAutoHide"] ?: @(YES)) boolValue];
     
     if ([dict objectForKey:@"waveColor"]){
         if ([[dict objectForKey:@"waveColor"] isKindOfClass:[UIColor class]]) {
