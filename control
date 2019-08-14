@@ -1,6 +1,6 @@
 Package: me.nepeta.mitsuhainfinity
 Name: Mitsuha Infinity
-Depends: mobilesubstrate, me.nepeta.libcolorpicker, io.ominousness.ass, ws.hbang.common (>= 1.11), me.nepeta.libmitsuha (>= 0.1.9), me.nepeta.libnepeta, firmware (>=11.0)
+Depends: mobilesubstrate, me.nepeta.libcolorpicker | org.thebigboss.libcolorpicker (>= 1.6.3), io.ominousness.ass, ws.hbang.common (>= 1.11), me.nepeta.libmitsuha (>= 0.1.9), me.nepeta.libnepeta, firmware (>=11.0)
 Conflicts: io.c0ldra1n.mitsuha, io.c0ldra1n.mitsuha-beta, io.ominousness.mitsuhaxi
 Version: 0.1.7
 Architecture: iphoneos-arm
