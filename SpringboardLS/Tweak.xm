@@ -10,12 +10,26 @@ MSHConfig *mshConfig;
 
 %property (retain,nonatomic) MSHView *mshView;
 
+%new
+-(id)valueForUndefinedKey:(NSString *)key {
+    return nil;
+}
+
 -(void)loadView{
     %orig;
     self.view.clipsToBounds = 1;
 
     MediaControlsPanelViewController *mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_mediaControlsPanelViewController"];
-    [mcpvc.headerView.artworkView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
+
+    if (!mcpvc && [self valueForKey:@"_platterViewController"]) {
+        mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_platterViewController"];
+    } else {
+        return;
+    }
+
+    MediaControlsHeaderView *headerView = [mcpvc respondsToSelector:@selector(headerView)] ? [mcpvc headerView] : [mcpvc nowPlayingHeaderView];
+
+    [headerView.artworkView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
     
     if (![mshConfig view]) [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];
     self.mshView = [mshConfig view];
@@ -36,7 +50,16 @@ MSHConfig *mshConfig;
 %new;
 -(void)readjustWaveColor{
     MediaControlsPanelViewController *mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_mediaControlsPanelViewController"];
-    [mshConfig colorizeView:mcpvc.headerView.artworkView.image];
+
+    if (!mcpvc && [self valueForKey:@"_platterViewController"]) {
+        mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_platterViewController"];
+    } else {
+        return;
+    }
+
+    MediaControlsHeaderView *headerView = [mcpvc respondsToSelector:@selector(headerView)] ? [mcpvc headerView] : [mcpvc nowPlayingHeaderView];
+
+    [mshConfig colorizeView:headerView.artworkView.image];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

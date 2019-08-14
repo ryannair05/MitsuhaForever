@@ -53,6 +53,7 @@
 
 @interface MediaControlsPanelViewController : UIViewController
 @property (retain,nonatomic) MediaControlsHeaderView *headerView;
+@property (nonatomic,retain) MediaControlsHeaderView *nowPlayingHeaderView;
 @property (retain,nonatomic) MediaControlsParentContainerView *parentContainerView;
 @property (retain,nonatomic) MSHView *mshView;
 @property (retain,nonatomic) NSString *label;
