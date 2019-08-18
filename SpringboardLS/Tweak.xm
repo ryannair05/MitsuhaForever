@@ -39,9 +39,9 @@ MSHConfig *mshConfig;
 
     if (!mcpvc && [self valueForKey:@"_platterViewController"]) {
         mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_platterViewController"];
-    } else {
-        return;
     }
+    
+    if (!mcpvc) return;
 
     if (![mshConfig view]) [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
     self.mshView = [mshConfig view];
