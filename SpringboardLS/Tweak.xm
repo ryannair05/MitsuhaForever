@@ -43,6 +43,9 @@ MSHConfig *mshConfig;
         return;
     }
 
+    if (![mshConfig view]) [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
+    self.mshView = [mshConfig view];
+
     if (!moveIntoPanel) {
         [self.view addSubview:self.mshView];
         [self.view sendSubviewToBack:self.mshView];
