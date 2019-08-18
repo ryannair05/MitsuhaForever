@@ -1,10 +1,26 @@
 #import "Tweak.h"
+#import <MediaRemote/MediaRemote.h>
 #import <notify.h>
 
 bool moveIntoPanel = false;
 MSHConfig *mshConfig;
 
 %group MitsuhaVisualsNotification
+
+%hook SBMediaController
+
+-(void)setNowPlayingInfo:(id)arg1 {
+    %orig;
+    MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
+        NSDictionary *dict = (__bridge NSDictionary *)information;
+
+        if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
+            [mshConfig colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+        }
+    });
+}
+
+%end
 
 %hook SBDashBoardMediaControlsViewController
 
@@ -27,13 +43,6 @@ MSHConfig *mshConfig;
         return;
     }
 
-    MediaControlsHeaderView *headerView = [mcpvc respondsToSelector:@selector(headerView)] ? [mcpvc headerView] : [mcpvc nowPlayingHeaderView];
-
-    [headerView.artworkView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
-    
-    if (![mshConfig view]) [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];
-    self.mshView = [mshConfig view];
-
     if (!moveIntoPanel) {
         [self.view addSubview:self.mshView];
         [self.view sendSubviewToBack:self.mshView];
@@ -42,32 +51,10 @@ MSHConfig *mshConfig;
     }
 }
 
-%new;
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    [self readjustWaveColor];
-}
-
-%new;
--(void)readjustWaveColor{
-    MediaControlsPanelViewController *mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_mediaControlsPanelViewController"];
-
-    if (!mcpvc && [self valueForKey:@"_platterViewController"]) {
-        mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_platterViewController"];
-    } else {
-        return;
-    }
-
-    MediaControlsHeaderView *headerView = [mcpvc respondsToSelector:@selector(headerView)] ? [mcpvc headerView] : [mcpvc nowPlayingHeaderView];
-
-    [mshConfig colorizeView:headerView.artworkView.image];
-}
-
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
     self.view.superview.layer.cornerRadius = 13;
     self.view.superview.layer.masksToBounds = TRUE;
-    
-    [self readjustWaveColor];
 
     [[mshConfig view] start];
     [mshConfig view].center = CGPointMake([mshConfig view].center.x, mshConfig.waveOffset);
