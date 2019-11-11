@@ -4,7 +4,7 @@ This is a fork of Nepeta's excellent tweak - [MitsuhaInfinity](https://github.co
 
 ## Installation
 
-1. Add this repository to Cydia: https://repo.conorthedev.me/
+1. Add this repository to Cydia: https://conorthedev.github.io/repo
 2. Install **Mitsuha Infinity**.
 
 ## Compatibility
