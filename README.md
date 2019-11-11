@@ -1,10 +1,10 @@
 # Mitsuha Infinity
 
-This is a fork of c0ldra1n's excellent tweak - [Mitsuha2](https://github.com/c0ldra1n/Mitsuha2) and an update to [MitsuhaXI](https://github.com/Nepeta/MitsuhaXI).
+This is a fork of Nepeta's excellent tweak - [MitsuhaInfinity](https://github.com/c0ldra1n/Mitsuha2) with support for iOS 13 + bug fixes
 
 ## Installation
 
-1. Add this repository to Cydia: https://repo.nepeta.me/
+1. Add this repository to Cydia: https://repo.conorthedev.me/
 2. Install **Mitsuha Infinity**.
 
 ## Compatibility
@@ -34,3 +34,4 @@ Support me at: https://nepeta.me/donate
 ## Credits
 
 * [c0ldra1n](https://github.com/c0ldra1n/) - developed the original tweak for iOS 10 and earlier.
+* Nepeta - developed the original Mitsuha Infinity before she left the community.
