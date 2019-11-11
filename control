@@ -5,6 +5,6 @@ Conflicts: io.c0ldra1n.mitsuha, io.c0ldra1n.mitsuha-beta, io.ominousness.mitsuha
 Version: 0.1.8
 Architecture: iphoneos-arm
 Description: Audio visualizer for iOS
-Maintainer: Nepeta
-Author: c0ldra1n & Nepeta
+Maintainer: ConorTheDev
+Author: c0ldra1n & Nepeta & ConorTheDev
 Section: Tweaks
