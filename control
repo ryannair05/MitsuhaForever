@@ -6,5 +6,6 @@ Version: 0.1.8
 Architecture: iphoneos-arm
 Description: Audio visualizer for iOS
 Maintainer: ConorTheDev
-Author: c0ldra1n & Nepeta & ConorTheDev
+Author: c0ldra1n, Nepeta, ConorTheDev
 Section: Tweaks
+Depiction: https://conorthedev.github.io/repo/depictions/?p=me.nepeta.mitsuhainfinity
