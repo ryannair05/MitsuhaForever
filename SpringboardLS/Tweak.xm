@@ -22,6 +22,64 @@ MSHConfig *mshConfig;
 
 %end
 
+%end
+
+%group ios13
+%hook CSMediaControlsViewController
+
+%property (retain,nonatomic) MSHView *mshView;
+
+%new
+-(id)valueForUndefinedKey:(NSString *)key {
+    return nil;
+}
+
+-(void)loadView{
+    %orig;
+    self.view.clipsToBounds = 1;
+
+    MRPlatterViewController *pvc = nil;
+
+    if ([self valueForKey:@"_platterViewController"]) {
+        pvc = (MRPlatterViewController*)[self valueForKey:@"_platterViewController"];
+    }
+    
+    if (!pvc) return;
+
+    if (![mshConfig view]) [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
+    self.mshView = [mshConfig view];
+
+    if (!moveIntoPanel) {
+        [self.view addSubview:self.mshView];
+        [self.view sendSubviewToBack:self.mshView];
+    } else {
+        [pvc.view insertSubview:self.mshView atIndex:1];
+    }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    %orig;
+    self.view.superview.layer.cornerRadius = 13;
+    self.view.superview.layer.masksToBounds = TRUE;
+
+    [[mshConfig view] start];
+    [mshConfig view].center = CGPointMake([mshConfig view].center.x, mshConfig.waveOffset);
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [[mshConfig view] start];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    %orig;
+    [[mshConfig view] stop];
+}
+
+%end
+
+%end
+
+%group old
 %hook SBDashBoardMediaControlsViewController
 
 %property (retain,nonatomic) MSHView *mshView;
@@ -73,7 +131,6 @@ MSHConfig *mshConfig;
 }
 
 %end
-
 %end
 
 static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStringRef name, const void* object, CFDictionaryRef userInfo) {
@@ -123,5 +180,12 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
         }
 
         %init(MitsuhaVisualsNotification);
+
+        if(@available(iOS 13.0, *)) {
+		    NSLog(@"[LockWidgets] Current version is iOS 13!");
+		    %init(ios13)
+	    } else {
+            %init(old)
+        }
     }
 }
