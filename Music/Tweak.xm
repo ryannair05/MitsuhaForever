@@ -11,12 +11,23 @@ MSHConfig *mshConfig = NULL;
     if ([mshConfig view] == NULL) return;
 
     UIView *me = (UIView *)self;
-    
-    if ([NSStringFromClass([me.superview class]) isEqualToString:@"MusicApplication.NowPlayingContentView"]) {
-        if (mshConfig.colorMode != 2) {
-            [self readjustWaveColor];
+
+    if(@available(iOS 13.0, *)) {
+		if ([NSStringFromClass([me.superview class]) isEqualToString:@"MusicApplication.NowPlayingContentView"]) {
+            if (mshConfig.colorMode != 2) {
+                [self readjustWaveColor];
+            }
+
+            [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
         }
-        [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
+	} else {
+		if ([NSStringFromClass([me.superview class]) isEqualToString:@"Music.NowPlayingContentView"]) {
+            if (mshConfig.colorMode != 2) {
+                [self readjustWaveColor];
+            }
+
+            [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
+        }
     }
 }
 
@@ -74,7 +85,10 @@ MSHConfig *mshConfig = NULL;
     mshConfig = [MSHConfig loadConfigForApplication:@"Music"];
     mshConfig.waveOffsetOffset = 70;
     if(mshConfig.enabled){
-        %init(MitsuhaVisuals, //MusicNowPlayingContentView = NSClassFromString(@"MusicApplication.NowPlayingContentView"),
-            MusicArtworkComponentImageView = NSClassFromString(@"MusicApplication.ArtworkComponentImageView"));
+        if(@available(iOS 13.0, *)) {
+		    %init(MitsuhaVisuals, MusicArtworkComponentImageView = NSClassFromString(@"MusicApplication.ArtworkComponentImageView"));
+	    } else {
+		    %init(MitsuhaVisuals, MusicArtworkComponentImageView = NSClassFromString(@"Music.ArtworkComponentImageView"));
+        }
     }
 }
