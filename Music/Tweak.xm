@@ -85,10 +85,13 @@ MSHConfig *mshConfig = NULL;
     mshConfig = [MSHConfig loadConfigForApplication:@"Music"];
     mshConfig.waveOffsetOffset = 70;
     if(mshConfig.enabled){
+        NSString *classString = nil;
         if(@available(iOS 13.0, *)) {
-		    %init(MitsuhaVisuals, MusicArtworkComponentImageView = NSClassFromString(@"MusicApplication.ArtworkComponentImageView"));
+            classString = @"MusicApplication.ArtworkComponentImageView";
 	    } else {
-		    %init(MitsuhaVisuals, MusicArtworkComponentImageView = NSClassFromString(@"Music.ArtworkComponentImageView"));
+		    classString = @"Music.ArtworkComponentImageView";
         }
+        
+        %init(MitsuhaVisuals, MusicArtworkComponentImageView = NSClassFromString(classString));
     }
 }
