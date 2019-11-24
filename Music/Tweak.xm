@@ -12,7 +12,7 @@ MSHConfig *mshConfig = NULL;
 
     UIView *me = (UIView *)self;
     
-    if ([NSStringFromClass([me.superview class]) isEqualToString:@"Music.NowPlayingContentView"]) {
+    if ([NSStringFromClass([me.superview class]) isEqualToString:@"MusicApplication.NowPlayingContentView"]) {
         if (mshConfig.colorMode != 2) {
             [self readjustWaveColor];
         }
@@ -62,6 +62,10 @@ MSHConfig *mshConfig = NULL;
     [[mshConfig view] stop];
 }
 
+-(UIColor *)backgroundColor {
+    return [UIColor clearColor];
+}
+
 %end
 
 %end
@@ -70,7 +74,7 @@ MSHConfig *mshConfig = NULL;
     mshConfig = [MSHConfig loadConfigForApplication:@"Music"];
     mshConfig.waveOffsetOffset = 70;
     if(mshConfig.enabled){
-        %init(MitsuhaVisuals, //MusicNowPlayingContentView = NSClassFromString(@"Music.NowPlayingContentView"),
-            MusicArtworkComponentImageView = NSClassFromString(@"Music.ArtworkComponentImageView"));
+        %init(MitsuhaVisuals, //MusicNowPlayingContentView = NSClassFromString(@"MusicApplication.NowPlayingContentView"),
+            MusicArtworkComponentImageView = NSClassFromString(@"MusicApplication.ArtworkComponentImageView"));
     }
 }
