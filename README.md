@@ -2,6 +2,8 @@
 
 This is a fork of Nepeta's excellent tweak - [MitsuhaInfinity](https://github.com/c0ldra1n/Mitsuha2) with support for iOS 13 + bug fixes
 
+For support / to report a bug [join my discord server](https://oh-my-god.wtf/conorthedev)
+
 ## Installation
 
 1. Add this repository to Cydia: https://conorthedev.github.io/repo
