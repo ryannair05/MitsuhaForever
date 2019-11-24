@@ -60,6 +60,10 @@ MSHConfig *mshConfig = NULL;
     self.mshView = [mshConfig view];
     [self.view addSubview:[mshConfig view]];
     [self.view sendSubviewToBack:[mshConfig view]];
+
+    for (UIView *subview in self.view.subviews) {
+        subview.backgroundColor = [UIColor clearColor];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -71,10 +75,6 @@ MSHConfig *mshConfig = NULL;
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
     [[mshConfig view] stop];
-}
-
--(UIColor *)backgroundColor {
-    return [UIColor clearColor];
 }
 
 %end
