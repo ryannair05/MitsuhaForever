@@ -36,6 +36,7 @@ MSHConfig *mshConfig = NULL;
 
 -(void)setSelected:(BOOL)selected {
     %orig;
+    [mshConfig colorizeView:self.imageView.image];
     [self.imageView layoutSubviews];
 }
 
