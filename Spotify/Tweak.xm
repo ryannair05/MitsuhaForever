@@ -12,7 +12,7 @@ UIColor *const kTrans = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
 
 MSHConfig *mshConfig = NULL;
 
-%hook SPTGeniusNowPlayingViewCoverArtView
+%hook SPTNowPlayingCoverArtImageView
 
 -(void)layoutSubviews {
     %orig;
@@ -32,13 +32,11 @@ MSHConfig *mshConfig = NULL;
 
 %end
 
-%hook SPTNowPlayingCoverArtViewCell
+%hook SPTNowPlayingCoverArtCell
 
 -(void)setSelected:(BOOL)selected {
     %orig;
-    if (selected) {
-        [mshConfig colorizeView:self.cellContentRepresentation];
-    }
+    [self.imageView layoutSubviews];
 }
 
 %end
