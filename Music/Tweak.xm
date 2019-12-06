@@ -77,6 +77,13 @@ MSHConfig *mshConfig = NULL;
     [[mshConfig view] stop];
 }
 
+-(void)viewDidLayoutSubviews {
+    %orig;
+    for (UIView *subview in self.view.subviews) {
+        subview.backgroundColor = [UIColor clearColor];
+    }
+}
+
 %end
 
 %end
