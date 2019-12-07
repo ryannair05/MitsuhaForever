@@ -1,13 +1,13 @@
-# Mitsuha Infinity
+# Mitsuha Forever
 
-This is a fork of Nepeta's excellent tweak - [MitsuhaInfinity](https://github.com/c0ldra1n/Mitsuha2) with support for iOS 13 + bug fixes
+This is a fork of Nepeta's excellent tweak - [MitsuhaInfinity](https://github.com/Nepeta/MitsuhaInfinity) with support for iOS 13, bug fixes and new features
 
 For support / to report a bug [join my discord server](https://oh-my-god.wtf/conorthedev)
 
 ## Installation
 
 1. Add this repository to Cydia: https://conorthedev.github.io/repo
-2. Install **Mitsuha Infinity**.
+2. Install **Mitsuha Forever**.
 
 ## Compatibility
 
@@ -19,19 +19,18 @@ For support / to report a bug [join my discord server](https://oh-my-god.wtf/con
 
 ### Tweaks
 
-Should be compatible with EclipseX and similar tweaks. Spotify version is confirmed to work with ColorFlow.
-
+Should be compatible with EclipseX and similar tweaks.
 Works with Artsy.
 
 ## Bugs
 
-Feel free to [open a new issue](https://github.com/Nepeta/MitsuhaInfinity/issues/new).
+For support / to report a bug [join my discord server](https://oh-my-god.wtf/conorthedev)
 
 ## Donations
 
-Support the original developer here: https://www.paypal.me/c0ldra1n
+Support the original developers here: https://www.paypal.me/c0ldra1n, https://nepeta.me/donate
 
-Support me at: https://nepeta.me/donate
+Support me at: *coming soon*
 
 ## Credits
 
