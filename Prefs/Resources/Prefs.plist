@@ -5,12 +5,23 @@
 	<key>items</key>
 	<array>
 		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>headerCellClass</key>
-			<string>HBImageTableCell</string>
+    		<key>cell</key>
+    		<string>PSGroupCell</string>
+    		<key>headerCellClass</key>
+    		<string>HBPackageNameHeaderCell</string>
+    		<key>packageIdentifier</key>
+    		<string>me.conorthedev.mitsuhaforever</string>
 			<key>icon</key>
-			<string>mitsuhaforever.png</string>
+    		<string>icon@2x.png</string>
+    		<key>titleColor</key>
+   		 	<string>#3f3f3f</string>
+    		<key>subtitleColor</key>
+   		 	<string>#2f2f2f</string>
+			<key>backgroundGradientColors</key>
+    		<array>
+        		<string>#cdcdcd</string>
+        		<string>#cdcdcd</string>
+   		 	</array>
 		</dict>
 		<dict>
 			<key>cellClass</key>
@@ -57,6 +68,8 @@
 			<string>respring:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
+			<key>cellClass</key>
+    		<string>HBTintedTableCell</string>
 			<key>label</key>
 			<string>Respring</string>
 		</dict>
@@ -65,6 +78,8 @@
 			<string>restartmsd:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
+			<key>cellClass</key>
+    		<string>HBTintedTableCell</string>
 			<key>label</key>
 			<string>Restart mediaserverd</string>
 		</dict>
@@ -73,6 +88,8 @@
 			<string>resetPrefs:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
+			<key>cellClass</key>
+    		<string>HBTintedTableCell</string>
 			<key>isDestructive</key>
 			<true />
 			<key>confirmation</key>
