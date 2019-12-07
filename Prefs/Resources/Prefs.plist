@@ -10,7 +10,7 @@
 			<key>headerCellClass</key>
 			<string>HBImageTableCell</string>
 			<key>icon</key>
-			<string>mitsuhainfinity.png</string>
+			<string>mitsuhaforever.png</string>
 		</dict>
 		<dict>
 			<key>cellClass</key>
@@ -35,9 +35,6 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Supported applications</string>
-			<key>footerText</key>
-			<string>Due to the changes to this tweak's structure, support for external applications is provided in separate tweaks.
-Repo: https://chr0nict.github.io/Nepeta-Mirror/</string>
 			<key>isStaticText</key>
 			<true/>
             <key>id</key>
@@ -51,7 +48,7 @@ Repo: https://chr0nict.github.io/Nepeta-Mirror/</string>
 			<key>label</key>
 			<string>Other</string>
 			<key>footerText</key>
-			<string>Mitsuha Infinity</string>
+			<string>Mitsuha Forever</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>
@@ -81,7 +78,7 @@ Repo: https://chr0nict.github.io/Nepeta-Mirror/</string>
 			<key>confirmation</key>
 			<dict>
 				<key>prompt</key>
-				<string>Are you sure you want to reset all your Mitsuha Infinity preferences? This can not be undone.</string>
+				<string>Are you sure you want to reset all your Mitsuha Forever preferences? This can not be undone.</string>
 				<key>title</key>
 				<string>OK</string>
 				<key>okTitle</key>
@@ -102,7 +99,7 @@ Repo: https://chr0nict.github.io/Nepeta-Mirror/</string>
 			<key>subtitle</key>
 			<string>Source code</string>
 			<key>url</key>
-			<string>https://github.com/ConorTheDev/MitsuhaInfinity</string>
+			<string>https://github.com/ConorTheDev/MitsuhaForever</string>
 		</dict>
 		<dict>
 			<key>cellClass</key>
@@ -130,13 +127,13 @@ Repo: https://chr0nict.github.io/Nepeta-Mirror/</string>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
 			<string>Mitsuha, Mitsuha2 by c0ldra1n,
-MitsuhaXI, Mitsuha Infinity by Nepeta. 
-Being updated now by ConorTheDev</string>
+MitsuhaXI, Mitsuha Infinity by Nepeta,  
+Mitsuha Forever by ConorTheDev.</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>
 	</array>
 	<key>title</key>
-	<string>Mitsuha Infinity</string>
+	<string>Mitsuha Forever</string>
 </dict>
 </plist>

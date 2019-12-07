@@ -65,8 +65,8 @@
     [self insertSpecifier:spec afterSpecifierID:@"apps"];
   }
 
-  [self setTitle:@"Mitsuha Infinity"];
-  [self.navigationItem setTitle:@"Mitsuha Infinity"];
+  [self setTitle:@"Mitsuha Forever"];
+  [self.navigationItem setTitle:@"Mitsuha Forever"];
 }
 
 - (void)setSpecifier:(PSSpecifier *)specifier {

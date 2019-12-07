@@ -18,7 +18,7 @@
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>label</key>
 			<string>Enabled</string>
 			<key>key</key>
@@ -32,7 +32,7 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>label</key>
 			<string>FFT (frequency instead of amplitude)</string>
 			<key>key</key>
@@ -40,7 +40,7 @@
 			<key>alternateColors</key>
 			<true/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -48,7 +48,7 @@
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>label</key>
 			<string>Automatically hide the visualizer</string>
 			<key>key</key>
@@ -56,7 +56,7 @@
 			<key>alternateColors</key>
 			<true/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 
 		<dict>
@@ -73,7 +73,7 @@
 			<key>default</key>
 			<integer>0</integer>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>Style</string>
 			<key>validValues</key>
@@ -93,7 +93,7 @@
 			<key>alignment</key>
 			<string>4</string>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -109,7 +109,7 @@
 			<key>default</key>
 			<integer>8</integer>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>NumberOfPoints</string>
 			<key>min</key>
@@ -121,7 +121,7 @@
 			<key>isSegmented</key>
 			<true/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 
 		<dict>
@@ -146,7 +146,7 @@
 			<key>default</key>
 			<integer>5</integer>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>BarSpacing</string>
 			<key>min</key>
@@ -158,7 +158,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -174,7 +174,7 @@
 			<key>default</key>
 			<integer>0</integer>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>BarCornerRadius</string>
 			<key>min</key>
@@ -186,7 +186,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 
 		<dict>
@@ -211,7 +211,7 @@
 			<key>default</key>
 			<integer>5</integer>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>LineThickness</string>
 			<key>min</key>
@@ -223,7 +223,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 
 		<dict>
@@ -240,7 +240,7 @@
 			<key>default</key>
 			<integer>0</integer>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>ColorMode</string>
 			<key>validValues</key>
@@ -258,7 +258,7 @@
 			<key>alignment</key>
 			<string>3</string>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -274,7 +274,7 @@
 			<key>default</key>
 			<real>0.6</real>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>DynamicColorAlpha</string>
 			<key>min</key>
@@ -286,7 +286,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -296,7 +296,7 @@
 			<key>libcolorpicker</key>
 			<dict>
 				<key>defaults</key>
-				<string>me.nepeta.mitsuhainfinity.colors</string>
+				<string>me.conorthedev.mitsuhaforever.colors</string>
 				<key>key</key>
 				<string>WaveColor</string>
 				<key>fallback</key>
@@ -304,7 +304,7 @@
 				<key>alpha</key>
 				<true/>
 				<key>PostNotification</key>
-				<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+				<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 			</dict>
 			<key>label</key>
 			<string>Wave color</string>
@@ -332,7 +332,7 @@
 			<key>label</key>
 			<string>Wave offset (top)</string>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>WaveOffset</string>
 			<key>min</key>
@@ -344,7 +344,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -360,7 +360,7 @@
 			<key>default</key>
 			<real>24</real>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>Fps</string>
 			<key>min</key>
@@ -372,7 +372,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -388,7 +388,7 @@
 			<key>default</key>
 			<real>1</real>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>key</key>
 			<string>Sensitivity</string>
 			<key>min</key>
@@ -400,7 +400,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -408,7 +408,7 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>label</key>
 			<string>Disable battery saver</string>
 			<key>key</key>
@@ -416,14 +416,14 @@
 			<key>alternateColors</key>
 			<true/>
 			<key>PostNotification</key>
-			<string>me.nepeta.mitsuhainfinity/ReloadPrefs</string>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<!-- Credits -->
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Mitsuha Infinity</string>
+			<string>Mitsuha Forever</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>

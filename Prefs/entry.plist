@@ -1,10 +1,10 @@
 {
     entry = {
-	bundle = MitsuhaInfinityPrefs;
+	bundle = MitsuhaForeverPrefs;
 	cell = PSLinkCell;
 	detail = MSHPrefsListController;
 	icon = icon.png;
 	isController = 1;
-	label = "Mitsuha Infinity";
+	label = "Mitsuha Forever";
     };
 }

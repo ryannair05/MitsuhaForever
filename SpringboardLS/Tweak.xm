@@ -133,6 +133,57 @@ MSHConfig *mshConfig;
 %end
 %end
 
+%group sylphiOS13
+%hook CSMediaControlsViewController
+
+%property (retain,nonatomic) MSHView *mshView;
+
+%new
+-(id)valueForUndefinedKey:(NSString *)key {
+    return nil;
+}
+
+-(void)loadView{
+    %orig;
+    self.view.clipsToBounds = 1;
+
+    MRPlatterViewController *pvc = nil;
+
+    if ([self valueForKey:@"_platterViewController"]) {
+        pvc = (MRPlatterViewController*)[self valueForKey:@"_platterViewController"];
+    }
+    
+    if (!pvc) return;
+
+    [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];	
+    self.mshView = [mshConfig view];
+    
+    [pvc.view insertSubview:self.mshView atIndex:2];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    %orig;
+
+    self.view.superview.layer.cornerRadius = 13;
+    self.view.superview.layer.masksToBounds = TRUE;
+
+    [[mshConfig view] start];
+    [mshConfig view].center = CGPointMake([mshConfig view].center.x, mshConfig.waveOffset);
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [[mshConfig view] start];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    %orig;
+    [[mshConfig view] stop];
+}
+
+%end
+
+%end
+
 static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStringRef name, const void* object, CFDictionaryRef userInfo) {
     uint64_t state;
     int token;
@@ -153,14 +204,31 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
     mshConfig.waveOffsetOffset = 500;
 
     if(mshConfig.enabled){
+        %init(MitsuhaVisualsNotification);
+
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
         //Check if Artsy is installed
         bool artsyEnabled = false;
         bool artsyLsEnabled = false;
         bool artsyPresent = [[NSFileManager defaultManager] fileExistsAtPath: ArtsyTweakDylibFile] && [[NSFileManager defaultManager] fileExistsAtPath: ArtsyTweakPlistFile];
 
+        //Check if Sylph is installed
+        bool sylphEnabled = false;
+        bool sylphPresent = [[NSFileManager defaultManager] fileExistsAtPath: SylphTweakDylibFile] && [[NSFileManager defaultManager] fileExistsAtPath: SylphTweakPlistFile];
+
+        if (sylphPresent) {
+            NSLog(@"[MitsuhaForever] Sylph found");
+            sylphEnabled = true; 
+            
+            //Check if Artsy is enabled
+            NSMutableDictionary *sylphPrefs = [[NSMutableDictionary alloc] initWithContentsOfFile:SylphPreferencesFile];
+            if (sylphPrefs) {
+                sylphEnabled = [([sylphPrefs objectForKey:@"enabled"] ?: @(YES)) boolValue];
+            }
+        }
+
         if (artsyPresent) {
-            NSLog(@"[MitsuhaInfinity] Artsy found");
+            NSLog(@"[MitsuhaForever] Artsy found");
             artsyEnabled = true; //it's enabled by default when Artsy is installed
             artsyLsEnabled = true;
             
@@ -172,17 +240,31 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
             }
         }
 
+
         if (artsyEnabled) {
             if (artsyLsEnabled) {
-                NSLog(@"[MitsuhaInfinity] Artsy lsEnabled = true");
+                NSLog(@"[MitsuhaForever: ARTSY] lsEnabled = true");
                 moveIntoPanel = true;
             }
         }
 
-        %init(MitsuhaVisualsNotification);
+        if(sylphEnabled) {
+             NSLog(@"[MitsuhaForever: SYLPH] enabled = true");
+
+            if(@available(iOS 13.0, *)) {
+		        NSLog(@"[MitsuhaForever: SYLPH] Current version is iOS 13!");
+		        %init(sylphiOS13)
+                return;
+	        } else {
+                return;
+                //%init(sylphOld)
+            }
+        } else {
+            NSLog(@"[MitsuhaForever: SYLPH] enabled = false");
+        }
 
         if(@available(iOS 13.0, *)) {
-		    NSLog(@"[LockWidgets] Current version is iOS 13!");
+		    NSLog(@"[MitsuhaForever] Current version is iOS 13!");
 		    %init(ios13)
 	    } else {
             %init(old)

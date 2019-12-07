@@ -12,7 +12,7 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>label</key>
 			<string>Ignore ColorFlow</string>
 			<key>key</key>
@@ -26,7 +26,7 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>me.nepeta.mitsuhainfinity</string>
+			<string>me.conorthedev.mitsuhaforever</string>
 			<key>label</key>
 			<string>Cover art bug fix</string>
 			<key>key</key>
