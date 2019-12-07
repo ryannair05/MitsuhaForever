@@ -1,12 +1,12 @@
-Package: me.nepeta.mitsuhainfinity
+Package: me.conorthedev.mitsuhaforever
 Name: Mitsuha Infinity
 Depends: mobilesubstrate, me.nepeta.libcolorpicker | org.thebigboss.libcolorpicker (>= 1.6.3), io.ominousness.ass, ws.hbang.common (>= 1.11), me.nepeta.libmitsuha (>= 0.1.9), me.nepeta.libnepeta, firmware (>=11.0)
-Conflicts: io.c0ldra1n.mitsuha, io.c0ldra1n.mitsuha-beta, io.ominousness.mitsuhaxi
-Version: 0.2
+Conflicts: io.c0ldra1n.mitsuha, io.c0ldra1n.mitsuha-beta, io.ominousness.mitsuhaxi, me.nepeta.mitsuhainfinity
+Version: 1.0
 Architecture: iphoneos-arm
-Description: Audio visualizer for iOS
+Description: Universal audio visualizer for iOS
 Maintainer: ConorTheDev <con0r.b@protonmail.com>
 Author: ConorTheDev <con0r.b@protonmail.com>, c0ldra1n, Nepeta
 Section: Tweaks
-Depiction: https://conorthedev.github.io/repo/depictions/?p=me.nepeta.mitsuhainfinity
-SileoDepiction: https://conorthedev.github.io/repo/sileodepictions/me.nepeta.mitsuhainfinity
+Depiction: https://conorthedev.github.io/repo/depictions/?p=me.nepeta.mitsuhaforever
+SileoDepiction: https://conorthedev.github.io/repo/sileodepictions/me.conorthedev.mitsuhaforever
