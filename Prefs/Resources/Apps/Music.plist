@@ -4,5 +4,7 @@
 <dict>
     <key>name</key>
     <string>Music</string>
+    <key>title</key>
+    <string>Apple Music</string>
 </dict>
 </plist>
