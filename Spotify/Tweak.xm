@@ -122,13 +122,8 @@ MSHConfig *mshConfig = NULL;
 
 -(void)viewDidAppear:(BOOL)animated{
     %orig;
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        
-        [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height/2 + mshConfig.waveOffset);
-        
-    } completion:nil];
-    
-    
+    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height/2 + mshConfig.waveOffset);
+
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
     //  Copied from NowPlayingImpl
@@ -142,11 +137,8 @@ MSHConfig *mshConfig = NULL;
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
     [[mshConfig view] stop];
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height + mshConfig.waveOffset);
-    } completion:^(BOOL finished){
-        [mshConfig view].shouldUpdate = false;
-    }];
+    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height + mshConfig.waveOffset);
+    [mshConfig view].shouldUpdate = false;
 }
 
 %end
@@ -174,13 +166,8 @@ MSHConfig *mshConfig = NULL;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    %orig;
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        
-        [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height/2 + mshConfig.waveOffset);
-        
-    } completion:nil];
-    
+    %orig;        
+    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height/2 + mshConfig.waveOffset);    
     
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
@@ -195,11 +182,8 @@ MSHConfig *mshConfig = NULL;
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
     [[mshConfig view] stop];
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height + mshConfig.waveOffset);
-    } completion:^(BOOL finished){
-        [mshConfig view].shouldUpdate = false;
-    }];
+    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height + mshConfig.waveOffset);
+    [mshConfig view].shouldUpdate = false;
 }
 
 -(void)viewDidLayoutSubviews{
@@ -350,16 +334,11 @@ static CGFloat originalCenterY = 0;
         originalCenterY = center.y;
     }
     
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.view.coverArtView.alpha = 1.0;
+    self.view.coverArtView.alpha = 1.0;
+    self.view.coverArtView.center = CGPointMake(center.x, originalCenterY * 0.8);
+    if(self.view.coverArtView.center.y != originalCenterY * 0.8){    //  For some reason I can't explain
         self.view.coverArtView.center = CGPointMake(center.x, originalCenterY * 0.8);
-    } completion:^(BOOL finished){
-        if(self.view.coverArtView.center.y != originalCenterY * 0.8){    //  For some reason I can't explain
-            [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                self.view.coverArtView.center = CGPointMake(center.x, originalCenterY * 0.8);
-            } completion:nil];
-        }
-    }];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -367,10 +346,8 @@ static CGFloat originalCenterY = 0;
     
     CGPoint center = self.view.coverArtView.center;
     
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.view.coverArtView.alpha = 0;
-        self.view.coverArtView.center = CGPointMake(center.x, originalCenterY);
-    } completion:nil];
+    self.view.coverArtView.alpha = 0;
+    self.view.coverArtView.center = CGPointMake(center.x, originalCenterY);
 }
 
 %end
