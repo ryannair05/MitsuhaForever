@@ -51,6 +51,14 @@
             <key>id</key>
             <string>apps</string>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>label</key>
+			<string>AirPods (2 / Pro) Compatability</string>
+			<key>detail</key>
+			<string>MSHAirPodsController</string>
+		</dict>
 
 		<!-- Credits -->
 		<dict>

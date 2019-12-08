@@ -5,7 +5,7 @@ TARGET = iphone:clang:13.0:11.2
 include $(THEOS_MAKE_PATH)/common.mk
 
 BUNDLE_NAME = MitsuhaForeverPrefs
-$(BUNDLE_NAME)_FILES = MSHPrefsListController.m MSHAppPrefsListController.m
+$(BUNDLE_NAME)_FILES = MSHPrefsListController.m MSHAppPrefsListController.m MSHAirPodsController.m
 $(BUNDLE_NAME)_INSTALL_PATH = /Library/PreferenceBundles
 $(BUNDLE_NAME)_FRAMEWORKS = UIKit
 $(BUNDLE_NAME)_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
