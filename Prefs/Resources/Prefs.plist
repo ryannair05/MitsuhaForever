@@ -12,7 +12,7 @@
     		<key>packageIdentifier</key>
     		<string>me.conorthedev.mitsuhaforever</string>
 			<key>icon</key>
-    		<string>icon@2x.png</string>
+    		<string>icon@3x.png</string>
     		<key>titleColor</key>
    		 	<string>#3f3f3f</string>
     		<key>subtitleColor</key>
