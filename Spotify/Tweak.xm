@@ -19,6 +19,11 @@ MSHConfig *mshConfig = NULL;
     [mshConfig colorizeView:self.image];
 }
 
+-(void)setImage:(UIImage*)image {
+    %orig;
+    [mshConfig colorizeView:self.image];
+}
+
 %end
 
 %hook SPTNowPlayingContentCell
