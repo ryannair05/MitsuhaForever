@@ -68,12 +68,7 @@ MSHConfig *mshConfig = NULL;
 
 -(void)viewDidAppear:(BOOL)animated{
     %orig;
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        
-        [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height/2 + mshConfig.waveOffset);
-        
-    } completion:nil];
-    
+    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height/2 + mshConfig.waveOffset);
     
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
@@ -88,11 +83,8 @@ MSHConfig *mshConfig = NULL;
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
     [[mshConfig view] stop];
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height + mshConfig.waveOffset);
-    } completion:^(BOOL finished){
-        [mshConfig view].shouldUpdate = false;
-    }];
+    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height + mshConfig.waveOffset);
+    [mshConfig view].shouldUpdate = false;
 }
 
 -(void)viewDidLayoutSubviews{
