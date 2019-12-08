@@ -14,11 +14,6 @@ MSHConfig *mshConfig = NULL;
 
 %hook SPTNowPlayingCoverArtImageView
 
--(void)layoutSubviews {
-    %orig;
-    [mshConfig colorizeView:self.image];
-}
-
 -(void)setImage:(UIImage*)image {
     %orig;
     [mshConfig colorizeView:self.image];
