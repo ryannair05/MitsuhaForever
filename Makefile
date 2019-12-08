@@ -3,6 +3,6 @@ DEBUG=0
 
 include $(THEOS)/makefiles/common.mk
 
-SUBPROJECTS += ASSWatchdog libmitsuhainfinity Prefs Music Spotify SpringboardLS
+SUBPROJECTS += ASSWatchdog libmitsuhainfinity Prefs Music Spotify SpringboardLS SpringboardLSBackground
 
 include $(THEOS_MAKE_PATH)/aggregate.mk

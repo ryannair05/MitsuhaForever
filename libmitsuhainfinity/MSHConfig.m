@@ -1,7 +1,7 @@
 #import "public/MSHConfig.h"
 #import "../MSHUtils.h"
 #import <Cephei/HBPreferences.h>
-#import <Nepeta/NEPColorUtils.h>
+#import <ConorTheDev/libconorthedev.h>
 #import <libcolorpicker.h>
 
 void notificationCallback(CFNotificationCenterRef center, void *observer,
@@ -94,13 +94,8 @@ void notificationCallback(CFNotificationCenterRef center, void *observer,
   if (self.view == NULL)
     return;
   UIColor *color = self.waveColor;
-
-  if (self.colorMode == 1) {
-    color = [NEPColorUtils averageColorNew:image
-                                 withAlpha:self.dynamicColorAlpha];
-  } else if (self.colorMode == 0) {
-    color = [NEPColorUtils averageColor:image withAlpha:self.dynamicColorAlpha];
-  }
+  CTDColorUtils *colorUtils = [[CTDColorUtils alloc] init];
+  color = [colorUtils getAverageColorFrom:image];
 
   self.calculatedColor = color;
   [self.view updateWaveColor:[color copy] subwaveColor:[color copy]];

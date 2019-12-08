@@ -7,7 +7,7 @@ LIBRARY_NAME = libmitsuhainfinity
 $(LIBRARY_NAME)_OBJC_FILES = $(wildcard *.m)
 $(LIBRARY_NAME)_CFLAGS = -I./
 $(LIBRARY_NAME)_FRAMEWORKS += QuartzCore
-$(LIBRARY_NAME)_LIBRARIES += colorpicker nepeta mitsuhainfinity mitsuha
+$(LIBRARY_NAME)_LIBRARIES += colorpicker conorthedev mitsuhainfinity mitsuha
 $(LIBRARY_NAME)_EXTRA_FRAMEWORKS += Cephei
 $(LIBRARY_NAME)_USE_MODULES = 0
 
