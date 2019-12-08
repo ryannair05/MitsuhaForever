@@ -95,7 +95,8 @@ void notificationCallback(CFNotificationCenterRef center, void *observer,
     return;
   UIColor *color = self.waveColor;
   CTDColorUtils *colorUtils = [[CTDColorUtils alloc] init];
-  color = [colorUtils getAverageColorFrom:image withAlpha:0.5];
+  color = [colorUtils getAverageColorFrom:image
+                                withAlpha:self.dynamicColorAlpha];
 
   self.calculatedColor = color;
   [self.view updateWaveColor:[color copy] subwaveColor:[color copy]];
