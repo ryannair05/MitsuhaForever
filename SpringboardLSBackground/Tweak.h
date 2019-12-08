@@ -11,6 +11,12 @@
 #import <Mitsuha/MSHView.h>
 #import <MitsuhaInfinity/MSHConfig.h>
 
+@interface SBDashBoardFixedFooterViewController : UIViewController
+
+@property(retain, nonatomic) MSHView *mshView;
+
+@end
+
 @interface CSFixedFooterViewController : UIViewController
 
 @property(retain, nonatomic) MSHView *mshView;
