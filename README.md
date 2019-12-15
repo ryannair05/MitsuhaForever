@@ -6,7 +6,7 @@ For support / to report a bug [join my discord server](https://oh-my-god.wtf/con
 
 ## Installation
 
-1. Add this repository to Cydia: https://conorthedev.github.io/repo
+1. Add this repository to your package manager: https://repo.conorthedev.me
 2. Install **Mitsuha Forever**.
 
 ## Compatibility
@@ -30,7 +30,7 @@ For support / to report a bug [join my discord server](https://oh-my-god.wtf/con
 
 Support the original developers here: https://www.paypal.me/c0ldra1n, https://nepeta.me/donate
 
-Support me at: *coming soon*
+Support me at: https://www.ko-fi.com/ConorTheDev
 
 ## Credits
 
