@@ -131,7 +131,6 @@ MSHConfig *mshConfig;
 }
 
 %end
-%end
 
 %end
 
