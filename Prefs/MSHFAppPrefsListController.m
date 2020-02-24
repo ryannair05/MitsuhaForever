@@ -1,16 +1,16 @@
-#import "MSHAppPrefsListController.h"
+#import "MSHFAppPrefsListController.h"
 
-@implementation MSHAppPrefsListController
+@implementation MSHFAppPrefsListController
 
 - (id)specifiers {
   return _specifiers;
 }
 
 - (void)loadFromSpecifier:(PSSpecifier *)specifier {
-  NSString *app = [specifier propertyForKey:@"MSHApp"];
+  NSString *app = [specifier propertyForKey:@"MSHFApp"];
   if (!app)
     return;
-  NSString *prefix = [@"MSH" stringByAppendingString:app];
+  NSString *prefix = [@"MSHF" stringByAppendingString:app];
   NSString *title = [specifier name];
 
   _specifiers = [[self loadSpecifiersFromPlistName:@"App" target:self] retain];

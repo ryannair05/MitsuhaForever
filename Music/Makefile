@@ -6,7 +6,7 @@ include $(THEOS_MAKE_PATH)/common.mk
 
 TWEAK_NAME = MitsuhaForeverMusic
 $(TWEAK_NAME)_FILES = Tweak.xm
-$(TWEAK_NAME)_LIBRARIES += mitsuha mitsuhainfinity
+$(TWEAK_NAME)_LIBRARIES += mitsuhaforever
 $(TWEAK_NAME)_EXTRA_FRAMEWORKS += Cephei
 
 include $(THEOS_MAKE_PATH)/tweak.mk

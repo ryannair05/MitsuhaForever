@@ -1,4 +1,4 @@
-#import "../MSHUtils.h"
+#import "../MSHFUtils.h"
 #import <Cephei/HBPreferences.h>
 #import <CepheiPrefs/HBAppearanceSettings.h>
 #import <CepheiPrefs/HBRootListController.h>
@@ -6,8 +6,6 @@
 #import <Preferences/PSSpecifier.h>
 #import <spawn.h>
 
-@interface MSHPrefsListController : HBListController
-- (void)resetPrefs:(id)sender;
-- (void)respring:(id)sender;
-- (void)restartmsd:(id)sender;
+@interface MSHFAirPodsController : HBListController
+
 @end

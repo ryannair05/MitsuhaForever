@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import <Mitsuha/MSHView.h>
-#import <MitsuhaInfinity/MSHConfig.h>
+#import <MitsuhaForever/MSHFConfig.h>
+#import <MitsuhaForever/MSHFView.h>
 
-#import "../MSHUtils.h"
+#import "../MSHFUtils.h"
 
 @interface CSMediaControlsViewController : UIViewController
-@property(retain, nonatomic) MSHView *mshView;
+@property(retain, nonatomic) MSHFView *mshfview;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -73,7 +73,7 @@
 @property(nonatomic, retain) MediaControlsHeaderView *nowPlayingHeaderView;
 @property(retain, nonatomic)
     MediaControlsParentContainerView *parentContainerView;
-@property(retain, nonatomic) MSHView *mshView;
+@property(retain, nonatomic) MSHFView *mshfview;
 @property(retain, nonatomic) NSString *label;
 
 - (BOOL)handleEvent:(id)event;
@@ -88,7 +88,7 @@
 @interface SBDashBoardMediaControlsViewController : UIViewController {
   MediaControlsPanelViewController *_mediaControlsPanelViewController;
 }
-@property(retain, nonatomic) MSHView *mshView;
+@property(retain, nonatomic) MSHFView *mshfview;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object

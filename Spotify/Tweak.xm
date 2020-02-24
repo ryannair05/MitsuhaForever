@@ -1,22 +1,22 @@
 #import "Tweak.h"
 #define CFWBackgroundViewTagNumber 896541
-#define MSHColorFlowInstalled [%c(CFWPrefsManager) class]
-#define MSHColorFlowMusicEnabled MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_musicEnabled")
-#define MSHColorFlowSpotifyEnabled MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_spotifyEnabled")
-#define MSHCustomCoverInstalled [%c(CustomCoverAPI) class]
+#define MSHFColorFlowInstalled [%c(CFWPrefsManager) class]
+#define MSHFColorFlowMusicEnabled MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_musicEnabled")
+#define MSHFColorFlowSpotifyEnabled MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_spotifyEnabled")
+#define MSHFCustomCoverInstalled [%c(CustomCoverAPI) class]
 
 static SPTUniversalController *currentBackgroundMusicVC;
 UIColor *const kTrans = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
 
 %group MitsuhaVisuals
 
-MSHConfig *mshConfig = NULL;
+MSHFConfig *config = NULL;
 
 %hook SPTNowPlayingCoverArtImageView
 
 -(void)setImage:(UIImage*)image {
     %orig;
-    [mshConfig colorizeView:self.image];
+    [config colorizeView:self.image];
 }
 
 %end
@@ -26,7 +26,7 @@ MSHConfig *mshConfig = NULL;
 -(void)setSelected:(BOOL)selected {
     %orig;
     if (selected) {
-        [mshConfig colorizeView:self.cellContentRepresentation];
+        [config colorizeView:self.cellContentRepresentation];
     }
 }
 
@@ -36,14 +36,14 @@ MSHConfig *mshConfig = NULL;
 
 -(void)setSelected:(BOOL)selected {
     %orig;
-    [mshConfig colorizeView:self.imageView.image];
+    [config colorizeView:self.imageView.image];
     [self.imageView layoutSubviews];
 }
 
 %end
 
 %hook SPTNowPlayingShowsFormatBackgroundViewController
-%property (retain,nonatomic) MSHView *mshView;
+%property (retain,nonatomic) MSHFView *mshfview;
 
 -(void)viewDidLoad{
     %orig;
@@ -52,39 +52,39 @@ MSHConfig *mshConfig = NULL;
     
     currentBackgroundMusicVC = (SPTUniversalController*)self;
 
-    CGFloat height = CGRectGetHeight(self.view.bounds) - mshConfig.waveOffset;
+    CGFloat height = CGRectGetHeight(self.view.bounds) - config.waveOffset;
     
-    [mshConfig initializeViewWithFrame:CGRectMake(0, mshConfig.waveOffset, self.view.bounds.size.width, height)];
-    self.mshView = [mshConfig view];
-    [self.view addSubview:self.mshView];
+    [config initializeViewWithFrame:CGRectMake(0, config.waveOffset, self.view.bounds.size.width, height)];
+    self.mshfview = [config view];
+    [self.view addSubview:self.mshfview];
     [self applyCustomLayout];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [[mshConfig view] start];
+    [[config view] start];
     %orig;
-    [mshConfig view].shouldUpdate = true;
+    [config view].shouldUpdate = true;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     %orig;
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height/2 + mshConfig.waveOffset);
+    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);
     
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
     //  Copied from NowPlayingImpl
-    if(MSHColorFlowInstalled && MSHColorFlowSpotifyEnabled){
+    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
         CFWSpotifyStateManager *stateManager = [%c(CFWSpotifyStateManager) sharedManager];
         UIColor *backgroundColor = [stateManager.mainColorInfo.backgroundColor colorWithAlphaComponent:0.5];
-        [[mshConfig view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
+        [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
     }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    [[mshConfig view] stop];
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height + mshConfig.waveOffset);
-    [mshConfig view].shouldUpdate = false;
+    [[config view] stop];
+    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
+    [config view].shouldUpdate = false;
 }
 
 -(void)viewDidLayoutSubviews{
@@ -94,96 +94,96 @@ MSHConfig *mshConfig = NULL;
 
 %new
 -(void)applyCustomLayout{
-    [self.view bringSubviewToFront:[mshConfig view]];
+    [self.view bringSubviewToFront:[config view]];
 }
 
 %end
 
 %hook SPTNowPlayingScrollViewController
 
-%property (retain,nonatomic) MSHView *mshView;
+%property (retain,nonatomic) MSHFView *mshfview;
 
 -(void)viewDidLoad{
     %orig;
 
     NSLog(@"[Mitsuha]: viewDidLoad");
     
-    CGFloat height = CGRectGetHeight(self.view.bounds) - mshConfig.waveOffset;
-    [mshConfig initializeViewWithFrame:CGRectMake(0, mshConfig.waveOffset, self.view.bounds.size.width, height)];
-    self.mshView = [mshConfig view];
-    [self.view insertSubview:self.mshView atIndex:2];
+    CGFloat height = CGRectGetHeight(self.view.bounds) - config.waveOffset;
+    [config initializeViewWithFrame:CGRectMake(0, config.waveOffset, self.view.bounds.size.width, height)];
+    self.mshfview = [config view];
+    [self.view insertSubview:self.mshfview atIndex:2];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [[mshConfig view] start];
+    [[config view] start];
     %orig;
-    [mshConfig view].shouldUpdate = true;
+    [config view].shouldUpdate = true;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     %orig;
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height/2 + mshConfig.waveOffset);
+    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);
 
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
     //  Copied from NowPlayingImpl
-    if(MSHColorFlowInstalled && MSHColorFlowSpotifyEnabled){
+    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
         CFWSpotifyStateManager *stateManager = [%c(CFWSpotifyStateManager) sharedManager];
         UIColor *backgroundColor = [stateManager.mainColorInfo.backgroundColor colorWithAlphaComponent:0.5];
-        [[mshConfig view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
+        [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
     }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    [[mshConfig view] stop];
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height + mshConfig.waveOffset);
-    [mshConfig view].shouldUpdate = false;
+    [[config view] stop];
+    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
+    [config view].shouldUpdate = false;
 }
 
 %end
 
 %hook SPTNowPlayingBackgroundMusicViewController
 
-%property (retain,nonatomic) MSHView *mshView;
+%property (retain,nonatomic) MSHFView *mshfview;
 
 -(void)viewDidLoad{
     %orig;
 
     NSLog(@"[Mitsuha]: viewDidLoad");
     
-    CGFloat height = CGRectGetHeight(self.view.bounds) - mshConfig.waveOffset;
-    [mshConfig initializeViewWithFrame:CGRectMake(0, mshConfig.waveOffset, self.view.bounds.size.width, height)];
-    self.mshView = [mshConfig view];
-    [self.view addSubview:self.mshView];
+    CGFloat height = CGRectGetHeight(self.view.bounds) - config.waveOffset;
+    [config initializeViewWithFrame:CGRectMake(0, config.waveOffset, self.view.bounds.size.width, height)];
+    self.mshfview = [config view];
+    [self.view addSubview:self.mshfview];
     [self applyCustomLayout];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [[mshConfig view] start];
+    [[config view] start];
     %orig;
-    [mshConfig view].shouldUpdate = true;
+    [config view].shouldUpdate = true;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     %orig;        
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height/2 + mshConfig.waveOffset);    
+    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);    
     
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
     //  Copied from NowPlayingImpl
-    if(MSHColorFlowInstalled && MSHColorFlowSpotifyEnabled){
+    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
         CFWSpotifyStateManager *stateManager = [%c(CFWSpotifyStateManager) sharedManager];
         UIColor *backgroundColor = [stateManager.mainColorInfo.backgroundColor colorWithAlphaComponent:0.5];
-        [[mshConfig view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
+        [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
     }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    [[mshConfig view] stop];
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height + mshConfig.waveOffset);
-    [mshConfig view].shouldUpdate = false;
+    [[config view] stop];
+    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
+    [config view].shouldUpdate = false;
 }
 
 -(void)viewDidLayoutSubviews{
@@ -193,7 +193,7 @@ MSHConfig *mshConfig = NULL;
 
 %new
 -(void)applyCustomLayout{
-    [self.view bringSubviewToFront:[mshConfig view]];
+    [self.view bringSubviewToFront:[config view]];
 }
 
 %end
@@ -217,7 +217,7 @@ MSHConfig *mshConfig = NULL;
 
 %new
 -(void)applyCustomLayout{
-    if(MSHColorFlowInstalled){
+    if(MSHFColorFlowInstalled){
         if([self viewWithTag:CFWBackgroundViewTagNumber]){
             [[self viewWithTag:CFWBackgroundViewTagNumber] removeFromSuperview];
         }
@@ -226,7 +226,7 @@ MSHConfig *mshConfig = NULL;
 
 %new
 -(void)updateGradientDark:(BOOL)darkbackground{
-    if(MSHColorFlowInstalled && MSHColorFlowSpotifyEnabled){
+    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
         NSArray<UIColor *> *colors;
         
         if(darkbackground){
@@ -264,13 +264,13 @@ MSHConfig *mshConfig = NULL;
 
 %new
 -(void)applyColorChange{
-    if(MSHColorFlowInstalled && MSHColorFlowSpotifyEnabled){
-        if(!mshConfig.ignoreColorFlow){
+    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
+        if(!config.ignoreColorFlow){
             CFWColorInfo *colorInfo = [[%c(CFWSpotifyStateManager) sharedManager] mainColorInfo];
             UIColor *backgroundColor = [[colorInfo backgroundColor] colorWithAlphaComponent:0.5];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [[mshConfig view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
+                [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
                 //[currentBackgroundMusicVC.backgroundView.backgroundImageBlurView updateGradientDark:colorInfo.backgroundDark];
             });
         }
@@ -284,7 +284,7 @@ MSHConfig *mshConfig = NULL;
 static BOOL registered;
 
 -(void)applicationDidEnterBackground:(UIApplication *)application{
-    [mshConfig view].shouldUpdate = false;
+    [config view].shouldUpdate = false;
     
     if(!registered){
         [[NSNotificationCenter defaultCenter] addObserver: self
@@ -299,7 +299,7 @@ static BOOL registered;
 
 %new
 -(void)enableWave{
-    [mshConfig view].shouldUpdate = true;
+    [config view].shouldUpdate = true;
 }
 
 %end
@@ -355,11 +355,11 @@ static CGFloat originalCenterY = 0;
 %end
 
 %ctor{
-    mshConfig = [MSHConfig loadConfigForApplication:@"Spotify"];
-    mshConfig.waveOffsetOffset = 520;
+    config = [MSHFConfig loadConfigForApplication:@"Spotify"];
+    config.waveOffsetOffset = 520;
 
-    if(mshConfig.enabled){
+    if(config.enabled){
         %init(MitsuhaVisuals)
-        if (mshConfig.enableCoverArtBugFix) %init(MitsuhaSpotifyCoverArtFix)
+        if (config.enableCoverArtBugFix) %init(MitsuhaSpotifyCoverArtFix)
     }
 }

@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import <Mitsuha/MSHView.h>
-#import <MitsuhaInfinity/MSHConfig.h>
+#import <MitsuhaForever/MSHFConfig.h>
+#import <MitsuhaForever/MSHFView.h>
 
-#import "../MSHUtils.h"
+#import "../MSHFUtils.h"
 
 @interface SPTImageBlurView : UIView
 
@@ -41,7 +41,7 @@
 @end
 
 @interface SPTUniversalController : UIViewController
-@property(retain, nonatomic) MSHView *mshView;
+@property(retain, nonatomic) MSHFView *mshfview;
 @property(retain, nonatomic) SPTCarouselBlurBackgroundView
     *backgroundView; // @synthesize backgroundView=_backgroundView;
 - (void)applyCustomLayout;

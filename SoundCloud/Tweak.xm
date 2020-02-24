@@ -2,18 +2,18 @@
 
 %group MitsuhaVisuals
 
-MSHConfig *mshConfig = NULL;
+MSHFConfig *MSHFConfig = NULL;
 
 %hook PlayerArtworkView
 
 -(void)layoutSubviews{
     %orig;
-    if ([mshConfig view] == NULL) return;
+    if ([MSHFConfig view] == NULL) return;
     if (!self.superview) return;
     if (!self.superview.nextResponder) return;
     if (![NSStringFromClass([self.superview.nextResponder class]) isEqualToString:@"TrackPlayerViewController"]) return;
 
-    if (mshConfig.colorMode != 2) {
+    if (MSHFConfig.colorMode != 2) {
         [self readjustWaveColor];
     }
 
@@ -22,21 +22,21 @@ MSHConfig *mshConfig = NULL;
 
 %new;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"artworkImage"] && mshConfig.colorMode != 2) {
+    if ([keyPath isEqualToString:@"artworkImage"] && MSHFConfig.colorMode != 2) {
         [self readjustWaveColor];
     }
 }
 
 %new;
 -(void)readjustWaveColor{
-    [mshConfig colorizeView:((PlayerArtworkView*)self).artworkImage];
+    [MSHFConfig colorizeView:((PlayerArtworkView*)self).artworkImage];
 }
 
 %end
 
 %hook TrackPlayerViewController
 
-%property (retain,nonatomic) MSHView *mshView;
+%property (retain,nonatomic) MSHFView *MSHFView;
 
 -(void)loadView {
     %orig;
@@ -44,20 +44,20 @@ MSHConfig *mshConfig = NULL;
     CGFloat height = CGRectGetHeight(self.view.bounds);
     self.view.clipsToBounds = 1;
     
-    [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, height)];
+    [MSHFConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, height)];
 
-    self.mshView = [mshConfig view];
-    [self.view insertSubview:[mshConfig view] atIndex:2];
+    self.MSHFView = [MSHFConfig view];
+    [self.view insertSubview:[MSHFConfig view] atIndex:2];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
     
-    [[mshConfig view] removeFromSuperview];
-    [self.view insertSubview:[mshConfig view] atIndex:2];
+    [[MSHFConfig view] removeFromSuperview];
+    [self.view insertSubview:[MSHFConfig view] atIndex:2];
 
-    [[mshConfig view] start];
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height);
+    [[MSHFConfig view] start];
+    [MSHFConfig view].center = CGPointMake([MSHFConfig view].center.x, [MSHFConfig view].frame.size.height);
 }
 
 %end
@@ -65,10 +65,10 @@ MSHConfig *mshConfig = NULL;
 %end
 
 %ctor{
-    mshConfig = [MSHConfig loadConfigForApplication:@"SoundCloud"];
-    mshConfig.waveOffsetOffset = 70;
+    MSHFConfig = [MSHFConfig loadConfigForApplication:@"SoundCloud"];
+    MSHFConfig.waveOffsetOffset = 70;
     
-    if(mshConfig.enabled){
+    if(MSHFConfig.enabled){
         %init(MitsuhaVisuals);
     }
 }

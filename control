@@ -1,12 +1,13 @@
 Package: me.conorthedev.mitsuhaforever
 Name: Mitsuha Forever
-Depends: mobilesubstrate, org.thebigboss.libcolorpicker (>= 1.6.6), me.conorthedev.audiosnapshotserver, ws.hbang.common (>= 1.11), me.conorthedev.libmitsuha (>= 0.2.0), me.conorthedev.libconorthedev, firmware (>=11.0)
-Conflicts: io.c0ldra1n.mitsuha, io.c0ldra1n.mitsuha-beta, io.ominousness.mitsuhaxi, me.nepeta.mitsuhainfinity, me.nepeta.mitsuhainfinity-lockscreen
-Version: 1.0
+Depends: mobilesubstrate, org.thebigboss.libcolorpicker, me.conorthedev.thiccaudiosnapshotserver, ws.hbang.common, me.conorthedev.libmitsuhaforever, me.conorthedev.libconorthedev, firmware (>=11.0)
+Replaces: io.c0ldra1n.mitsuha, io.c0ldra1n.mitsuha-beta, io.ominousness.mitsuhaxi, me.nepeta.mitsuhainfinity, me.nepeta.mitsuhainfinity-lockscreen
+Version: 1.0.2
 Architecture: iphoneos-arm
-Description: Universal audio visualizer for iOS
-Maintainer: ConorTheDev <con0r.b@protonmail.com>
-Author: ConorTheDev <con0r.b@protonmail.com>, c0ldra1n, Nepeta
+Description: Universal audio visualizer for iOS, updated for iOS 13 with new features and bug fixes
+Maintainer: ConorTheDev
+Author: ConorTheDev, c0ldra1n, Nepeta
 Section: Tweaks
-Depiction: https://conorthedev.github.io/repo/depictions/?p=mitsuhaforever
-SileoDepiction: https://conorthedev.github.io/repo/sileodepictions/me.conorthedev.mitsuhaforever
+Depiction: https://repo.conorthedev.me/depictions/me.conorthedev.mitsuhaforever
+SileoDepiction: https://repo.conorthedev.me/sileodepiction/me.conorthedev.mitsuhaforever
+Icon: https://repo.conorthedev.me/icon/me.conorthedev.mitsuhaforever

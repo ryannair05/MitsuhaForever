@@ -57,7 +57,7 @@
 			<key>label</key>
 			<string>AirPods (2 / Pro) Compatability</string>
 			<key>detail</key>
-			<string>MSHAirPodsController</string>
+			<string>MSHFAirPodsController</string>
 		</dict>
 
 		<!-- Credits -->

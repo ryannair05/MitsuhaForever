@@ -1,7 +1,7 @@
-#import "MSHAirPodsController.h"
-#import "MSHPrefsListController.h"
+#import "MSHFAirPodsController.h"
+#import "MSHFPrefsListController.h"
 
-@implementation MSHAirPodsController
+@implementation MSHFAirPodsController
 - (instancetype)init {
   self = [super init];
 

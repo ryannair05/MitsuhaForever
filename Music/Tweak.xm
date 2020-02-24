@@ -2,19 +2,19 @@
 
 %group MitsuhaVisuals
 
-MSHConfig *mshConfig = NULL;
+MSHFConfig *config = NULL;
 
 %hook MusicArtworkComponentImageView
 
 -(void)layoutSubviews{
     %orig;
-    if ([mshConfig view] == NULL) return;
+    if ([config view] == NULL) return;
 
     UIView *me = (UIView *)self;
 
     if(@available(iOS 13.0, *)) {
 		if ([NSStringFromClass([me.superview class]) isEqualToString:@"MusicApplication.NowPlayingContentView"]) {
-            if (mshConfig.colorMode != 2) {
+            if (config.colorMode != 2) {
                 [self readjustWaveColor];
             }
 
@@ -22,7 +22,7 @@ MSHConfig *mshConfig = NULL;
         }
 	} else {
 		if ([NSStringFromClass([me.superview class]) isEqualToString:@"Music.NowPlayingContentView"]) {
-            if (mshConfig.colorMode != 2) {
+            if (config.colorMode != 2) {
                 [self readjustWaveColor];
             }
 
@@ -33,21 +33,21 @@ MSHConfig *mshConfig = NULL;
 
 %new;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"image"] && mshConfig.colorMode != 2) {
+    if ([keyPath isEqualToString:@"image"] && config.colorMode != 2) {
         [self readjustWaveColor];
     }
 }
 
 %new;
 -(void)readjustWaveColor{
-    [mshConfig colorizeView:((MusicArtworkComponentImageView*)self).image];
+    [config colorizeView:((MusicArtworkComponentImageView*)self).image];
 }
 
 %end
 
 %hook MusicNowPlayingControlsViewController
 
-%property (retain,nonatomic) MSHView *mshView;
+%property (retain,nonatomic) MSHFView *MSHFView;
 
 -(void)viewDidLoad{
     %orig;
@@ -55,11 +55,11 @@ MSHConfig *mshConfig = NULL;
     CGFloat height = CGRectGetHeight(self.view.bounds);
     self.view.clipsToBounds = 1;
     
-    [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, height)];
+    [config initializeViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, height)];
     
-    self.mshView = [mshConfig view];
-    [self.view addSubview:[mshConfig view]];
-    [self.view sendSubviewToBack:[mshConfig view]];
+    self.mshview = [config view];
+    [self.view addSubview:[config view]];
+    [self.view sendSubviewToBack:[config view]];
 
     for (UIView *subview in self.view.subviews) {
         subview.backgroundColor = [UIColor clearColor];
@@ -68,13 +68,13 @@ MSHConfig *mshConfig = NULL;
 
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
-    [[mshConfig view] start];
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, [mshConfig view].frame.size.height);
+    [[config view] start];
+    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height);
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    [[mshConfig view] stop];
+    [[config view] stop];
 }
 
 -(void)viewDidLayoutSubviews {
@@ -89,9 +89,9 @@ MSHConfig *mshConfig = NULL;
 %end
 
 %ctor{
-    mshConfig = [MSHConfig loadConfigForApplication:@"Music"];
-    mshConfig.waveOffsetOffset = 70;
-    if(mshConfig.enabled){
+    config = [MSHFConfig loadConfigForApplication:@"Music"];
+    config.waveOffsetOffset = 70;
+    if(config.enabled){
         NSString *classString = nil;
         if(@available(iOS 13.0, *)) {
             classString = @"MusicApplication.ArtworkComponentImageView";

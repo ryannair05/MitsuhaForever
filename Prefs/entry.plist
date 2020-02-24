@@ -2,7 +2,7 @@
     entry = {
 	bundle = MitsuhaForeverPrefs;
 	cell = PSLinkCell;
-	detail = MSHPrefsListController;
+	detail = MSHFPrefsListController;
 	icon = icon.png;
 	isController = 1;
 	label = "Mitsuha Forever";

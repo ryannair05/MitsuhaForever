@@ -3,7 +3,7 @@
 #import <notify.h>
 
 bool moveIntoPanel = false;
-MSHConfig *mshConfig;
+MSHFConfig *config;
 
 %group ios13
 
@@ -15,7 +15,7 @@ MSHConfig *mshConfig;
         NSDictionary *dict = (__bridge NSDictionary *)information;
 
         if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-            [mshConfig colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+            [config colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
         }
     });
 }
@@ -24,32 +24,32 @@ MSHConfig *mshConfig;
 
 %hook CSFixedFooterViewController
 
-%property (retain,nonatomic) MSHView *mshView;
+%property (retain,nonatomic) MSHFView *mshfview;
 
 -(void)loadView{
     %orig;
-    mshConfig.waveOffsetOffset = self.view.bounds.size.height - 200;
+    config.waveOffsetOffset = self.view.bounds.size.height - 200;
 
-    if (![mshConfig view]) [mshConfig initializeViewWithFrame:self.view.bounds];
-    self.mshView = [mshConfig view];
+    if (![config view]) [config initializeViewWithFrame:self.view.bounds];
+    self.mshfview = [config view];
     
-    [self.view addSubview:self.mshView];
-    [self.view bringSubviewToFront:self.mshView];
+    [self.view addSubview:self.mshfview];
+    [self.view bringSubviewToFront:self.mshfview];
 }
 
 -(void)viewDidLayoutSubviews {
     %orig;
-    [self.view bringSubviewToFront:self.mshView];
+    [self.view bringSubviewToFront:self.mshfview];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
-    [self.mshView start];
+    [self.mshfview start];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    [self.mshView stop];
+    [self.mshfview stop];
 }
 
 %end
@@ -66,7 +66,7 @@ MSHConfig *mshConfig;
         NSDictionary *dict = (__bridge NSDictionary *)information;
 
         if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-            [mshConfig colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+            [config colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
         }
     });
 }
@@ -75,32 +75,32 @@ MSHConfig *mshConfig;
 
 %hook SBDashBoardFixedFooterViewController
 
-%property (retain,nonatomic) MSHView *mshView;
+%property (retain,nonatomic) MSHFView *mshfview;
 
 -(void)loadView{
     %orig;
-    mshConfig.waveOffsetOffset = self.view.bounds.size.height - 200;
+    config.waveOffsetOffset = self.view.bounds.size.height - 200;
 
-    if (![mshConfig view]) [mshConfig initializeViewWithFrame:self.view.bounds];
-    self.mshView = [mshConfig view];
+    if (![config view]) [config initializeViewWithFrame:self.view.bounds];
+    self.mshfview = [config view];
     
-    [self.view addSubview:self.mshView];
-    [self.view bringSubviewToFront:self.mshView];
+    [self.view addSubview:self.mshfview];
+    [self.view bringSubviewToFront:self.mshfview];
 }
 
 -(void)viewDidLayoutSubviews {
     %orig;
-    [self.view bringSubviewToFront:self.mshView];
+    [self.view bringSubviewToFront:self.mshfview];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
-    [self.mshView start];
+    [self.mshfview start];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    [self.mshView stop];
+    [self.mshfview stop];
 }
 
 %end
@@ -113,19 +113,19 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
     notify_register_check("com.apple.iokit.hid.displayStatus", &token);
     notify_get_state(token, &state);
     notify_cancel(token);
-    if ([mshConfig view]) {
+    if ([config view]) {
         if (state) {
-            [[mshConfig view] start];
+            [[config view] start];
         } else {
-            [[mshConfig view] stop];
+            [[config view] stop];
         }
     }
 }
 
 %ctor{
-    mshConfig = [MSHConfig loadConfigForApplication:@"LockScreen"];
+    config = [MSHFConfig loadConfigForApplication:@"LockScreen"];
     
-    if(mshConfig.enabled){
+    if(config.enabled){
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
         if(@available(iOS 13.0, *)) {
 		    NSLog(@"[MitsuhaForever: SpringboardLSBackground] Current version is iOS 13!");

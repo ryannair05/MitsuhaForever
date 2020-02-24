@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-#import <Mitsuha/MSHView.h>
-#import <MitsuhaInfinity/MSHConfig.h>
+#import <MitsuhaForever/MSHFConfig.h>
+#import <MitsuhaForever/MSHFView.h>
 
 @interface SBDashBoardFixedFooterViewController : UIViewController
 
-@property(retain, nonatomic) MSHView *mshView;
+@property(retain, nonatomic) MSHFView *mshfview;
 
 @end
 
 @interface CSFixedFooterViewController : UIViewController
 
-@property(retain, nonatomic) MSHView *mshView;
+@property(retain, nonatomic) MSHFView *mshfview;
 
 @end

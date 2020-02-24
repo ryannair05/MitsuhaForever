@@ -6,8 +6,8 @@
 //  Copyright © 2017 c0ldra1n. All rights reserved.
 //
 
-#import <Mitsuha/MSHView.h>
-#import <MitsuhaInfinity/MSHConfig.h>
+#import <MitsuhaForever/MSHFConfig.h>
+#import <MitsuhaForever/MSHFView.h>
 #import <UIKit/UIKit.h>
 
 @interface PlayerArtworkView : UIView
@@ -28,6 +28,6 @@
 
 @interface TrackPlayerViewController : UIViewController
 
-@property(retain, nonatomic) MSHView *mshView;
+@property(retain, nonatomic) MSHFView *MSHFView;
 
 @end

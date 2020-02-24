@@ -1,6 +1,6 @@
 #import <arpa/inet.h>
 #import <spawn.h>
-#define ASSPort 43333
+#define ASSPort 44333
 const int one = 1;
 int connfd;
 
@@ -8,10 +8,10 @@ int connfd;
 
 -(id)init {
     id orig = %orig;
-    NSLog(@"[ASSWatchdog] checking for ASS");
-    bool assPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/AudioSnapshotServer.dylib"];
+    NSLog(@"[ASSWatchdog] checking for ThiccASS");
+    bool assPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/ThiccASS.dylib"];
     if (assPresent) {
-        NSLog(@"[ASSWatchdog] ASS found... checking if msd is hooked");
+        NSLog(@"[ASSWatchdog] ThiccASS found... checking if msd is hooked");
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             struct sockaddr_in remote;
             remote.sin_family = PF_INET;
@@ -21,7 +21,7 @@ int connfd;
             int retries = 0;
 
             while (connfd != -2) {
-                NSLog(@"[ASSWatchdog] Connecting to ASS.");
+                NSLog(@"[ASSWatchdog] Connecting to ThiccASS.");
                 retries++;
                 connfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 
@@ -34,10 +34,8 @@ int connfd;
                 while(r != 0) {
                     if (retries > 3) {
                         connfd = -2;
-                        NSLog(@"[ASSWatchdog] ASS not running.");
-                        pid_t pid;
-                        const char* args[] = {"killall", "mediaserverd", NULL};
-                        posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
+                        NSLog(@"[ASSWatchdog] ThiccASS not running.");
+                        NSLog(@"[ASSWatchdog] abort, there's no ThicASS here...");
                         break;
                     }
 
@@ -54,9 +52,8 @@ int connfd;
                 break;
             }
         });
-
     } else {
-        NSLog(@"[ASSWatchdog] abort, there's no ASS");
+        NSLog(@"[ASSWatchdog] abort, there's no ThicASS here...");
     }
 
     return orig;

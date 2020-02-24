@@ -6,8 +6,8 @@
 //  Copyright © 2017 c0ldra1n. All rights reserved.
 //
 
-#import <Mitsuha/MSHView.h>
-#import <MitsuhaInfinity/MSHConfig.h>
+#import <MitsuhaForever/MSHFConfig.h>
+#import <MitsuhaForever/MSHFView.h>
 #import <UIKit/UIKit.h>
 
 @interface MusicArtworkComponentImageView : UIImageView
@@ -19,5 +19,5 @@
 @end
 
 @interface MusicNowPlayingControlsViewController : UIViewController
-@property(retain, nonatomic) MSHView *mshView;
+@property(retain, nonatomic) MSHFView *mshview;
 @end

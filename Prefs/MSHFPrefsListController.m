@@ -1,7 +1,7 @@
-#import "MSHPrefsListController.h"
-#import "MSHAppPrefsListController.h"
+#import "MSHFAppPrefsListController.h"
+#import "MSHFPrefsListController.h"
 
-@implementation MSHPrefsListController
+@implementation MSHFPrefsListController
 - (instancetype)init {
   self = [super init];
 
@@ -29,7 +29,7 @@
                                             target:self] retain];
 
   NSFileManager *manager = [NSFileManager defaultManager];
-  NSString *directory = MSHAppSpecifiersDirectory;
+  NSString *directory = MSHFAppSpecifiersDirectory;
   NSArray *appPlists = [manager contentsOfDirectoryAtPath:directory error:nil];
   NSMutableArray *appSpecifiers = [NSMutableArray new];
 
@@ -48,10 +48,10 @@
                             target:nil
                                set:nil
                                get:nil
-                            detail:[MSHAppPrefsListController class]
+                            detail:[MSHFAppPrefsListController class]
                               cell:2
                               edit:nil];
-      [spec setProperty:name forKey:@"MSHApp"];
+      [spec setProperty:name forKey:@"MSHFApp"];
 
       if (plist[@"important"]) {
         [appSpecifiers insertObject:spec atIndex:0];
@@ -88,11 +88,11 @@
 
 - (void)resetPrefs:(id)sender {
   HBPreferences *prefs =
-      [[HBPreferences alloc] initWithIdentifier:MSHPreferencesIdentifier];
+      [[HBPreferences alloc] initWithIdentifier:MSHFPreferencesIdentifier];
   [prefs removeAllObjects];
 
   HBPreferences *colors =
-      [[HBPreferences alloc] initWithIdentifier:MSHColorsIdentifier];
+      [[HBPreferences alloc] initWithIdentifier:MSHFColorsIdentifier];
   [colors removeAllObjects];
 
   [self respring:sender];

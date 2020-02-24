@@ -3,7 +3,7 @@
 #import <notify.h>
 
 bool moveIntoPanel = false;
-MSHConfig *mshConfig;
+MSHFConfig *config;
 
 %group MitsuhaVisualsNotification
 
@@ -15,7 +15,7 @@ MSHConfig *mshConfig;
         NSDictionary *dict = (__bridge NSDictionary *)information;
 
         if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-            [mshConfig colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+            [config colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
         }
     });
 }
@@ -27,7 +27,7 @@ MSHConfig *mshConfig;
 %group ios13
 %hook CSMediaControlsViewController
 
-%property (retain,nonatomic) MSHView *mshView;
+%property (retain,nonatomic) MSHFView *mshfview;
 
 %new
 -(id)valueForUndefinedKey:(NSString *)key {
@@ -46,14 +46,14 @@ MSHConfig *mshConfig;
     
     if (!pvc) return;
 
-    if (![mshConfig view]) [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
-    self.mshView = [mshConfig view];
+    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
+    self.mshfview = [config view];
 
     if (!moveIntoPanel) {
-        [self.view addSubview:self.mshView];
-        [self.view sendSubviewToBack:self.mshView];
+        [self.view addSubview:self.mshfview];
+        [self.view sendSubviewToBack:self.mshfview];
     } else {
-        [pvc.view insertSubview:self.mshView atIndex:1];
+        [pvc.view insertSubview:self.mshfview atIndex:1];
     }
 }
 
@@ -62,17 +62,17 @@ MSHConfig *mshConfig;
     self.view.superview.layer.cornerRadius = 13;
     self.view.superview.layer.masksToBounds = TRUE;
 
-    [[mshConfig view] start];
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, mshConfig.waveOffset);
+    [[config view] start];
+    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    [[mshConfig view] start];
+    [[config view] start];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     %orig;
-    [[mshConfig view] stop];
+    [[config view] stop];
 }
 
 %end
@@ -82,7 +82,7 @@ MSHConfig *mshConfig;
 %group old
 %hook SBDashBoardMediaControlsViewController
 
-%property (retain,nonatomic) MSHView *mshView;
+%property (retain,nonatomic) MSHFView *mshfview;
 
 %new
 -(id)valueForUndefinedKey:(NSString *)key {
@@ -101,14 +101,14 @@ MSHConfig *mshConfig;
     
     if (!mcpvc) return;
 
-    if (![mshConfig view]) [mshConfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
-    self.mshView = [mshConfig view];
+    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
+    self.mshfview = [config view];
 
     if (!moveIntoPanel) {
-        [self.view addSubview:self.mshView];
-        [self.view sendSubviewToBack:self.mshView];
+        [self.view addSubview:self.mshfview];
+        [self.view sendSubviewToBack:self.mshfview];
     } else {
-        [mcpvc.view insertSubview:self.mshView atIndex:1];
+        [mcpvc.view insertSubview:self.mshfview atIndex:1];
     }
 }
 
@@ -117,17 +117,17 @@ MSHConfig *mshConfig;
     self.view.superview.layer.cornerRadius = 13;
     self.view.superview.layer.masksToBounds = TRUE;
 
-    [[mshConfig view] start];
-    [mshConfig view].center = CGPointMake([mshConfig view].center.x, mshConfig.waveOffset);
+    [[config view] start];
+    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    [[mshConfig view] start];
+    [[config view] start];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     %orig;
-    [[mshConfig view] stop];
+    [[config view] stop];
 }
 
 %end
@@ -140,20 +140,20 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
     notify_register_check("com.apple.iokit.hid.displayStatus", &token);
     notify_get_state(token, &state);
     notify_cancel(token);
-    if ([mshConfig view]) {
+    if ([config view]) {
         if (state) {
-            [[mshConfig view] start];
+            [[config view] start];
         } else {
-            [[mshConfig view] stop];
+            [[config view] stop];
         }
     }
 }
 
 %ctor{
-    mshConfig = [MSHConfig loadConfigForApplication:@"Springboard"];
-    mshConfig.waveOffsetOffset = 500;
+    config = [MSHFConfig loadConfigForApplication:@"Springboard"];
+    config.waveOffsetOffset = 500;
 
-    if(mshConfig.enabled){
+    if(config.enabled){
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
         //Check if Artsy is installed
         bool artsyEnabled = false;
@@ -179,7 +179,7 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
                 moveIntoPanel = true;
             }
         }
-
+        
         if(@available(iOS 13.0, *)) {
 		    NSLog(@"[MitsuhaForever] Current version is iOS 13!");
 		    %init(ios13)
