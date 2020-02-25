@@ -1,5 +1,7 @@
 #import "MSHFAppPrefsListController.h"
 
+NSUserDefaults *userDefaults;
+
 @implementation MSHFAppPrefsListController
 
 - (id)specifiers {
@@ -56,4 +58,5 @@
 - (bool)shouldReloadSpecifiersOnResume {
   return false;
 }
+
 @end

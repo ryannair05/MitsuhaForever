@@ -30,3 +30,8 @@
   @"/Library/MobileSubstrate/DynamicLibraries/Artsy.plist"
 #define MSHFAudioBufferSize 1024
 #define ASSPort 44333
+
+@interface NSUserDefaults (Private)
+- (instancetype)_initWithSuiteName:(NSString *)suiteName
+                         container:(NSURL *)container;
+@end

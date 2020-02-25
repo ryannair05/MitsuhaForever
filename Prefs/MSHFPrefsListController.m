@@ -1,20 +1,28 @@
-#import "MSHFAppPrefsListController.h"
 #import "MSHFPrefsListController.h"
+#import "MSHFAppPrefsListController.h"
 
 @implementation MSHFPrefsListController
 - (instancetype)init {
   self = [super init];
 
   if (self) {
-    HBAppearanceSettings *appearanceSettings =
-        [[HBAppearanceSettings alloc] init];
-    appearanceSettings.tintColor = [UIColor colorWithRed:238.0f / 255.0f
+    CTDPreferenceSettings *preferenceSettings =
+        [[CTDPreferenceSettings alloc] init];
+    preferenceSettings.customizeNavbar = YES;
+
+    preferenceSettings.tintColor = [UIColor colorWithRed:238.0f / 255.0f
                                                    green:100.0f / 255.0f
                                                     blue:92.0f / 255.0f
                                                    alpha:1];
-    appearanceSettings.tableViewCellSeparatorColor = [UIColor colorWithWhite:0
-                                                                       alpha:0];
-    self.hb_appearanceSettings = appearanceSettings;
+    preferenceSettings.barTintColor = preferenceSettings.tintColor;
+    self.preferenceSettings = preferenceSettings;
+
+    UIBarButtonItem *respringItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"Apply"
+                                         style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(respring:)];
+    self.navigationItem.rightBarButtonItem = respringItem;
   }
 
   return self;
@@ -87,13 +95,16 @@
 }
 
 - (void)resetPrefs:(id)sender {
-  HBPreferences *prefs =
-      [[HBPreferences alloc] initWithIdentifier:MSHFPreferencesIdentifier];
-  [prefs removeAllObjects];
+  /*NSDictionary *defaultsDictionary = [userDefaults dictionaryRepresentation];
+  for (NSString *key in [defaultsDictionary allKeys]) {
+    [userDefaults removeObjectForKey:key];
+  }
+  [userDefaults synchronize];
 
   HBPreferences *colors =
       [[HBPreferences alloc] initWithIdentifier:MSHFColorsIdentifier];
   [colors removeAllObjects];
+  */
 
   [self respring:sender];
 }
@@ -110,7 +121,37 @@
   posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char *const *)args, NULL);
 }
 
+- (void)github {
+  [[UIApplication sharedApplication]
+                openURL:[NSURL URLWithString:@"https://github.com/ConorTheDev/"
+                                             @"MitsuhaForever"]
+                options:@{}
+      completionHandler:nil];
+}
+
+- (void)coldrain {
+  [[UIApplication sharedApplication]
+                openURL:[NSURL URLWithString:@"https://www.paypal.me/c0ldra1n"]
+                options:@{}
+      completionHandler:nil];
+}
+
+- (void)nepeta {
+  [[UIApplication sharedApplication]
+                openURL:[NSURL URLWithString:@"https://nepeta.me/donate"]
+                options:@{}
+      completionHandler:nil];
+}
+
+- (void)conorthedev {
+  [[UIApplication sharedApplication]
+                openURL:[NSURL URLWithString:@"https://ko-fi.com/ConorTheDev"]
+                options:@{}
+      completionHandler:nil];
+}
+
 - (bool)shouldReloadSpecifiersOnResume {
   return false;
 }
+
 @end

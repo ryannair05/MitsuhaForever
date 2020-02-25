@@ -39,8 +39,7 @@
 			<string>EnableFFT</string>
 			<key>alternateColors</key>
 			<true/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -55,8 +54,7 @@
 			<string>EnableAutoHide</string>
 			<key>alternateColors</key>
 			<true/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 
 		<dict>
@@ -92,8 +90,7 @@
 			</array>
 			<key>alignment</key>
 			<string>4</string>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -120,8 +117,7 @@
 			<true/>
 			<key>isSegmented</key>
 			<true/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 
 		<dict>
@@ -157,8 +153,7 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -185,8 +180,7 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 
 		<dict>
@@ -222,8 +216,7 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 
 		<dict>
@@ -257,8 +250,7 @@
 			</array>
 			<key>alignment</key>
 			<string>3</string>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -285,8 +277,7 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -343,8 +334,7 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -371,8 +361,7 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -399,8 +388,7 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -415,24 +403,16 @@
 			<string>DisableBatterySaver</string>
 			<key>alternateColors</key>
 			<true/>
-			<key>PostNotification</key>
-			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
+
 		</dict>
 		<!-- Credits -->
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Mitsuha Forever</string>
-			<key>isStaticText</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Mitsuha, Mitsuha2 by c0ldra1n,$
-ported to iOS 11 by Nepeta.</string>
+			<string>Mitsuha, Mitsuha2 by c0ldra1n,
+MitsuhaXI, Mitsuha Infinity by Nepeta,  
+Mitsuha Forever by ConorTheDev.</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>

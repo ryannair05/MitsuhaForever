@@ -1,24 +1,9 @@
 #import "MSHFAirPodsController.h"
 #import "MSHFPrefsListController.h"
 
+NSUserDefaults *userDefaults;
+
 @implementation MSHFAirPodsController
-- (instancetype)init {
-  self = [super init];
-
-  if (self) {
-    HBAppearanceSettings *appearanceSettings =
-        [[HBAppearanceSettings alloc] init];
-    appearanceSettings.tintColor = [UIColor colorWithRed:238.0f / 255.0f
-                                                   green:100.0f / 255.0f
-                                                    blue:92.0f / 255.0f
-                                                   alpha:1];
-    appearanceSettings.tableViewCellSeparatorColor = [UIColor colorWithWhite:0
-                                                                       alpha:0];
-    self.hb_appearanceSettings = appearanceSettings;
-  }
-
-  return self;
-}
 
 - (id)specifiers {
   if (_specifiers == nil) {
@@ -43,4 +28,5 @@
 - (bool)shouldReloadSpecifiersOnResume {
   return false;
 }
+
 @end

@@ -1,11 +1,8 @@
 #import "../MSHFUtils.h"
-#import <Cephei/HBPreferences.h>
-#import <CepheiPrefs/HBAppearanceSettings.h>
-#import <CepheiPrefs/HBRootListController.h>
-#import <Preferences/PSListController.h>
+#import <CTDPrefs/CTDPrefs.h>
 #import <Preferences/PSSpecifier.h>
 #import <spawn.h>
 
-@interface MSHFAirPodsController : HBListController
+@interface MSHFAirPodsController : CTDListController
 
 @end

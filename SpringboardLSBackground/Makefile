@@ -8,6 +8,5 @@ $(TWEAK_NAME)_FILES = Tweak.xm
 $(TWEAK_NAME)_FRAMEWORKS += QuartzCore
 $(TWEAK_NAME)_PRIVATE_FRAMEWORKS += QuartzCore MediaRemote
 $(TWEAK_NAME)_LIBRARIES += mitsuhaforever
-$(TWEAK_NAME)_EXTRA_FRAMEWORKS += Cephei
 
 include $(THEOS_MAKE_PATH)/tweak.mk

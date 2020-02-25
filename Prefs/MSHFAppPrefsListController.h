@@ -1,8 +1,8 @@
-#import <CepheiPrefs/HBAppearanceSettings.h>
-#import <CepheiPrefs/HBListController.h>
+#import "../MSHFUtils.h"
+#import <CTDPrefs/CTDPrefs.h>
 #import <Preferences/PSListController.h>
 #import <Preferences/PSSpecifier.h>
 
-@interface MSHFAppPrefsListController : HBListController
+@interface MSHFAppPrefsListController : CTDListController
 
 @end

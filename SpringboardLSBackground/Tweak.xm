@@ -44,12 +44,16 @@ MSHFConfig *config;
 
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
-    [self.mshfview start];
+    if(self.mshfview && [config view]) {
+        [self.mshfview start];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    [self.mshfview stop];
+    if(self.mshfview && [config view]) {
+        [self.mshfview stop];
+    }
 }
 
 %end
@@ -95,12 +99,16 @@ MSHFConfig *config;
 
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
-    [self.mshfview start];
+    if(self.mshfview && [config view]) {
+        [self.mshfview start];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    [self.mshfview stop];
+    if(self.mshfview && [config view]) {
+        [self.mshfview stop];
+    }
 }
 
 %end

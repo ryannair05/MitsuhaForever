@@ -6,24 +6,19 @@
 	<array>
 		<dict>
     		<key>cell</key>
-    		<string>PSGroupCell</string>
-    		<key>headerCellClass</key>
-    		<string>HBPackageNameHeaderCell</string>
-    		<key>packageIdentifier</key>
-    		<string>me.conorthedev.mitsuhaforever</string>
-			<key>icon</key>
-    		<string>icon@3x.png</string>
-    		<key>titleColor</key>
-   		 	<string>#3f3f3f</string>
-    		<key>subtitleColor</key>
-   		 	<string>#2f2f2f</string>
-			<key>backgroundGradientColors</key>
-    		<array>
-        		<string>#cdcdcd</string>
-        		<string>#cdcdcd</string>
-   		 	</array>
+    		<string>PSDefaultCell</string>
+    		<key>cellClass</key>
+    		<string>CTDHeaderCell</string>
+    		<key>title</key>
+    		<string>Mitsuha Forever</string>
+			<key>subtitle</key>
+    		<string>by ConorTheDev</string>
+			<key>iconPath</key>
+    		<string>/Library/PreferenceBundles/MitsuhaForeverPrefs.bundle/icon_83.5@2x.png</string>
+			<key>height</key>
+			<real>150</real>
 		</dict>
-		<dict>
+		<!--<dict>
 			<key>cellClass</key>
 			<string>HBTwitterCell</string>
 			<key>label</key>
@@ -38,9 +33,7 @@
 			<string>Conor</string>
 			<key>user</key>
 			<string>ConorTheDev</string>
-		</dict>
-
-		<!-- Apps -->
+		</dict>-->
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -59,45 +52,37 @@
 			<key>detail</key>
 			<string>MSHFAirPodsController</string>
 		</dict>
-
-		<!-- Credits -->
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Other</string>
-			<key>footerText</key>
-			<string>Mitsuha Forever</string>
-			<key>isStaticText</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>action</key>
 			<string>respring:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
-			<key>cellClass</key>
-    		<string>HBTintedTableCell</string>
 			<key>label</key>
 			<string>Respring</string>
+			<key>cellClass</key>
+			<string>CTDTableCell</string>
 		</dict>
 		<dict>
 			<key>action</key>
 			<string>restartmsd:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
-			<key>cellClass</key>
-    		<string>HBTintedTableCell</string>
 			<key>label</key>
 			<string>Restart mediaserverd</string>
+			<key>cellClass</key>
+			<string>CTDTableCell</string>
 		</dict>
 		<dict>
 			<key>action</key>
 			<string>resetPrefs:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
-			<key>cellClass</key>
-    		<string>HBTintedTableCell</string>
 			<key>isDestructive</key>
 			<true />
 			<key>confirmation</key>
@@ -113,40 +98,57 @@
 			</dict>
 			<key>label</key>
 			<string>Restore default settings and respring</string>
-		</dict>
-
-
-		<dict>
 			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
+			<string>CTDTableCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>github</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
 			<key>label</key>
-			<string>Github</string>
-			<key>subtitle</key>
-			<string>Source code</string>
-			<key>url</key>
-			<string>https://github.com/ConorTheDev/MitsuhaForever</string>
+			<string>View Source Code</string>
+			<key>cellClass</key>
+			<string>CTDTableCell</string>
 		</dict>
 		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
+			<key>action</key>
+			<string>conorthedev</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
 			<key>label</key>
-			<string>Donate to Nepeta</string>
-			<key>subtitle</key>
-			<string>MitsuhaXI, Mitsuha Infinity developer</string>
-			<key>url</key>
-			<string>https://nepeta.me/donate</string>
+			<string>Donate to ConorTheDev</string>
+			<key>cellClass</key>
+			<string>CTDTableCell</string>
 		</dict>
 		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
+			<key>action</key>
+			<string>coldrain</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
 			<key>label</key>
 			<string>Donate to c0ldra1n</string>
 			<key>subtitle</key>
-			<string>original developer of Mitsuha for iOS 9 and 10</string>
-			<key>url</key>
-			<string>https://www.paypal.me/c0ldra1n</string>
+			<string>Original Mitsuha + Mitsuha2 developer</string>
+			<key>cellClass</key>
+			<string>CTDTableCell</string>
 		</dict>
-
+		<dict>
+			<key>action</key>
+			<string>nepeta</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Donate to Nepeta</string>
+			<key>subtitle</key>
+			<string>Original Mitsuha Infinity Developer</string>
+			<key>cellClass</key>
+			<string>CTDTableCell</string>
+		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
