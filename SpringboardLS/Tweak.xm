@@ -4,6 +4,7 @@
 
 bool moveIntoPanel = false;
 MSHFConfig *config;
+MSHFView *mshfview;
 
 %group MitsuhaVisualsNotification
 
@@ -27,8 +28,6 @@ MSHFConfig *config;
 %group ios13
 %hook CSMediaControlsViewController
 
-%property (retain,nonatomic) MSHFView *mshfview;
-
 %new
 -(id)valueForUndefinedKey:(NSString *)key {
     return nil;
@@ -47,13 +46,13 @@ MSHFConfig *config;
     if (!pvc) return;
 
     if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
-    self.mshfview = [config view];
+    mshfview = [config view];
 
     if (!moveIntoPanel) {
-        [self.view addSubview:self.mshfview];
-        [self.view sendSubviewToBack:self.mshfview];
+        [self.view addSubview:mshfview];
+        [self.view sendSubviewToBack:mshfview];
     } else {
-        [pvc.view insertSubview:self.mshfview atIndex:1];
+        [pvc.view insertSubview:mshfview atIndex:1];
     }
 }
 
@@ -82,8 +81,6 @@ MSHFConfig *config;
 %group old
 %hook SBDashBoardMediaControlsViewController
 
-%property (retain,nonatomic) MSHFView *mshfview;
-
 %new
 -(id)valueForUndefinedKey:(NSString *)key {
     return nil;
@@ -102,13 +99,13 @@ MSHFConfig *config;
     if (!mcpvc) return;
 
     if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
-    self.mshfview = [config view];
+    mshfview = [config view];
 
     if (!moveIntoPanel) {
-        [self.view addSubview:self.mshfview];
-        [self.view sendSubviewToBack:self.mshfview];
+        [self.view addSubview:mshfview];
+        [self.view sendSubviewToBack:mshfview];
     } else {
-        [mcpvc.view insertSubview:self.mshfview atIndex:1];
+        [mcpvc.view insertSubview:mshfview atIndex:1];
     }
 }
 

@@ -39,7 +39,8 @@
 			<string>EnableFFT</string>
 			<key>alternateColors</key>
 			<true/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -54,7 +55,8 @@
 			<string>EnableAutoHide</string>
 			<key>alternateColors</key>
 			<true/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 
 		<dict>
@@ -90,7 +92,8 @@
 			</array>
 			<key>alignment</key>
 			<string>4</string>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -117,9 +120,9 @@
 			<true/>
 			<key>isSegmented</key>
 			<true/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
-
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -153,7 +156,8 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -180,9 +184,9 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
-
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -216,9 +220,9 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
-
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -250,7 +254,8 @@
 			</array>
 			<key>alignment</key>
 			<string>3</string>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -277,7 +282,6 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -300,7 +304,6 @@
 			<key>label</key>
 			<string>Wave color</string>
 		</dict>
-
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -334,7 +337,8 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -361,7 +365,8 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -388,7 +393,8 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -403,7 +409,8 @@
 			<string>DisableBatterySaver</string>
 			<key>alternateColors</key>
 			<true/>
-
+			<key>PostNotification</key>
+			<string>me.conorthedev.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<!-- Credits -->
 		<dict>
