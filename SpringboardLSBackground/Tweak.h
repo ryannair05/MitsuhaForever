@@ -13,12 +13,12 @@
 
 @interface SBDashBoardFixedFooterViewController : UIViewController
 
-@property(retain, nonatomic) MSHFView *mshfview;
+@property(strong, nonatomic) MSHFView *mshfview;
 
 @end
 
 @interface CSFixedFooterViewController : UIViewController
 
-@property(retain, nonatomic) MSHFView *mshfview;
+@property(strong, nonatomic) MSHFView *mshfview;
 
 @end

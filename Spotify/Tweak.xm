@@ -94,12 +94,12 @@ MSHFConfig *config = NULL;
 
 %new
 -(void)applyCustomLayout{
-    [self.view bringSubviewToFront:[config view]];
+    [self.view sendSubviewToBack:[config view]];
 }
 
 %end
 
-%hook SPTNowPlayingScrollViewController
+%hook SPTNowPlayingBackgroundViewController
 
 %property (retain,nonatomic) MSHFView *mshfview;
 
@@ -111,7 +111,7 @@ MSHFConfig *config = NULL;
     CGFloat height = CGRectGetHeight(self.view.bounds) - config.waveOffset;
     [config initializeViewWithFrame:CGRectMake(0, config.waveOffset, self.view.bounds.size.width, height)];
     self.mshfview = [config view];
-    [self.view insertSubview:self.mshfview atIndex:2];
+    [self.view insertSubview:self.mshfview atIndex:0];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

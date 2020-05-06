@@ -24,12 +24,6 @@ NSUserDefaults *userDefaults;
                       forKey:@"key"];
     }
 
-    NSMutableDictionary *dict = [specifier propertyForKey:@"libcolorpicker"];
-    if (dict) {
-      dict[@"key"] = [prefix stringByAppendingString:dict[@"key"]];
-      [specifier setProperty:dict forKey:@"libcolorpicker"];
-    }
-
     if ([specifier.name isEqualToString:@"%APP_NAME%"]) {
       specifier.name = title;
     }

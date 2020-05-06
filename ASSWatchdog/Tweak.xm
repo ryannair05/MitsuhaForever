@@ -8,10 +8,10 @@ int connfd;
 
 -(id)init {
     id orig = %orig;
-    NSLog(@"[ASSWatchdog] checking for ThiccASS");
-    bool assPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/ThiccASS.dylib"];
+    NSLog(@"[ASSWatchdog] checking for ASS");
+    bool assPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/AudioSnapshotServer.dylib"];
     if (assPresent) {
-        NSLog(@"[ASSWatchdog] ThiccASS found... checking if msd is hooked");
+        NSLog(@"[ASSWatchdog] ASS found... checking if msd is hooked");
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             struct sockaddr_in remote;
             remote.sin_family = PF_INET;
@@ -21,7 +21,7 @@ int connfd;
             int retries = 0;
 
             while (connfd != -2) {
-                NSLog(@"[ASSWatchdog] Connecting to ThiccASS.");
+                NSLog(@"[ASSWatchdog] Connecting to ASS.");
                 retries++;
                 connfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 
@@ -34,8 +34,8 @@ int connfd;
                 while(r != 0) {
                     if (retries > 3) {
                         connfd = -2;
-                        NSLog(@"[ASSWatchdog] ThiccASS not running.");
-                        NSLog(@"[ASSWatchdog] abort, there's no ThicASS here...");
+                        NSLog(@"[ASSWatchdog] ASS not running.");
+                        NSLog(@"[ASSWatchdog] abort, there's no ASS here...");
                         break;
                     }
 

@@ -26,6 +26,11 @@
 
 @end
 
+@interface SPTNowPlayingBackgroundViewController : UIViewController
+@property(retain, nonatomic) MSHFView *mshfview;
+- (void)applyCustomLayout;
+@end
+
 @interface SPTNowPlayingCoverArtImageView : UIImageView
 
 - (void)readjustWaveColor;
@@ -53,7 +58,6 @@
 @end
 
 @interface SPTNowPlayingBackgroundMusicViewController : SPTUniversalController
-
 @end
 
 @interface SPTNowPlayingContentCell : UIView

@@ -24,7 +24,7 @@ MSHFConfig *config;
 
 %hook CSFixedFooterViewController
 
-%property (retain,nonatomic) MSHFView *mshfview;
+%property (strong,nonatomic) MSHFView *mshfview;
 
 -(void)loadView{
     %orig;
@@ -79,7 +79,7 @@ MSHFConfig *config;
 
 %hook SBDashBoardFixedFooterViewController
 
-%property (retain,nonatomic) MSHFView *mshfview;
+%property (strong,nonatomic) MSHFView *mshfview;
 
 -(void)loadView{
     %orig;
@@ -130,7 +130,7 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
     }
 }
 
-%ctor{
+%ctor {
     config = [MSHFConfig loadConfigForApplication:@"LockScreen"];
     
     if(config.enabled){
