@@ -47,7 +47,7 @@ MSHFConfig *config = NULL;
 
 %hook MusicNowPlayingControlsViewController
 
-%property (retain,nonatomic) MSHFView *MSHFView;
+%property (retain,nonatomic) MSHFView *mshfView;
 
 -(void)viewDidLoad{
     %orig;
@@ -57,7 +57,7 @@ MSHFConfig *config = NULL;
     
     [config initializeViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, height)];
     
-    self.mshview = [config view];
+    self.mshfView = [config view];
     [self.view addSubview:[config view]];
     [self.view sendSubviewToBack:[config view]];
 

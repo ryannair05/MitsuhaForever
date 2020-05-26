@@ -19,5 +19,5 @@
 @end
 
 @interface MusicNowPlayingControlsViewController : UIViewController
-@property(retain, nonatomic) MSHFView *mshview;
+@property(retain, nonatomic) MSHFView *mshfView;
 @end
