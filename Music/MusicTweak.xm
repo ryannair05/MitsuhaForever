@@ -2,7 +2,7 @@
 
 %group MitsuhaVisuals
 
-MSHFConfig *config = NULL;
+static MSHFConfig *config = NULL;
 
 %hook MusicArtworkComponentImageView
 

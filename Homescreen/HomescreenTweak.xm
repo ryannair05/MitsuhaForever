@@ -22,33 +22,39 @@ MSHFConfig *mshConfig;
 
 %end
 
-%hook SBDockView
+%hook SBHomeScreenView
 
-%property (retain,nonatomic) MSHFView *mshView;
+%property (nonatomic,strong) MSHFView *mshfView;
 
--(void)layoutSubviews {
+-(void)willMoveToSuperview:(UIView*)newSuperview {
     %orig;
     mshConfig.waveOffsetOffset = self.bounds.size.height - 200;
 
-    if (![mshConfig view]) [mshConfig initializeViewWithFrame:self.backgroundView.frame];
-    self.backgroundView = [mshConfig view];
-    [self.mshView start];
+    if (![mshConfig view]) [mshConfig initializeViewWithFrame:self.frame];
+    self.mshfView = [mshConfig view];
+    [self addSubview:self.mshfView];
+    [self sendSubviewToBack:self.mshfView];
+    [self.mshfView start];
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)didMoveToWindow {
     %orig;
     [[mshConfig view] start];
-    //[mshConfig view].center = CGPointMake([mshConfig view].center.x, mshConfig.waveOffset);
 }
 
--(void)viewDidAppear:(BOOL)animated {
+-(void)didMoveToSuperview {
     %orig;
-    [[mshConfig view] start];
+    
+    if (!self.superview) {
+        [[mshConfig view] stop];
+    } else {
+        [[mshConfig view] start];
+    }
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     %orig;
-    [[mshConfig view] stop];
+    
 }
 
 %end

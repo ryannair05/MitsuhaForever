@@ -3,7 +3,7 @@
 #import <notify.h>
 
 bool moveIntoPanel = false;
-MSHFConfig *config;
+static MSHFConfig *config = NULL;
 MSHFView *mshfview;
 
 %group MitsuhaVisualsNotification

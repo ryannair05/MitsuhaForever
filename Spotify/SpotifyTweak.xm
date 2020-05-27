@@ -10,7 +10,7 @@ UIColor *const kTrans = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
 
 %group MitsuhaVisuals
 
-MSHFConfig *config = NULL;
+static MSHFConfig *config = NULL;
 
 %hook SPTNowPlayingCoverArtImageView
 

@@ -11,9 +11,6 @@
 #import <MitsuhaForever/MSHFConfig.h>
 #import <MitsuhaForever/MSHFView.h>
 
-@interface SBDockView : UIView
-
-@property(retain, nonatomic) MSHFView *mshView;
-@property(retain, nonatomic) UIView *backgroundView;
-
+@interface SBHomeScreenView : UIView
+@property (nonatomic,retain) MSHFView * mshfView;     
 @end
