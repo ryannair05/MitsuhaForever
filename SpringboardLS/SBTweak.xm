@@ -151,11 +151,17 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
     config.waveOffsetOffset = 500;
 
     if(config.enabled){
-        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
         //Check if Artsy is installed
         bool artsyEnabled = false;
         bool artsyLsEnabled = false;
         bool artsyPresent = [[NSFileManager defaultManager] fileExistsAtPath: ArtsyTweakDylibFile] && [[NSFileManager defaultManager] fileExistsAtPath: ArtsyTweakPlistFile];
+        bool flowPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/Flow.dylib"];
+
+        if(flowPresent) {
+            return;
+        }
+
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
 
         if (artsyPresent) {
             NSLog(@"[MitsuhaForever] Artsy found");

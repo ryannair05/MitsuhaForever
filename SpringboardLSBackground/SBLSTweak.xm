@@ -132,14 +132,16 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
 
 %ctor {
     config = [MSHFConfig loadConfigForApplication:@"LockScreen"];
-    
-    if(config.enabled){
+    bool flowPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/Flow.dylib"];
+
+    if(config.enabled || flowPresent){
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
         if(@available(iOS 13.0, *)) {
-		    NSLog(@"[MitsuhaForever: SpringboardLSBackground] Current version is iOS 13!");
 		    %init(ios13)
+            return;
 	    } else {
             %init(old)
+            return;
         }
     }
 }
