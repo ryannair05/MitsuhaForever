@@ -12,7 +12,7 @@
     NSString *prefix = [@"MSHF" stringByAppendingString:app];
     NSString *title = [specifier name];
 
-    _specifiers = [[self loadSpecifiersFromPlistName:@"App" target:self] retain];
+    _specifiers = [self loadSpecifiersFromPlistName:@"App" target:self];
 
     for (PSSpecifier *specifier in _specifiers) {
         NSString *key = [specifier propertyForKey:@"key"];
@@ -33,7 +33,7 @@
         [self reloadSpecifier:specifier];
     }
 
-    NSMutableArray *extra = [[self loadSpecifiersFromPlistName:[NSString stringWithFormat:@"Apps/%@", app] target:self] retain];
+    NSMutableArray *extra = [self loadSpecifiersFromPlistName:[NSString stringWithFormat:@"Apps/%@", app] target:self];
     if (extra) {
         for (PSSpecifier *specifier in extra) {
             [self insertSpecifier:specifier afterSpecifierID:@"otherSettings"];
@@ -46,9 +46,5 @@
 - (void)setSpecifier:(PSSpecifier *)specifier {
 	[self loadFromSpecifier:specifier];
 	[super setSpecifier:specifier];
-}
-
-- (bool)shouldReloadSpecifiersOnResume {
-    return true;
 }
 @end

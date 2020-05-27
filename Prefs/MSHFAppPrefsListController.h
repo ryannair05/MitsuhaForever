@@ -5,5 +5,4 @@
 #import <libcolorpicker.h>
 
 @interface MSHFAppPrefsListController : HBListController
-
 @end

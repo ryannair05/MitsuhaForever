@@ -26,11 +26,14 @@
 }
 
 - (id)specifiers {
+    if(!_specifiers) {
+        _specifiers = [self loadSpecifiersFromPlistName:@"Prefs" target:self];
+    }
     return _specifiers;
 }
 
 - (void)loadFromSpecifier:(PSSpecifier *)specifier {
-    _specifiers = [[self loadSpecifiersFromPlistName:@"Prefs" target:self] retain];
+    _specifiers = [self loadSpecifiersFromPlistName:@"Prefs" target:self];
 
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *directory = MSHFAppSpecifiersDirectory;
@@ -70,9 +73,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-
-    CGRect frame = self.table.bounds;
-    frame.origin.y = -frame.size.height;
 	
     [self.navigationController.navigationController.navigationBar setShadowImage: [UIImage new]];
     self.navigationController.navigationController.navigationBar.translucent = YES;
@@ -98,9 +98,5 @@
 	pid_t pid;
     const char* args[] = {"killall", "mediaserverd", NULL};
     posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
-}
-
-- (bool)shouldReloadSpecifiersOnResume {
-    return true;
 }
 @end
