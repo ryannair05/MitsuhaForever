@@ -1,8 +1,8 @@
 Package: me.conorthedev.mitsuhaforever
 Name: Mitsuha Forever
-Depends: mobilesubstrate, preferenceloader, me.conorthedev.audiosnapshotserver, me.conorthedev.libmitsuhaforever, me.conorthedev.libconorthedev, ws.hbang.common, firmware (>=11.0)
+Depends: mobilesubstrate, preferenceloader, me.conorthedev.audiosnapshotserver, me.conorthedev.libmitsuhaforever, me.conorthedev.libconorthedev, ws.hbang.common, ws.hbang.alderis
 Replaces: io.c0ldra1n.mitsuha, io.c0ldra1n.mitsuha-beta, io.ominousness.mitsuhaxi, me.nepeta.mitsuhainfinity, me.nepeta.mitsuhainfinity-lockscreen
-Version: 1.2.1
+Version: 1.2.2
 Architecture: iphoneos-arm
 Description: Universal audio visualizer for iOS, updated for iOS 13 with new features and bug fixes
 Maintainer: ConorTheDev
