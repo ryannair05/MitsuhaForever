@@ -3,7 +3,7 @@
 #import <notify.h>
 
 bool moveIntoPanel = false;
-MSHFConfig *mshConfig;
+static MSHFConfig *mshConfig;
 
 %group MitsuhaVisuals
 
@@ -24,7 +24,7 @@ MSHFConfig *mshConfig;
 
 %hook SBHomeScreenView
 
-%property (nonatomic,strong) MSHFView *mshfView;
+%property (nonatomic, strong) MSHFView *mshfView;
 
 -(void)willMoveToSuperview:(UIView*)newSuperview {
     %orig;
