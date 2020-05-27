@@ -101,6 +101,6 @@
 }
 
 - (bool)shouldReloadSpecifiersOnResume {
-    return false;
+    return true;
 }
 @end
