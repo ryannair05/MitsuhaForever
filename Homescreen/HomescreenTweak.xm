@@ -5,8 +5,7 @@
 bool moveIntoPanel = false;
 static MSHFConfig *mshConfig;
 
-%group MitsuhaVisuals
-
+%group SBMediaHook
 %hook SBMediaController
 
 -(void)setNowPlayingInfo:(id)arg1 {
@@ -19,9 +18,10 @@ static MSHFConfig *mshConfig;
         }
     });
 }
-
+%end
 %end
 
+%group ios13
 %hook SBHomeScreenView
 
 %property (nonatomic, strong) MSHFView *mshfView;
@@ -30,11 +30,11 @@ static MSHFConfig *mshConfig;
     %orig;
     mshConfig.waveOffsetOffset = self.bounds.size.height - 200;
 
-    if (![mshConfig view]) [mshConfig initializeViewWithFrame:self.frame];
+    if (![mshConfig view]) [mshConfig initializeViewWithFrame:self.bounds];
     self.mshfView = [mshConfig view];
+    
     [self addSubview:self.mshfView];
     [self sendSubviewToBack:self.mshfView];
-    [self.mshfView start];
 }
 
 -(void)didMoveToWindow {
@@ -52,13 +52,37 @@ static MSHFConfig *mshConfig;
     }
 }
 
--(void)viewDidDisappear:(BOOL)animated{
+
+%end
+%end
+
+%group old
+%hook SBIconController
+
+%property (retain,nonatomic) MSHFView *mshfView;
+
+-(void)loadView{
     %orig;
+    mshConfig.waveOffsetOffset = self.view.bounds.size.height - 200;
+
+    if (![mshConfig view]) [mshConfig initializeViewWithFrame:self.view.bounds];
+    self.mshfView = [mshConfig view];
     
+    [self.view addSubview:self.mshfView];
+    [self.view sendSubviewToBack:self.mshfView];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    %orig;
+    [self.mshfView start];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    %orig;
+    [self.mshfView stop];
 }
 
 %end
-
 %end
 
 static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStringRef name, const void* object, CFDictionaryRef userInfo) {
@@ -78,6 +102,15 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
 
 %ctor{
     mshConfig = [MSHFConfig loadConfigForApplication:@"HomeScreen"];
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
-    %init(MitsuhaVisuals);
+    if(mshConfig.enabled){
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
+        
+        if(@available(iOS 13.0, *)) {
+		    %init(ios13)
+	    } else {
+            %init(old)
+        }
+
+        %init(SBMediaHook);
+    }
 }

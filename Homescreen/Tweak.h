@@ -14,3 +14,7 @@
 @interface SBHomeScreenView : UIView
 @property (nonatomic,retain) MSHFView * mshfView;     
 @end
+
+@interface SBIconController : UIViewController
+@property (nonatomic,retain) MSHFView * mshfView;     
+@end
