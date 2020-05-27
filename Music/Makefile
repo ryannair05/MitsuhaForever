@@ -1,7 +1,6 @@
 ARCHS = arm64 arm64e
 TARGET = iphone:clang:13.0:11.2
 
-
 include $(THEOS_MAKE_PATH)/common.mk
 
 TWEAK_NAME = MitsuhaForeverMusic

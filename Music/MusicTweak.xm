@@ -49,27 +49,28 @@ static MSHFConfig *config = NULL;
 
 %property (retain,nonatomic) MSHFView *mshfView;
 
+
 -(void)viewDidLoad{
     %orig;
-    
-    CGFloat height = CGRectGetHeight(self.view.bounds);
-    self.view.clipsToBounds = 1;
-    
-    [config initializeViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, height)];
+
+    self.view.subviews[3].clipsToBounds = 1;
+    [config initializeViewWithFrame:CGRectMake(0, -150, self.view.frame.size.width, (self.view.frame.size.height / 2) - 100)];
     
     self.mshfView = [config view];
-    [self.view addSubview:[config view]];
-    [self.view sendSubviewToBack:[config view]];
+    [self.view.subviews[3] addSubview:[config view]];
+    [self.view.subviews[3] sendSubviewToBack:[config view]];
 
-    for (UIView *subview in self.view.subviews) {
-        subview.backgroundColor = [UIColor clearColor];
+    if(self.mshfView.superview == NULL) {
+        self.mshfView = [config view];
+        [self.view addSubview:[config view]];
+        [self.view sendSubviewToBack:[config view]];
     }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
     [[config view] start];
-    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height);
+    [config view].center = CGPointMake([config view].center.x, 150);
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
