@@ -59,7 +59,7 @@ static MSHFConfig *mshConfig;
 %group old
 %hook SBIconController
 
-%property (retain,nonatomic) MSHFView *mshfView;
+%property (strong,nonatomic) MSHFView *mshfView;
 
 -(void)loadView{
     %orig;
