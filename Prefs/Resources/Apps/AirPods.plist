@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>name</key>
-    <string>HomeScreen</string>
+    <string>AirPods</string>
     <key>title</key>
-    <string>Homescreen</string>
+    <string>AirPods</string>
 	<key>items</key>
 	<array>
 		<dict>
@@ -23,7 +23,5 @@
 			<true/>
 		</dict>
 	</array>
-	<key>title</key>
-	<string>AirPods (2 / Pro) Compatability</string>
 </dict>
 </plist>
