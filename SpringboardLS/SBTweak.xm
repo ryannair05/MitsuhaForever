@@ -45,7 +45,7 @@ MSHFView *mshfview;
     
     if (!pvc) return;
 
-    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
+    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];	
     mshfview = [config view];
 
     if (!moveIntoPanel) {
