@@ -24,7 +24,7 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>defaults</key>
 			<string>me.conorthedev.mitsuhaforever</string>
 			<key>label</key>

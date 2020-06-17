@@ -1,5 +1,7 @@
-FINAL_PACKAGE=1
-DEBUG=0
+FINALPACKAGE = 1
+
+export ADDITIONAL_CFLAGS = -DTHEOS_LEAN_AND_MEAN -fobjc-arc
+export TARGET = iphone:13.5:11.0
 
 include $(THEOS)/makefiles/common.mk
 

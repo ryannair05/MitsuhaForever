@@ -47,11 +47,8 @@ static MSHFConfig *mshConfig;
     
     if (!self.superview) {
         [[mshConfig view] stop];
-    } else {
-        [[mshConfig view] start];
     }
 }
-
 
 %end
 %end

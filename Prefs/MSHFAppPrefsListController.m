@@ -2,7 +2,7 @@
 
 @implementation MSHFAppPrefsListController
 
-- (id)specifiers {
+- (NSArray *)specifiers {
     return _specifiers;
 }
 
@@ -46,5 +46,9 @@
 - (void)setSpecifier:(PSSpecifier *)specifier {
 	[self loadFromSpecifier:specifier];
 	[super setSpecifier:specifier];
+}
+
+- (bool)shouldReloadSpecifiersOnResume {
+    return NO;
 }
 @end

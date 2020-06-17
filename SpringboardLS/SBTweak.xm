@@ -28,11 +28,6 @@ MSHFView *mshfview;
 %group ios13
 %hook CSMediaControlsViewController
 
-%new
--(id)valueForUndefinedKey:(NSString *)key {
-    return nil;
-}
-
 -(void)loadView{
     %orig;
     self.view.clipsToBounds = 1;
@@ -60,13 +55,12 @@ MSHFView *mshfview;
     %orig;
     self.view.superview.layer.cornerRadius = 13;
     self.view.superview.layer.masksToBounds = TRUE;
-
-    [[config view] start];
-    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+    %orig;
     [[config view] start];
+    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -80,11 +74,6 @@ MSHFView *mshfview;
 
 %group old
 %hook SBDashBoardMediaControlsViewController
-
-%new
--(id)valueForUndefinedKey:(NSString *)key {
-    return nil;
-}
 
 -(void)loadView{
     %orig;
@@ -113,13 +102,12 @@ MSHFView *mshfview;
     %orig;
     self.view.superview.layer.cornerRadius = 13;
     self.view.superview.layer.masksToBounds = TRUE;
-
-    [[config view] start];
-    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+    %orig;
     [[config view] start];
+    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

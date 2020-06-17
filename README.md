@@ -1,12 +1,12 @@
 # Mitsuha Forever
 
-This is a fork of Nepeta's excellent tweak - [MitsuhaInfinity](https://github.com/Nepeta/MitsuhaInfinity) with support for iOS 13, bug fixes and new features
+This is a fork of a Nepeta's excellent tweak - [MitsuhaInfinity](https://github.com/Nepeta/MitsuhaInfinity) with support for iOS 13, bug fixes and new features
 
-For support / to report a bug [join my discord server](https://oh-my-god.wtf/conorthedev)
+For support / to report a bug [join my discord server](https://discord.gg/J2Tmaqy)
 
 ## Installation
 
-1. Add this repository to your package manager: https://repo.conorthedev.me
+1. Add this repository to your package manager: https://repo.packix.com
 2. Install **Mitsuha Forever**.
 
 ## Compatibility
@@ -19,20 +19,19 @@ For support / to report a bug [join my discord server](https://oh-my-god.wtf/con
 
 ### Tweaks
 
-Should be compatible with EclipseX and similar tweaks.
+Should be compatible with Eclipse and similar tweaks.
 Works with Artsy.
 
 ## Bugs
 
-For support / to report a bug [join my discord server](https://oh-my-god.wtf/conorthedev)
+For support / to report a bug you may open an issue here on Github
 
 ## Donations
 
-Support the original developers here: https://www.paypal.me/c0ldra1n, https://nepeta.me/donate
-
-Support me at: https://www.ko-fi.com/ConorTheDev
+Support the original developer, c0ldra1n, not me, here: https://www.paypal.me/c0ldra1n
 
 ## Credits
 
-* [c0ldra1n](https://github.com/c0ldra1n/) - developed the original tweak for iOS 10 and earlier.
-* Nepeta - developed the original Mitsuha Infinity before she left the community.
+* [c0ldra1n](https://github.com/c0ldra1n/) - Developed the original tweak for iOS 10 and earlier.
+* Nepeta - Developed the original Mitsuha Infinity.
+* [cbyrne](https://github.com/cbyrne/)] - Originally developed this tweak.

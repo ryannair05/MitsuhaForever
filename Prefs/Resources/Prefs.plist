@@ -10,7 +10,7 @@
     		<key>headerCellClass</key>
     		<string>HBPackageNameHeaderCell</string>
     		<key>packageIdentifier</key>
-    		<string>me.conorthedev.mitsuhaforever</string>
+    		<string>com.ryannair05.mitsuhaforever</string>
 			<!--<key>icon</key>
     		<string>icon@3x.png</string>-->
     		<key>titleColor</key>
@@ -41,7 +41,7 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>me.conorthedev.mitsuhaforever</string>
+			<string>com.ryannair05.mitsuhaforever</string>
 			<key>label</key>
 			<string>Enable sensitivity boost (AirPods 2 + Pro)</string>
 			<key>key</key>
@@ -56,10 +56,6 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Other</string>
-			<key>footerText</key>
-			<string>Mitsuha Forever</string>
-			<key>isStaticText</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -104,8 +100,16 @@
 			<key>label</key>
 			<string>Restore default settings and respring</string>
 		</dict>
-
-
+		<dict>
+		<key>cellClass</key>
+		<string>HBTwitterCell</string>
+		<key>label</key>
+		<string>Ryan Nair</string>
+		<key>subtitle</key>
+		<string>Current Developer of Mitsuha Forever</string>
+		<key>user</key>
+		<string>ryannair05</string>
+		</dict>
 		<dict>
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
@@ -114,27 +118,7 @@
 			<key>subtitle</key>
 			<string>Source code</string>
 			<key>url</key>
-			<string>https://github.com/ConorTheDev/MitsuhaForever</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Donate to ConorTheDev</string>
-			<key>subtitle</key>
-			<string>Mitsuha Forever developer</string>
-			<key>url</key>
-			<string>https://ko-fi.com/ConorTheDev</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Donate to Nepeta</string>
-			<key>subtitle</key>
-			<string>MitsuhaXI, Mitsuha Infinity developer</string>
-			<key>url</key>
-			<string>https://nepeta.me/donate</string>
+			<string>https://github.com/ryannair05/MitsuhaForever</string>
 		</dict>
 		<dict>
 			<key>cellClass</key>
@@ -142,7 +126,7 @@
 			<key>label</key>
 			<string>Donate to c0ldra1n</string>
 			<key>subtitle</key>
-			<string>original developer of Mitsuha for iOS 9 and 10</string>
+			<string>Original developer of Mitsuha for iOS 9 and 10</string>
 			<key>url</key>
 			<string>https://www.paypal.me/c0ldra1n</string>
 		</dict>

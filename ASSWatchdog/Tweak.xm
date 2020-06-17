@@ -1,3 +1,4 @@
+#import <UIKit/UIKit.h>
 #import <arpa/inet.h>
 #import <spawn.h>
 #define ASSPort 44333
@@ -7,7 +8,6 @@ int connfd;
 %hook SpringBoard
 
 -(id)init {
-    id orig = %orig;
     NSLog(@"[ASSWatchdog] checking for ASS");
     bool assPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/AudioSnapshotServer.dylib"];
     if (assPresent) {
@@ -53,10 +53,10 @@ int connfd;
             }
         });
     } else {
-        NSLog(@"[ASSWatchdog] abort, there's no ThicASS here...");
+        NSLog(@"[ASSWatchdog] abort, there's no ASS here...");
     }
 
-    return orig;
+    return %orig;
 }
 
 %end

@@ -11,8 +11,6 @@
 #import <MitsuhaForever/MSHFConfig.h>
 #import <MitsuhaForever/MSHFView.h>
 
-#import "../MSHFUtils.h"
-
 @interface SPTImageBlurView : UIView
 
 @property(retain, nonatomic)

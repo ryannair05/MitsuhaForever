@@ -25,7 +25,7 @@
     return self;
 }
 
-- (id)specifiers {
+- (NSArray *)specifiers {
     if(!_specifiers) {
         _specifiers = [self loadSpecifiersFromPlistName:@"Prefs" target:self];
     }
@@ -86,6 +86,10 @@
     [colors removeAllObjects];
 
     [self respring:sender];
+}
+
+- (bool)shouldReloadSpecifiersOnResume {
+    return NO;
 }
 
 - (void)respring:(id)sender {
