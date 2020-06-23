@@ -82,6 +82,7 @@
 				<integer>1</integer>
 				<integer>2</integer>
 				<integer>3</integer>
+				<integer>4</integer>
 			</array>
 			<key>validTitles</key>
 			<array>
@@ -89,9 +90,10 @@
 				<string>Bar</string>
 				<string>Line</string>
 				<string>Dot</string>
+				<string>Siri</string>
 			</array>
 			<key>alignment</key>
-			<string>4</string>
+			<string>5</string>
 			<key>PostNotification</key>
 			<string>com.ryannair05.mitsuhaforever/ReloadPrefs</string>
 		</dict>
@@ -247,8 +249,8 @@
 			</array>
 			<key>validTitles</key>
 			<array>
-				<string>Dynamic - old</string>
-				<string>Dynamic - new</string>
+				<string>Dynamic</string>
+				<string>Siri</string>
 			</array>
 			<key>alignment</key>
 			<string>2</string>
@@ -397,7 +399,8 @@
 			<string>Mitsuha, Mitsuha2 by c0ldra1n
 MitsuhaXI, Mitsuha Infinity by Nepeta  
 Mitsuha Forever by ConorTheDev
-Mitsuha Forever updated by Ryan Nair</string>
+Mitsuha Forever updated by Ryan Nair
+Siri Visualizer by biD3V</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>
