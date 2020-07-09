@@ -8,7 +8,6 @@
 
 #import <MitsuhaForever/MSHFConfig.h>
 #import <MitsuhaForever/MSHFView.h>
-#import <UIKit/UIKit.h>
 
 @interface MusicArtworkComponentImageView : UIImageView
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -20,4 +19,8 @@
 
 @interface MusicNowPlayingControlsViewController : UIViewController
 @property(retain, nonatomic) MSHFView *mshfView;
+@end
+
+@interface CFWPrefsManager : NSObject
++ (id)sharedInstance;
 @end

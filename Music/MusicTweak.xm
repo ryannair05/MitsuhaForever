@@ -3,7 +3,7 @@
 %group MitsuhaVisuals
 
 static MSHFConfig *config = NULL;
-static bool colorflow = false;
+static bool const colorflow = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_musicEnabled");
 
 %hook MusicArtworkComponentImageView
 
@@ -11,24 +11,21 @@ static bool colorflow = false;
     %orig;
     if ([config view] == NULL) return;
 
+    NSString *musicString;
+
+    if (@available(iOS 13.0, *))
+        musicString =  @"MusicApplication.NowPlayingContentView";
+    else 
+        musicString = @"Music.NowPlayingContentView";
+
     UIView *me = (UIView *)self;
 
-    if(@available(iOS 13.0, *)) {
-		if ([NSStringFromClass([me.superview class]) isEqualToString:@"MusicApplication.NowPlayingContentView"]) {
-            if (config.colorMode != 2) {
-                [self readjustWaveColor];
-            }
-
-            [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
+    if ([NSStringFromClass([me.superview class]) isEqualToString:musicString]) {
+        if (config.colorMode != 2) {
+            [self readjustWaveColor];
         }
-	} else {
-		if ([NSStringFromClass([me.superview class]) isEqualToString:@"Music.NowPlayingContentView"]) {
-            if (config.colorMode != 2) {
-                [self readjustWaveColor];
-            }
 
-            [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
-        }
+        [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
 
@@ -113,7 +110,6 @@ static bool colorflow = false;
     config = [MSHFConfig loadConfigForApplication:@"Music"];
     config.waveOffsetOffset = 70;
     if(config.enabled){
-        colorflow = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/ColorFlow5.dylib"];
         NSString *classString = nil;
         if(@available(iOS 13.0, *)) {
             classString = @"MusicApplication.ArtworkComponentImageView";

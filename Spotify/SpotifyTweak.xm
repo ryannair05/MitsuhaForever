@@ -1,10 +1,7 @@
 #import "Tweak.h"
 #define CFWBackgroundViewTagNumber 896541
-#define MSHFColorFlowInstalled [%c(CFWPrefsManager) class]
-#define MSHFColorFlowMusicEnabled MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_musicEnabled")
-#define MSHFColorFlowSpotifyEnabled MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_spotifyEnabled")
-#define MSHFCustomCoverInstalled [%c(CustomCoverAPI) class]
 
+bool const MSHFColorFlowSpotifyEnabled = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_spotifyEnabled");
 static SPTUniversalController *currentBackgroundMusicVC;
 UIColor *const kTrans = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
 
@@ -73,7 +70,7 @@ static MSHFConfig *config = NULL;
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
     //  Copied from NowPlayingImpl
-    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
+    if(MSHFColorFlowSpotifyEnabled){
         CFWSpotifyStateManager *stateManager = [%c(CFWSpotifyStateManager) sharedManager];
         UIColor *backgroundColor = [stateManager.mainColorInfo.backgroundColor colorWithAlphaComponent:0.5];
         [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
@@ -127,7 +124,7 @@ static MSHFConfig *config = NULL;
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
     //  Copied from NowPlayingImpl
-    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
+    if(MSHFColorFlowSpotifyEnabled){
         CFWSpotifyStateManager *stateManager = [%c(CFWSpotifyStateManager) sharedManager];
         UIColor *backgroundColor = [stateManager.mainColorInfo.backgroundColor colorWithAlphaComponent:0.5];
         [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
@@ -172,7 +169,7 @@ static MSHFConfig *config = NULL;
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
     //  Copied from NowPlayingImpl
-    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
+    if(MSHFColorFlowSpotifyEnabled){
         CFWSpotifyStateManager *stateManager = [%c(CFWSpotifyStateManager) sharedManager];
         UIColor *backgroundColor = [stateManager.mainColorInfo.backgroundColor colorWithAlphaComponent:0.5];
         [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
@@ -217,7 +214,7 @@ static MSHFConfig *config = NULL;
 
 %new
 -(void)applyCustomLayout{
-    if(MSHFColorFlowInstalled){
+    if(MSHFColorFlowSpotifyEnabled){
         if([self viewWithTag:CFWBackgroundViewTagNumber]){
             [[self viewWithTag:CFWBackgroundViewTagNumber] removeFromSuperview];
         }
@@ -226,7 +223,7 @@ static MSHFConfig *config = NULL;
 
 %new
 -(void)updateGradientDark:(BOOL)darkbackground{
-    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
+    if(MSHFColorFlowSpotifyEnabled){
         NSArray<UIColor *> *colors;
         
         if(darkbackground){
@@ -264,7 +261,7 @@ static MSHFConfig *config = NULL;
 
 %new
 -(void)applyColorChange{
-    if(MSHFColorFlowInstalled && MSHFColorFlowSpotifyEnabled){
+    if(MSHFColorFlowSpotifyEnabled){
         if(!config.ignoreColorFlow){
             CFWColorInfo *colorInfo = [[%c(CFWSpotifyStateManager) sharedManager] mainColorInfo];
             UIColor *backgroundColor = [[colorInfo backgroundColor] colorWithAlphaComponent:0.5];

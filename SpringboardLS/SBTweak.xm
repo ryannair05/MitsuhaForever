@@ -4,13 +4,12 @@
 
 bool moveIntoPanel = false;
 static MSHFConfig *config = NULL;
-MSHFView *mshfview;
 
 %group MitsuhaVisualsNotification
 
 %hook SBMediaController
 
--(void)setNowPlayingInfo:(id)arg1 {
+-(void)setNowPlayingInfo:(NSDictionary *)arg1 {
     %orig;
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
         NSDictionary *dict = (__bridge NSDictionary *)information;
@@ -23,10 +22,12 @@ MSHFView *mshfview;
 
 %end
 
-%end
+%end 
 
 %group ios13
 %hook CSMediaControlsViewController
+
+%property (retain,nonatomic) MSHFView *mshfView;
 
 -(void)loadView{
     %orig;
@@ -41,13 +42,13 @@ MSHFView *mshfview;
     if (!pvc) return;
 
     if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];	
-    mshfview = [config view];
+    self.mshfView = [config view];
 
     if (!moveIntoPanel) {
-        [self.view addSubview:mshfview];
-        [self.view sendSubviewToBack:mshfview];
+        [self.view addSubview:self.mshfView];
+        [self.view sendSubviewToBack:self.mshfView];
     } else {
-        [pvc.view insertSubview:mshfview atIndex:1];
+        [pvc.view insertSubview:self.mshfView atIndex:1];
     }
 }
 
@@ -61,6 +62,14 @@ MSHFView *mshfview;
     %orig;
     [[config view] start];
     [config view].center = CGPointMake([config view].center.x, config.waveOffset);
+
+    MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
+        NSDictionary *dict = (__bridge NSDictionary *)information;
+
+        if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
+            [config colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+        }
+    });
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -75,26 +84,33 @@ MSHFView *mshfview;
 %group old
 %hook SBDashBoardMediaControlsViewController
 
+%property (retain,nonatomic) MSHFView *mshfView;
+
+%new
+-(id)valueForUndefinedKey:(NSString *)key {
+    return nil;
+}
+
 -(void)loadView{
     %orig;
     self.view.clipsToBounds = 1;
 
     MediaControlsPanelViewController *mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_mediaControlsPanelViewController"];
-
+    
     if (!mcpvc && [self valueForKey:@"_platterViewController"]) {
         mcpvc = (MediaControlsPanelViewController*)[self valueForKey:@"_platterViewController"];
     }
-    
-    if (!mcpvc) return;
 
-    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];	
-    mshfview = [config view];
+    if (!mcpvc) return;
+    
+    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];
+    self.mshfView = [config view];
 
     if (!moveIntoPanel) {
-        [self.view addSubview:mshfview];
-        [self.view sendSubviewToBack:mshfview];
+        [self.view addSubview:self.mshfView];
+        [self.view sendSubviewToBack:self.mshfView];
     } else {
-        [mcpvc.view insertSubview:mshfview atIndex:1];
+        [mcpvc.view insertSubview:self.mshfView atIndex:1];
     }
 }
 
@@ -102,12 +118,13 @@ MSHFView *mshfview;
     %orig;
     self.view.superview.layer.cornerRadius = 13;
     self.view.superview.layer.masksToBounds = TRUE;
+
+    [[config view] start];
+    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    %orig;
     [[config view] start];
-    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -140,10 +157,8 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
 
     if(config.enabled){
         //Check if Artsy is installed
-        bool artsyEnabled = false;
-        bool artsyLsEnabled = false;
-        bool artsyPresent = [[NSFileManager defaultManager] fileExistsAtPath: ArtsyTweakDylibFile] && [[NSFileManager defaultManager] fileExistsAtPath: ArtsyTweakPlistFile];
-        bool flowPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/Flow.dylib"];
+        bool const artsyPresent = [[NSFileManager defaultManager] fileExistsAtPath: ArtsyTweakDylibFile];
+        bool const flowPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/Flow.dylib"];
 
         if(flowPresent) {
             return;
@@ -153,19 +168,14 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
 
         if (artsyPresent) {
             NSLog(@"[MitsuhaForever] Artsy found");
-            artsyEnabled = true; //it's enabled by default when Artsy is installed
-            artsyLsEnabled = true;
             
-            //Check if Artsy is enabled
-            NSMutableDictionary *artsyPrefs = [[NSMutableDictionary alloc] initWithContentsOfFile:ArtsyPreferencesFile];
-            if (artsyPrefs) {
-                artsyEnabled = [([artsyPrefs objectForKey:@"enabled"] ?: @(YES)) boolValue];
-                artsyLsEnabled = [([artsyPrefs objectForKey:@"lsEnabled"] ?: @(YES)) boolValue];
+            NSDictionary *artsyPrefs = [[NSDictionary alloc] initWithContentsOfFile:ArtsyPreferencesFile];
+            if (artsyPrefs) { //Check if Artsy is enabled
+                bool const artsyEnabled = [([artsyPrefs objectForKey:@"enabled"] ?: @(YES)) boolValue];
+                if (artsyEnabled)
+                    moveIntoPanel = [([artsyPrefs objectForKey:@"lsEnabled"] ?: @(YES)) boolValue];
             }
-        }
-
-        if (artsyEnabled) {
-            if (artsyLsEnabled) {
+            else { //It's enabled by default when Artsy is installed
                 NSLog(@"[MitsuhaForever: ARTSY] lsEnabled = true");
                 moveIntoPanel = true;
             }

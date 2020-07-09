@@ -82,6 +82,7 @@
 				<integer>1</integer>
 				<integer>2</integer>
 				<integer>3</integer>
+				<integer>4</integer>
 			</array>
 			<key>validTitles</key>
 			<array>
@@ -89,9 +90,10 @@
 				<string>Bar</string>
 				<string>Line</string>
 				<string>Dot</string>
+				<string>Siri</string>
 			</array>
 			<key>alignment</key>
-			<string>4</string>
+			<string>5</string>
 			<key>PostNotification</key>
 			<string>com.ryannair05.mitsuhaforever/ReloadPrefs</string>
 		</dict>
@@ -230,6 +232,8 @@
 			<string>Color</string>
 			<key>isStaticText</key>
 			<true/>
+			<key>footerText</key>
+			<string>Siri Color, credit to biD3V for development, currently requires the Siri style to be selected</string>
 		</dict>
         <dict>
 			<key>cell</key>
@@ -244,11 +248,13 @@
 			<array>
 				<integer>0</integer>
 				<integer>1</integer>
+				<integer>2</integer>
 			</array>
 			<key>validTitles</key>
 			<array>
-				<string>Dynamic - old</string>
-				<string>Dynamic - new</string>
+				<string>Dynamic</string>
+				<string>Siri</string>
+				<string>Custom</string>
 			</array>
 			<key>alignment</key>
 			<string>2</string>
@@ -280,6 +286,24 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>HBColorPickerTableCell</string>
+			<key>defaults</key>
+			<string>com.ryannair05.mitsuhaforever</string>
+			<key>default</key>
+			<string>#000000:0.5</string>
+			<key>key</key>
+			<string>WaveColor</string>
+			<key>label</key>
+			<string>Wave Color</string>
+			<key>showAlphaSlider</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>com.ryannair05.mitsuhaforever/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>

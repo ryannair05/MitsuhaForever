@@ -2,10 +2,9 @@
 #import <MediaRemote/MediaRemote.h>
 #import <notify.h>
 
-bool moveIntoPanel = false;
 static MSHFConfig *config = NULL;
 
-%group ios13
+%group MitsuhaVisualsNotification
 
 %hook SBMediaController
 
@@ -21,6 +20,10 @@ static MSHFConfig *config = NULL;
 }
 
 %end
+
+%end
+
+%group ios13
 
 %hook CSFixedFooterViewController
 
@@ -61,21 +64,6 @@ static MSHFConfig *config = NULL;
 %end
 
 %group old
-
-%hook SBMediaController
-
--(void)setNowPlayingInfo:(id)arg1 {
-    %orig;
-    MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-        NSDictionary *dict = (__bridge NSDictionary *)information;
-
-        if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-            [config colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
-        }
-    });
-}
-
-%end
 
 %hook SBDashBoardFixedFooterViewController
 
@@ -132,16 +120,15 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
 
 %ctor {
     config = [MSHFConfig loadConfigForApplication:@"LockScreen"];
-    bool flowPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/Flow.dylib"];
 
-    if(config.enabled || flowPresent){
+    if(config.enabled){
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
         if(@available(iOS 13.0, *)) {
 		    %init(ios13)
-            return;
 	    } else {
             %init(old)
-            return;
         }
+
+        %init(MitsuhaVisualsNotification);
     }
 }

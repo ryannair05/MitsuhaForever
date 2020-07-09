@@ -6,8 +6,6 @@
 //  Copyright © 2017 c0ldra1n. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import <MitsuhaForever/MSHFConfig.h>
 #import <MitsuhaForever/MSHFView.h>
 
