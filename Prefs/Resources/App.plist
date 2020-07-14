@@ -122,6 +122,8 @@
 			<true/>
 			<key>isSegmented</key>
 			<true/>
+			<key>id</key>
+			<string>NumberOfPoints</string>
 			<key>PostNotification</key>
 			<string>com.ryannair05.mitsuhaforever/ReloadPrefs</string>
 		</dict>
@@ -132,12 +134,16 @@
 			<string>Bar</string>
 			<key>isStaticText</key>
 			<true/>
+			<key>id</key>
+			<string>BarText</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSStaticTextCell</string>
 			<key>label</key>
 			<string>Bar spacing</string>
+			<key>id</key>
+			<string>BarSpacingText</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -158,6 +164,8 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
+			<key>id</key>
+			<string>BarSpacing</string>
 			<key>PostNotification</key>
 			<string>com.ryannair05.mitsuhaforever/ReloadPrefs</string>
 		</dict>
@@ -166,6 +174,8 @@
 			<string>PSStaticTextCell</string>
 			<key>label</key>
 			<string>Bar corner radius</string>
+			<key>id</key>
+			<string>BarRadiusText</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -186,6 +196,8 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
+			<key>id</key>
+			<string>BarRadius</string>
 			<key>PostNotification</key>
 			<string>com.ryannair05.mitsuhaforever/ReloadPrefs</string>
 		</dict>
@@ -196,12 +208,16 @@
 			<string>Line</string>
 			<key>isStaticText</key>
 			<true/>
+			<key>id</key>
+			<string>LineText</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSStaticTextCell</string>
 			<key>label</key>
 			<string>Line thickness</string>
+			<key>id</key>
+			<string>LineThicknessText</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -222,6 +238,8 @@
 			<true/>
 			<key>isSegmented</key>
 			<false/>
+			<key>id</key>
+			<string>LineThickness</string>
 			<key>PostNotification</key>
 			<string>com.ryannair05.mitsuhaforever/ReloadPrefs</string>
 		</dict>

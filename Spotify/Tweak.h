@@ -96,15 +96,6 @@
 
 @end
 
-@interface SPTPlayerImpl : NSObject
-
-- (id)skipToNextTrackWithOptions:(id)arg1 track:(id)arg2;
-- (id)skipToPreviousTrackWithOptions:(id)arg1 track:(id)arg2;
-- (id)skipToNextTrackWithOptions:(id)arg1;
-- (id)skipToPreviousTrackWithOptions:(id)arg1;
-
-@end
-
 @interface SpotifyAppDelegate : NSObject <UIApplicationDelegate>
 
 @end
@@ -157,10 +148,6 @@
 @interface CFWPrefsManager : NSObject
 
 + (id)sharedInstance;
-
-@end
-
-@interface SPTNowPlayingScrollViewController : SPTUniversalController
 
 @end
 
