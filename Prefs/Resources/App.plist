@@ -251,7 +251,7 @@
 			<key>isStaticText</key>
 			<true/>
 			<key>footerText</key>
-			<string>Siri Color, credit to biD3V for development, currently requires the Siri style to be selected</string>
+			<string>Siri Style and Color, credit to biD3V for development</string>
 		</dict>
         <dict>
 			<key>cell</key>

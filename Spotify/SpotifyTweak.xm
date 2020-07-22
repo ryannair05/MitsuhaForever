@@ -1,13 +1,14 @@
 #import "Tweak.h"
 #define CFWBackgroundViewTagNumber 896541
 
-bool const MSHFColorFlowSpotifyEnabled = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_spotifyEnabled");
+bool MSHFColorFlowSpotifyEnabled = NO;
 static SPTUniversalController *currentBackgroundMusicVC;
+
 UIColor *const kTrans = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
 
 %group MitsuhaVisuals
 
-static MSHFConfig *config = NULL;
+MSHFConfig *config = NULL;
 
 %hook SPTNowPlayingCoverArtImageView
 
@@ -33,8 +34,9 @@ static MSHFConfig *config = NULL;
 
 -(void)setSelected:(BOOL)selected {
     %orig;
-    [config colorizeView:self.imageView.image];
-    [self.imageView layoutSubviews];
+    if (selected) {
+        [config colorizeView:self.cellContentRepresentation];
+    }
 }
 
 %end
@@ -65,7 +67,12 @@ static MSHFConfig *config = NULL;
 
 -(void)viewDidAppear:(BOOL)animated{
     %orig;
-    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);
+        
+    } completion:nil];
+    
     
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
@@ -80,8 +87,11 @@ static MSHFConfig *config = NULL;
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
     [[config view] stop];
-    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
-    [config view].shouldUpdate = false;
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
+    } completion:^(BOOL finished){
+        [config view].shouldUpdate = false;
+    }];
 }
 
 -(void)viewDidLayoutSubviews{
@@ -91,7 +101,7 @@ static MSHFConfig *config = NULL;
 
 %new
 -(void)applyCustomLayout{
-    [self.view sendSubviewToBack:[config view]];
+    [self.view bringSubviewToFront:[config view]];
 }
 
 %end
@@ -119,8 +129,13 @@ static MSHFConfig *config = NULL;
 
 -(void)viewDidAppear:(BOOL)animated{
     %orig;
-    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);
-
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);
+        
+    } completion:nil];
+    
+    
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
     //  Copied from NowPlayingImpl
@@ -134,8 +149,11 @@ static MSHFConfig *config = NULL;
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
     [[config view] stop];
-    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
-    [config view].shouldUpdate = false;
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
+    } completion:^(BOOL finished){
+        [config view].shouldUpdate = false;
+    }];
 }
 
 %end
@@ -163,8 +181,13 @@ static MSHFConfig *config = NULL;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    %orig;        
-    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);    
+    %orig;
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);
+        
+    } completion:nil];
+    
     
     currentBackgroundMusicVC = (SPTUniversalController*)self;
     
@@ -179,8 +202,11 @@ static MSHFConfig *config = NULL;
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
     [[config view] stop];
-    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
-    [config view].shouldUpdate = false;
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
+    } completion:^(BOOL finished){
+        [config view].shouldUpdate = false;
+    }];
 }
 
 -(void)viewDidLayoutSubviews{
@@ -331,11 +357,16 @@ static CGFloat originalCenterY = 0;
         originalCenterY = center.y;
     }
     
-    self.view.coverArtView.alpha = 1.0;
-    self.view.coverArtView.center = CGPointMake(center.x, originalCenterY * 0.8);
-    if(self.view.coverArtView.center.y != originalCenterY * 0.8){    //  For some reason I can't explain
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.view.coverArtView.alpha = 1.0;
         self.view.coverArtView.center = CGPointMake(center.x, originalCenterY * 0.8);
-    }
+    } completion:^(BOOL finished){
+        if(self.view.coverArtView.center.y != originalCenterY * 0.8){    //  For some reason I can't explain
+            [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                self.view.coverArtView.center = CGPointMake(center.x, originalCenterY * 0.8);
+            } completion:nil];
+        }
+    }];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -343,8 +374,10 @@ static CGFloat originalCenterY = 0;
     
     CGPoint center = self.view.coverArtView.center;
     
-    self.view.coverArtView.alpha = 0;
-    self.view.coverArtView.center = CGPointMake(center.x, originalCenterY);
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.view.coverArtView.alpha = 0;
+        self.view.coverArtView.center = CGPointMake(center.x, originalCenterY);
+    } completion:nil];
 }
 
 %end
@@ -353,10 +386,15 @@ static CGFloat originalCenterY = 0;
 
 %ctor{
     config = [MSHFConfig loadConfigForApplication:@"Spotify"];
-    config.waveOffsetOffset = 520;
-
+    
     if(config.enabled){
-        %init(MitsuhaVisuals)
+        config.waveOffsetOffset = 520;
+        
+        if ([%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_spotifyEnabled") && !config.ignoreColorFlow) {
+            MSHFColorFlowSpotifyEnabled = YES;
+        }
+        %init(MitsuhaVisuals);
         if (config.enableCoverArtBugFix) %init(MitsuhaSpotifyCoverArtFix)
+        
     }
 }

@@ -38,6 +38,13 @@
 		}
     }
 
+    NSMutableArray *extra = [self loadSpecifiersFromPlistName:[NSString stringWithFormat:@"Apps/%@", self.appName] target:self];
+    if (extra) {
+        for (PSSpecifier *specifier in extra) {
+            [self insertSpecifier:specifier afterSpecifierID:@"otherSettings"];
+        }
+    }
+
     [self setTitle:title];
 }
 
@@ -67,6 +74,32 @@
     } else {
         [self removeLineText:NO];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+    self.table.separatorColor = [UIColor colorWithWhite:0 alpha:0];
+
+    if ([self.view respondsToSelector:@selector(setTintColor:)]) {
+        
+        NSPredicate *isKeyWindow = [NSPredicate predicateWithFormat:@"isKeyWindow == YES"];
+        UIWindow *keyWindow = [[[UIApplication sharedApplication] windows] filteredArrayUsingPredicate:isKeyWindow].firstObject;
+        
+        keyWindow.tintColor = [UIColor colorWithRed:238.0f / 255.0f
+                                                green:100.0f / 255.0f
+                                                blue:92.0f / 255.0f
+                                                alpha:1]; 
+	}
+
+    [UISwitch appearanceWhenContainedInInstancesOfClasses:@[self.class]].onTintColor = [UIColor colorWithRed:238.0f / 255.0f
+                                            green:100.0f / 255.0f
+                                            blue:92.0f / 255.0f
+                                            alpha:1]; 
+
+
+	if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+		self.edgesForExtendedLayout = UIRectEdgeNone;
+	}
 }
         
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier*)specifier {

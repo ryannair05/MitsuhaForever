@@ -6,56 +6,38 @@
 //  Copyright © 2017 c0ldra1n. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import <MitsuhaForever/MSHFConfig.h>
 #import <MitsuhaForever/MSHFView.h>
 
 @interface SPTImageBlurView : UIView
 
-@property(retain, nonatomic)
-    UIView *tintView; // @synthesize tintView=_tintView;
+@property(retain, nonatomic) UIView *tintView; // @synthesize tintView=_tintView;
 
 - (void)updateBlurredImageIfNeeded;
 - (void)updateBlurIntensity;
 
-- (void)applyCustomLayout;
-- (void)updateGradientDark:(BOOL)darkbackground;
+-(void)applyCustomLayout;
+-(void)updateGradientDark:(BOOL)darkbackground;
 
-@end
-
-@interface SPTNowPlayingBackgroundViewController : UIViewController
-@property(retain, nonatomic) MSHFView *mshfview;
-- (void)applyCustomLayout;
 @end
 
 @interface SPTNowPlayingCoverArtImageView : UIImageView
-
-- (void)readjustWaveColor;
-
-@end
-
-@interface SPTCarouselBlurBackgroundView : UIView
-
-@property(retain, nonatomic) SPTImageBlurView *
-    backgroundImageBlurView; // @synthesize
-                             // backgroundImageBlurView=_backgroundImageBlurView;
+-(void)setImage:(UIImage *)image;
+-(void)readjustWaveColor;
 
 @end
 
 @interface SPTUniversalController : UIViewController
-@property(retain, nonatomic) MSHFView *mshfview;
-@property(retain, nonatomic) SPTCarouselBlurBackgroundView
-    *backgroundView; // @synthesize backgroundView=_backgroundView;
-- (void)applyCustomLayout;
+@property (retain,nonatomic) MSHFView *mshfview;
+-(void)applyCustomLayout;
 @end
 
-@interface SPTNowPlayingShowsFormatBackgroundViewController
-    : SPTUniversalController
+@interface SPTNowPlayingShowsFormatBackgroundViewController : SPTUniversalController
 
 @end
 
 @interface SPTNowPlayingBackgroundMusicViewController : SPTUniversalController
+
 @end
 
 @interface SPTNowPlayingContentCell : UIView
@@ -67,16 +49,16 @@
 @interface SPTNowPlayingCoverArtCell : UIView
 
 @property(nonatomic) CGSize cellSize; // @synthesize cellSize=_cellSize;
-@property(retain, nonatomic)
-    UIView *contentView; // @synthesize contentView=_contentView;
+@property(retain, nonatomic) UIView *contentView; // @synthesize contentView=_contentView;
 @property(nonatomic) BOOL selected;
 @property(nonatomic) BOOL shouldShowCoverArtView;
 @property(retain, nonatomic) UIImage *cellContentRepresentation;
-@property(nonatomic, retain) SPTNowPlayingCoverArtImageView *imageView;
-- (void)setSelected:(BOOL)selected;
-- (void)readjustWaveColor;
+
+-(void)setSelected:(BOOL)selected;
+-(void)readjustWaveColor;
 
 @end
+
 
 @interface SPTNowPlayingCoverArtView : UIView
 
@@ -84,15 +66,13 @@
 
 @interface SPTNowPlayingCarouselContentUnitView : UIView
 
-@property(retain, nonatomic) SPTNowPlayingCoverArtView
-    *coverArtView; // @synthesize coverArtView=_coverArtView;
+@property(retain, nonatomic) SPTNowPlayingCoverArtView *coverArtView; // @synthesize coverArtView=_coverArtView;
 
 @end
 
 @interface SPTNowPlayingCarouselAreaViewController : UIViewController
 
-@property(retain, nonatomic)
-    SPTNowPlayingCarouselContentUnitView *view; // @dynamic view;
+@property(retain, nonatomic) SPTNowPlayingCarouselContentUnitView *view; // @dynamic view;
 
 @end
 
@@ -104,21 +84,17 @@
 - (void)player:(id)arg1 stateDidChange:(id)arg2 fromState:(id)arg3;
 - (void)updateWithPlayerState:(id)arg1;
 
-- (void)applyColorChange;
+-(void)applyColorChange;
 
 @end
 
 @interface CFWColorInfo : NSObject
 
 + (id)colorInfoWithAnalyzedInfo:(struct AnalyzedInfo)arg1;
-@property(nonatomic, getter=isBackgroundDark)
-    _Bool backgroundDark; // @synthesize backgroundDark=_backgroundDark;
-@property(retain, nonatomic)
-    UIColor *secondaryColor; // @synthesize secondaryColor=_secondaryColor;
-@property(retain, nonatomic)
-    UIColor *primaryColor; // @synthesize primaryColor=_primaryColor;
-@property(retain, nonatomic)
-    UIColor *backgroundColor; // @synthesize backgroundColor=_backgroundColor;
+@property(nonatomic, getter=isBackgroundDark) _Bool backgroundDark; // @synthesize backgroundDark=_backgroundDark;
+@property(retain, nonatomic) UIColor *secondaryColor; // @synthesize secondaryColor=_secondaryColor;
+@property(retain, nonatomic) UIColor *primaryColor; // @synthesize primaryColor=_primaryColor;
+@property(retain, nonatomic) UIColor *backgroundColor; // @synthesize backgroundColor=_backgroundColor;
 - (void)dealloc;
 - (id)description;
 - (_Bool)isEqual:(id)arg1;
@@ -130,29 +106,16 @@
 
 + (id)sharedManager;
 
-@property(readonly, retain, nonatomic)
-    CFWColorInfo *barColorInfo; // @synthesize barColorInfo=_barColorInfo;
-@property(readonly, retain, nonatomic)
-    NSString *barIdentifier; // @synthesize barIdentifier=_barIdentifier;
-@property(readonly, retain, nonatomic)
-    CFWColorInfo *mainColorInfo; // @synthesize mainColorInfo=_mainColorInfo;
-@property(readonly, retain, nonatomic)
-    NSString *mainIdentifier; // @synthesize mainIdentifier=_mainIdentifier;
-- (void)analysisCompletedForIdentifier:(id)arg1 colorInfo:(id)arg2;
-- (void)mainIdentifierPossiblyChanged:(id)arg1 colorInfo:(id)arg2;
-- (void)barIdentifierPossiblyChanged:(id)arg1 colorInfo:(id)arg2;
-- (void)dealloc;
+@property(readonly, retain, nonatomic) CFWColorInfo *mainColorInfo; // @synthesize mainColorInfo=_mainColorInfo;
 
 @end
 
 @interface CFWPrefsManager : NSObject
 
-+ (id)sharedInstance;
++(id)sharedInstance;
 
 @end
 
-@interface SPTNowPlayingCoverArtImageContentView : UIView
-
-- (void)setImage:(UIImage *)image;
+@interface SPTNowPlayingBackgroundViewController : SPTUniversalController
 
 @end

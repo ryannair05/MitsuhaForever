@@ -1,17 +1,19 @@
 #import <AudioUnit/AudioUnit.h>
 #import <arpa/inet.h>
+#include <os/log.h>
+#include <substrate.h>
+
 #define ASSPort 44333
 
 bool hasConnected = false;
 const int one = 1;
 int connfd;
 
-%hookf(OSStatus, AudioUnitInitialize, AudioUnit inUnit) {
+OSStatus (*_origAudioUnitInitialize)(AudioUnit inUnit); 
+OSStatus _functionAudioUnitInitialize(AudioUnit inUnit) {
 
-    NSLog(@"[ASSWatchdog] checking for ASS");
-    bool const assPresent = [[NSFileManager defaultManager] fileExistsAtPath: @"/Library/MobileSubstrate/DynamicLibraries/AudioSnapshotServer.dylib"];
-    if (assPresent && !hasConnected) {
-        NSLog(@"[ASSWatchdog] ASS found... checking if msd is hooked");
+    os_log(OS_LOG_DEFAULT, "[ASSWatchdog] checking for ASS");
+    if (!hasConnected) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             struct sockaddr_in remote;
             remote.sin_family = PF_INET;
@@ -20,7 +22,7 @@ int connfd;
             int retries = 0;
 
             while (connfd != -2) {
-                NSLog(@"[ASSWatchdog] Connecting to ASS.");
+                os_log(OS_LOG_DEFAULT, "[ASSWatchdog] Connecting to ASS");
                 retries++;
                 connfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 
@@ -34,13 +36,13 @@ int connfd;
 
                 if (r != 0) {
                     connfd = -2;
-                    NSLog(@"[ASSWatchdog] ASS not running.");
-                    NSLog(@"[ASSWatchdog] abort, there's no ASS here...");
+                    os_log(OS_LOG_DEFAULT, "[ASSWatchdog] ASS not running.");
+                    os_log(OS_LOG_DEFAULT, "[ASSWatchdog] abort, there's no ASS here...");
                     break;
                 }
 
                 if (connfd > 0) {
-                    NSLog(@"[ASSWatchdog] Connected.");
+                    os_log(OS_LOG_DEFAULT, "[ASSWatchdog] Connected.");
                     hasConnected = true;
                     close(connfd);
                 }
@@ -49,8 +51,14 @@ int connfd;
             }
         });
     } else {
-        NSLog(@"[ASSWatchdog] abort, there's no ASS here...");
+        os_log(OS_LOG_DEFAULT, "[ASSWatchdog] abort, there's no ASS here...");
     }
 
-    return %orig;
+    return _origAudioUnitInitialize(inUnit);
+}
+
+static __attribute__((constructor)) void Init() {
+    {
+        MSHookFunction((void *)AudioUnitInitialize, (void *)&_functionAudioUnitInitialize, (void **)&_origAudioUnitInitialize);
+    }
 }

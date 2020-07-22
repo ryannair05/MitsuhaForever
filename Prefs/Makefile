@@ -6,7 +6,6 @@ BUNDLE_NAME = MitsuhaForeverPrefs
 $(BUNDLE_NAME)_FILES = MSHFPrefsListController.m MSHFAppPrefsListController.m
 $(BUNDLE_NAME)_INSTALL_PATH = /Library/PreferenceBundles
 $(BUNDLE_NAME)_LIBRARIES = colorpicker mitsuhaforever
-$(BUNDLE_NAME)_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
 $(BUNDLE_NAME)_PRIVATE_FRAMEWORKS = Preferences
 
 include $(THEOS_MAKE_PATH)/bundle.mk

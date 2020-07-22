@@ -25,6 +25,7 @@ static MSHFConfig *config = NULL;
 %end 
 
 %group ios13
+
 %hook CSMediaControlsViewController
 
 %property (retain,nonatomic) MSHFView *mshfView;

@@ -8,7 +8,7 @@
     		<key>cell</key>
     		<string>PSGroupCell</string>
     		<key>headerCellClass</key>
-    		<string>HBPackageNameHeaderCell</string>
+    		<string>MSHFPackageNameHeaderCell</string>
     		<key>packageIdentifier</key>
     		<string>com.ryannair05.mitsuhaforever</string>
 			<!--<key>icon</key>
@@ -63,7 +63,7 @@
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>cellClass</key>
-    		<string>HBTintedTableCell</string>
+    		<string>MSHFTintedTableCell</string>
 			<key>label</key>
 			<string>Respring</string>
 		</dict>
@@ -73,7 +73,7 @@
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>cellClass</key>
-    		<string>HBTintedTableCell</string>
+    		<string>MSHFTintedTableCell</string>
 			<key>label</key>
 			<string>Restart mediaserverd</string>
 		</dict>
@@ -83,7 +83,7 @@
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>cellClass</key>
-    		<string>HBTintedTableCell</string>
+    		<string>MSHFTintedTableCell</string>
 			<key>isDestructive</key>
 			<true />
 			<key>confirmation</key>
@@ -102,7 +102,7 @@
 		</dict>
 		<dict>
 		<key>cellClass</key>
-		<string>HBTwitterCell</string>
+		<string>MSHFTwitterCell</string>
 		<key>label</key>
 		<string>Ryan Nair</string>
 		<key>subtitle</key>
@@ -112,7 +112,7 @@
 		</dict>
 		<dict>
 			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
+			<string>MSHFLinkTableCell</string>
 			<key>label</key>
 			<string>Github</string>
 			<key>subtitle</key>
@@ -122,7 +122,7 @@
 		</dict>
 		<dict>
 			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
+			<string>MSHFLinkTableCell</string>
 			<key>label</key>
 			<string>Donate to c0ldra1n</string>
 			<key>subtitle</key>

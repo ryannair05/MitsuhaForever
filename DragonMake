@@ -1,0 +1,67 @@
+---
+name: Mitsuha Forever
+icmd: killall -9 SpringBoard
+
+all:
+  targetvers: 11.0
+  archs:
+    - arm64
+    - arm64e
+  optim: 3
+
+ASSWatchdog:
+    dir: ASSWatchdog
+    type: tweak
+    c_files:
+        - "Tweak.c"
+MitsuhaForeverHomeScreen:
+    dir: Homescreen
+    type: tweak
+    logos_files:
+        - "HomescreenTweak.xm"
+    libs:
+        - MitsuhaForever
+    frameworks:
+        - MediaRemote
+MitsuhaForeverMusic:
+    dir: Music
+    type: tweak
+    logos_files:
+        - "MusicTweak.xm"
+    libs:
+        - MitsuhaForever
+MitsuhaForeverSpotify:
+    dir: Spotify
+    type: tweak
+    logos_files:
+        - "SpotifyTweak.xm"
+    libs:
+        - MitsuhaForever
+MitsuhaForeverSpringboardLS:
+    dir: SpringboardLS
+    type: tweak
+    logos_files:
+        - "SBTweak.xm"
+    libs:
+        - MitsuhaForever
+    frameworks:
+        - MediaRemote
+MitsuhaForeverSpringboardLSBackground:
+    dir: SpringboardLSBackground
+    type: tweak
+    logos_files:
+        - "SBLSTweak.xm"
+    libs:
+        - MitsuhaForever
+    frameworks:
+        - MediaRemote
+
+MitsuhaForeverPrefs:
+    dir: Prefs
+    type: prefs
+    objc_files:
+        - MSHFAppPrefsListController.m
+        - MSHFPrefsListController.m
+    libs:
+        - colorpicker
+        - mitsuhaforever
