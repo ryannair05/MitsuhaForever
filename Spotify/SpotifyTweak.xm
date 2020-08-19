@@ -106,7 +106,7 @@ MSHFConfig *config = NULL;
 
 %end
 
-%hook SPTNowPlayingBackgroundViewController
+%hook SPTNowPlayingViewController
 
 %property (retain,nonatomic) MSHFView *mshfview;
 

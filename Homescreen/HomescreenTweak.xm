@@ -2,7 +2,6 @@
 #import <MediaRemote/MediaRemote.h>
 #import <notify.h>
 
-bool moveIntoPanel = false;
 static MSHFConfig *mshConfig;
 
 %group SBMediaHook

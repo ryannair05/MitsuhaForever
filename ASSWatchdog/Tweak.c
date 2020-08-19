@@ -16,14 +16,13 @@ OSStatus _functionAudioUnitInitialize(AudioUnit inUnit) {
     if (!hasConnected) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             struct sockaddr_in remote;
+            memset(&remote, 0, sizeof(struct sockaddr_in));
             remote.sin_family = PF_INET;
             remote.sin_port = htons(ASSPort);
             inet_aton("127.0.0.1", &remote.sin_addr);
-            int retries = 0;
 
             while (connfd != -2) {
                 os_log(OS_LOG_DEFAULT, "[ASSWatchdog] Connecting to ASS");
-                retries++;
                 connfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 
                 if (connfd == -1) {

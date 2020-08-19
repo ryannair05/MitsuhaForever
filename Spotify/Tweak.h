@@ -7,7 +7,6 @@
 //
 
 #import <MitsuhaForever/MSHFConfig.h>
-#import <MitsuhaForever/MSHFView.h>
 
 @interface SPTImageBlurView : UIView
 
@@ -116,6 +115,6 @@
 
 @end
 
-@interface SPTNowPlayingBackgroundViewController : SPTUniversalController
+@interface SPTNowPlayingViewController : SPTUniversalController
 
 @end

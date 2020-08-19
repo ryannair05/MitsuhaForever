@@ -76,14 +76,13 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
     self.table.separatorColor = [UIColor colorWithWhite:0 alpha:0];
 
     if ([self.view respondsToSelector:@selector(setTintColor:)]) {
         
-        NSPredicate *isKeyWindow = [NSPredicate predicateWithFormat:@"isKeyWindow == YES"];
-        UIWindow *keyWindow = [[[UIApplication sharedApplication] windows] filteredArrayUsingPredicate:isKeyWindow].firstObject;
+        UIWindow *keyWindow = [[[UIApplication sharedApplication] windows] firstObject];
         
         keyWindow.tintColor = [UIColor colorWithRed:238.0f / 255.0f
                                                 green:100.0f / 255.0f
@@ -101,7 +100,7 @@
 		self.edgesForExtendedLayout = UIRectEdgeNone;
 	}
 }
-        
+
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier*)specifier {
 
     [super setPreferenceValue:value specifier:specifier];

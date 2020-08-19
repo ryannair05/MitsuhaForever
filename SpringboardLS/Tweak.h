@@ -8,54 +8,33 @@
 
 
 #import <MitsuhaForever/MSHFConfig.h>
-#import <MitsuhaForever/MSHFView.h>
 
-#import "../MSHFUtils.h"
+#define ArtsyTweakDylibFile                                                    \
+  @"/Library/MobileSubstrate/DynamicLibraries/Artsy.dylib"
+#define QuartTweakDylibFile                                                    \
+  @"/Library/MobileSubstrate/DynamicLibraries/Quart.dylib"
+#define FlowTweakDylibFile                                                     \
+  @"/Library/MobileSubstrate/DynamicLibraries/Flow.dylib"
+#define ArtsyPreferencesFile                                                   \
+@"/var/mobile/Library/Preferences/ch.mdaus.artsy.plist"
+#define QuartPreferencesFile                                                   \
+@"/var/mobile/Library/Preferences/com.laughingquoll.quartprefs.plist"
 
 @interface CSMediaControlsViewController : UIViewController
 @property(retain, nonatomic) MSHFView *mshfView;
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context;
-- (void)readjustWaveColor;
-- (void)readjustUIColor:(UIColor *)currentColor;
-- (BOOL)handleEvent:(id)event;
 @end
 
 @interface MRPlatterViewController : UIViewController
 @end
 
-@interface MediaControlsHeaderView : UIView
-@property(retain, nonatomic) UIImageView *artworkView;
-@end
-
 @interface MediaControlsPanelViewController : UIViewController
-@property(retain, nonatomic) MediaControlsHeaderView *headerView;
-@property(nonatomic, retain) MediaControlsHeaderView *nowPlayingHeaderView;
-@property(retain, nonatomic) MSHFView *mshfview;
-@property(retain, nonatomic) NSString *label;
-
-- (BOOL)handleEvent:(id)event;
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context;
-- (void)readjustWaveColor;
-- (void)setStyle:(NSInteger)style;
+@property(retain, nonatomic) MSHFView *mshfView;
 @end
 
-@interface SBDashBoardMediaControlsViewController : UIViewController {
-  MediaControlsPanelViewController *_mediaControlsPanelViewController;
-}
+@interface SBDashBoardMediaControlsViewController : UIViewController
 @property(retain, nonatomic) MSHFView *mshfView;
+@end
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context;
-- (void)readjustWaveColor;
-- (void)readjustUIColor:(UIColor *)currentColor;
-- (BOOL)handleEvent:(id)event;
+@interface QRTMediaModuleViewController : UIViewController
+@property(strong, nonatomic) MSHFView *mshfView;
 @end

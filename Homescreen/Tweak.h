@@ -7,7 +7,6 @@
 //
 
 #import <MitsuhaForever/MSHFConfig.h>
-#import <MitsuhaForever/MSHFView.h>
 
 @interface SBHomeScreenView : UIView
 @property (nonatomic,retain) MSHFView * mshfView;     
