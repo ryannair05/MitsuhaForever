@@ -27,14 +27,24 @@ static MSHFConfig *mshConfig;
 
 -(void)willMoveToSuperview:(UIView*)newSuperview {
     %orig;
-    mshConfig.waveOffsetOffset = self.bounds.size.height - 200;
+    
 
-    if (![mshConfig view]) [mshConfig initializeViewWithFrame:self.bounds];
+    if (![mshConfig view]) {
+        mshConfig.waveOffsetOffset = self.bounds.size.height - 200;
+        [mshConfig initializeViewWithFrame:self.bounds];
+    }
     self.mshfView = [mshConfig view];
     
     [self addSubview:self.mshfView];
     [self sendSubviewToBack:self.mshfView];
+    
 }
+
+-(void)viewDidDisappear:(BOOL)animated{
+    %orig;
+    [[mshConfig view] stop];
+}
+
 
 -(void)didMoveToWindow {
     %orig;
@@ -60,7 +70,6 @@ static MSHFConfig *mshConfig;
 -(void)loadView{
     %orig;
     mshConfig.waveOffsetOffset = self.view.bounds.size.height - 200;
-
     if (![mshConfig view]) [mshConfig initializeViewWithFrame:self.view.bounds];
     self.mshfView = [mshConfig view];
     
@@ -82,17 +91,22 @@ static MSHFConfig *mshConfig;
 %end
 
 static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStringRef name, const void* object, CFDictionaryRef userInfo) {
-    uint64_t state;
-    int token;
-    notify_register_check("com.apple.iokit.hid.displayStatus", &token);
-    notify_get_state(token, &state);
-    notify_cancel(token);
-    if ([mshConfig view]) {
-        if (state) {
-            [[mshConfig view] start];
-        } else {
-            [[mshConfig view] stop];
+    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
+        uint64_t state;
+        int token;
+        notify_register_check("com.apple.iokit.hid.displayStatus", &token);
+        notify_get_state(token, &state);
+        notify_cancel(token);
+        if ([mshConfig view]) {
+            if (state) {
+                [[mshConfig view] start];
+            } else {
+                [[mshConfig view] stop];
+            }
         }
+    }
+    else {
+        [[mshConfig view] stop];
     }
 }
 

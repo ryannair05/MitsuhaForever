@@ -58,7 +58,6 @@
 			<key>PostNotification</key>
 			<string>com.ryannair05.mitsuhaforever/ReloadPrefs</string>
 		</dict>
-
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>

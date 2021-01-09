@@ -4,8 +4,6 @@
 bool MSHFColorFlowSpotifyEnabled = NO;
 static SPTUniversalController *currentBackgroundMusicVC;
 
-UIColor *const kTrans = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
-
 %group MitsuhaVisuals
 
 MSHFConfig *config = NULL;
@@ -19,27 +17,20 @@ MSHFConfig *config = NULL;
 
 %end
 
+
 %hook SPTNowPlayingContentCell
 
 -(void)setSelected:(BOOL)selected {
     %orig;
     if (selected) {
-        [config colorizeView:self.cellContentRepresentation];
+        if ([self respondsToSelector:@selector(cellContentRepresentation)]) {
+                [config colorizeView:self.cellContentRepresentation];
+        }
     }
 }
 
 %end
 
-%hook SPTNowPlayingCoverArtCell
-
--(void)setSelected:(BOOL)selected {
-    %orig;
-    if (selected) {
-        [config colorizeView:self.cellContentRepresentation];
-    }
-}
-
-%end
 
 %hook SPTNowPlayingShowsFormatBackgroundViewController
 %property (retain,nonatomic) MSHFView *mshfview;
@@ -62,7 +53,6 @@ MSHFConfig *config = NULL;
 -(void)viewWillAppear:(BOOL)animated{
     [[config view] start];
     %orig;
-    [config view].shouldUpdate = true;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -90,7 +80,6 @@ MSHFConfig *config = NULL;
     [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
     } completion:^(BOOL finished){
-        [config view].shouldUpdate = false;
     }];
 }
 
@@ -124,7 +113,6 @@ MSHFConfig *config = NULL;
 -(void)viewWillAppear:(BOOL)animated{
     [[config view] start];
     %orig;
-    [config view].shouldUpdate = true;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -152,7 +140,6 @@ MSHFConfig *config = NULL;
     [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
     } completion:^(BOOL finished){
-        [config view].shouldUpdate = false;
     }];
 }
 
@@ -177,7 +164,6 @@ MSHFConfig *config = NULL;
 -(void)viewWillAppear:(BOOL)animated{
     [[config view] start];
     %orig;
-    [config view].shouldUpdate = true;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -205,7 +191,6 @@ MSHFConfig *config = NULL;
     [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
     } completion:^(BOOL finished){
-        [config view].shouldUpdate = false;
     }];
 }
 
@@ -294,35 +279,10 @@ MSHFConfig *config = NULL;
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
-                //[currentBackgroundMusicVC.backgroundView.backgroundImageBlurView updateGradientDark:colorInfo.backgroundDark];
+                // [currentBackgroundMusicVC.backgroundView.backgroundImageBlurView updateGradientDark:colorInfo.backgroundDark];
             });
         }
     }
-}
-
-%end
-
-%hook SpotifyAppDelegate
-
-static BOOL registered;
-
--(void)applicationDidEnterBackground:(UIApplication *)application{
-    [config view].shouldUpdate = false;
-    
-    if(!registered){
-        [[NSNotificationCenter defaultCenter] addObserver: self
-                                                 selector: @selector(enableWave)
-                                                     name: UIApplicationDidBecomeActiveNotification
-                                                   object: nil];
-        registered = true;
-    }
-    
-    %orig;
-}
-
-%new
--(void)enableWave{
-    [config view].shouldUpdate = true;
 }
 
 %end

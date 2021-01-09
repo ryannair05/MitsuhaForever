@@ -1,5 +1,4 @@
 ARCHS = arm64 arm64e
-INSTALL_TARGET_PROCESSES = SpringBoard
 
 include $(THEOS_MAKE_PATH)/common.mk
 

@@ -12,6 +12,7 @@ static MSHFConfig *config = NULL;
 
 -(void)setNowPlayingInfo:(NSDictionary *)arg1 {
     %orig;
+
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
         NSDictionary *dict = (__bridge NSDictionary *)information;
 
@@ -43,7 +44,9 @@ static MSHFConfig *config = NULL;
 -(void)setArtworkContainer:(id)arg1 {
 
     %orig;
-    [[config view] start];
+    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
+        [[config view] start];
+    }
     [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
@@ -104,7 +107,9 @@ static MSHFConfig *config = NULL;
 
 -(void)viewDidAppear:(BOOL)animated {
     %orig;
-    [[config view] start];
+    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
+        [[config view] start];
+    }
     [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
@@ -163,13 +168,15 @@ static MSHFConfig *config = NULL;
     self.view.superview.layer.cornerRadius = 13;
     self.view.superview.layer.masksToBounds = TRUE;
 
-    [[config view] start];
+    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
+        [[config view] start];
+    }
     [config view].center = CGPointMake([config view].center.x, config.waveOffset);
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [[config view] start];
-}
+// -(void)viewDidAppear:(BOOL)animated {
+//     [[config view] start];
+// }
 
 -(void)viewDidDisappear:(BOOL)animated{
     %orig;
@@ -181,17 +188,21 @@ static MSHFConfig *config = NULL;
 %end
 
 static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStringRef name, const void* object, CFDictionaryRef userInfo) {
-    uint64_t state;
-    int token;
-    notify_register_check("com.apple.iokit.hid.displayStatus", &token);
-    notify_get_state(token, &state);
-    notify_cancel(token);
-    if ([config view]) {
-        if (state) {
-            [[config view] start];
-        } else {
-            [[config view] stop];
+    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
+        uint64_t state;
+        int token;
+        notify_register_check("com.apple.iokit.hid.displayStatus", &token);
+        notify_get_state(token, &state);
+        notify_cancel(token);
+        if ([config view]) {
+            if (state) {
+                    [[config view] start];
+            } else {
+                [[config view] stop];
+            }
         }
+    } else {
+        [[config view] stop];
     }
 }
 

@@ -57,6 +57,23 @@
     [self.navigationItem setTitle:@"Mitsuha Forever"];
 }
 
+- (id)readPreferenceValue:(PSSpecifier*)specifier {
+  NSString *path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", specifier.properties[@"defaults"]];
+  NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+  [settings addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:path]];
+
+  return ([settings objectForKey:specifier.properties[@"key"]]) ?: specifier.properties[@"default"];
+}
+
+- (void)setPreferenceValue:(id)value specifier:(PSSpecifier*)specifier {
+  NSString *path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", specifier.properties[@"defaults"]];
+  NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+  [settings addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:path]];
+
+  [settings setObject:value forKey:specifier.properties[@"key"]];
+  [settings writeToFile:path atomically:YES];
+}
+
 - (void)setSpecifier:(PSSpecifier *)specifier {
 	[self loadFromSpecifier:specifier];
 	[super setSpecifier:specifier];
@@ -326,12 +343,13 @@
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            NSString *size = [UIScreen mainScreen].scale > 2 ? @"original" : @"bigger";
+            // NSString *size = [UIScreen mainScreen].scale > 2 ? @"original" : @"bigger";
             NSError __block *err = NULL;
             NSData __block *data;
             BOOL __block reqProcessed = false;
             
-            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://mobile.twitter.com/%@/profile_image?size=%@", _user, size]]];
+            // NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://mobile.twitter.com/%@/profile_image?size=%@", _user, size]]];
+			NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://pbs.twimg.com/profile_images/1161080936836018176/4GUKuGlb_200x200.jpg"]]];
             
             [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData  *_data, NSURLResponse *_response, NSError *_error) {
                 err = _error;

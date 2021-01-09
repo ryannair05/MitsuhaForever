@@ -1,10 +1,10 @@
 Package: com.ryannair05.mitsuhaforever
 Name: Mitsuha Forever
-Depends: mobilesubstrate, preferenceloader, com.ryannair05.libmitsuhaforever, firmware (>=11.0)
+Depends: mobilesubstrate, preferenceloader, com.ryannair05.libmitsuhaforever (>=1.4.0), ws.hbang.alderis, firmware (>=11.0)
 Replaces: io.c0ldra1n.mitsuha, io.ominousness.mitsuhaxi, me.nepeta.mitsuhainfinity, me.nepeta.mitsuhainfinity-lockscreen
-Version: 1.3.5
+Version: 1.4.0
 Architecture: iphoneos-arm
-Description: Universal audio visualizer for iOS, updated for iOS 13 with new features and bug fixes
+Description: Universal audio visualizer for iOS
 Maintainer: Ryan Nair
 Author: Ryan Nair, ConorTheDev, and Nepeta
 Section: Tweaks

@@ -1,9 +1,9 @@
 #import "Tweak.h"
 
-%group MitsuhaVisuals
-
 static MSHFConfig *config = NULL;
 static bool const colorflow = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_musicEnabled");
+
+%group MitsuhaVisuals
 
 %hook MusicArtworkComponentImageView
 
@@ -63,18 +63,22 @@ static bool const colorflow = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%
             [self.view sendSubviewToBack:[config view]];
         }
     } else {
-        CGFloat height = CGRectGetHeight(self.view.bounds);
+        CGSize const screenSize = [[UIScreen mainScreen] bounds].size;
+
         self.view.clipsToBounds = 1;
         
-        [config initializeViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, height)];
+        [config initializeViewWithFrame:CGRectMake(0, 0, screenSize.width, screenSize.height)];
         
         self.mshfView = [config view];
         [self.view addSubview:[config view]];
         [self.view sendSubviewToBack:[config view]];
 
-        for (UIView *subview in self.view.subviews) {
-            subview.backgroundColor = [UIColor clearColor];
+        if (@available(iOS 14.0, *)) {
+            return;
         }
+        
+        self.view.subviews[3].backgroundColor = [UIColor clearColor];
+        self.view.subviews[4].backgroundColor = [UIColor clearColor];
     }
 }
 
@@ -95,10 +99,12 @@ static bool const colorflow = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%
 
 -(void)viewDidLayoutSubviews {
     %orig;
+    if (@available(iOS 14.0, *)) {
+        return;
+    }
     if(!colorflow) {
-        for (UIView *subview in self.view.subviews) {
-            subview.backgroundColor = [UIColor clearColor];
-        }
+        self.view.subviews[3].backgroundColor = [UIColor clearColor];
+        self.view.subviews[4].backgroundColor = [UIColor clearColor];
     }
 }
 

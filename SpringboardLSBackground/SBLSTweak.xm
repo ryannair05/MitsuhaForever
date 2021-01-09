@@ -40,21 +40,16 @@ static MSHFConfig *config = NULL;
     [self.view bringSubviewToFront:self.mshfview];
 }
 
--(void)viewDidLayoutSubviews {
-    %orig;
-    [self.view bringSubviewToFront:self.mshfview];
-}
-
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
-    if(self.mshfview && [config view]) {
+    if([config view] && [[%c(SBMediaController) sharedInstance] isPlaying]) {
         [self.mshfview start];
     }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    if(self.mshfview && [config view]) {
+    if([config view]) {
         [self.mshfview stop];
     }
 }
@@ -80,21 +75,16 @@ static MSHFConfig *config = NULL;
     [self.view bringSubviewToFront:self.mshfview];
 }
 
--(void)viewDidLayoutSubviews {
-    %orig;
-    [self.view bringSubviewToFront:self.mshfview];
-}
-
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
-    if(self.mshfview && [config view]) {
+    if([config view] && [[%c(SBMediaController) sharedInstance] isPlaying]) {
         [self.mshfview start];
     }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     %orig;
-    if(self.mshfview && [config view]) {
+    if([config view]) {
         [self.mshfview stop];
     }
 }
@@ -104,17 +94,21 @@ static MSHFConfig *config = NULL;
 %end
 
 static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStringRef name, const void* object, CFDictionaryRef userInfo) {
-    uint64_t state;
-    int token;
-    notify_register_check("com.apple.iokit.hid.displayStatus", &token);
-    notify_get_state(token, &state);
-    notify_cancel(token);
-    if ([config view]) {
-        if (state) {
-            [[config view] start];
-        } else {
-            [[config view] stop];
+    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
+        uint64_t state;
+        int token;
+        notify_register_check("com.apple.iokit.hid.displayStatus", &token);
+        notify_get_state(token, &state);
+        notify_cancel(token);
+        if ([config view]) {
+            if (state) {
+                    [[config view] start];
+            } else {
+                [[config view] stop];
+            }
         }
+    } else {
+        [[config view] stop];
     }
 }
 

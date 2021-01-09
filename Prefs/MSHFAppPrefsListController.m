@@ -101,9 +101,28 @@
 	}
 }
 
+- (id)readPreferenceValue:(PSSpecifier*)specifier {
+  NSString *path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", specifier.properties[@"defaults"]];
+  NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+  [settings addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:path]];
+
+  return ([settings objectForKey:specifier.properties[@"key"]]) ?: specifier.properties[@"default"];
+}
+
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier*)specifier {
 
-    [super setPreferenceValue:value specifier:specifier];
+    NSString *path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", specifier.properties[@"defaults"]];
+    NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+    [settings addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:path]];
+
+    [settings setObject:value forKey:specifier.properties[@"key"]];
+    [settings writeToFile:path atomically:YES];
+
+    NSString *notificationName = specifier.properties[@"PostNotification"];
+    if (notificationName) {
+        // [[NSNotificationCenter defaultCenter] postNotificationName:@"com.ryannair05.mitsuhaforever/ReloadPrefs" object:nil];
+        // CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), notificationName, NULL, NULL, YES);
+    }
 
     NSString const *key = [specifier propertyForKey:@"key"];
 
