@@ -6,7 +6,7 @@ For support / to report a bug [join my discord server](https://discord.gg/J2Tmaq
 
 ## Installation
 
-1. Add this repository to your package manager: https://repo.packix.com
+1. Add this repository to your package manager: https://repo.chariz.com
 2. Install **Mitsuha Forever**.
 
 ## Compatibility
@@ -34,4 +34,4 @@ Support the original developer, c0ldra1n, not me, here: https://www.paypal.me/c0
 
 * [c0ldra1n](https://github.com/c0ldra1n/) - Developed the original tweak for iOS 10 and earlier.
 * Nepeta - Developed the original Mitsuha Infinity.
-* [cbyrne](https://github.com/cbyrne/)] - Originally developed this tweak.
+* [cbyrne](https://github.com/conorthedev) - Originally developed this tweak.

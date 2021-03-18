@@ -2,7 +2,6 @@
 #define CFWBackgroundViewTagNumber 896541
 
 bool MSHFColorFlowSpotifyEnabled = NO;
-static SPTUniversalController *currentBackgroundMusicVC;
 
 %group MitsuhaVisuals
 
@@ -12,85 +11,22 @@ MSHFConfig *config = NULL;
 
 -(void)setImage:(UIImage*)image {
     %orig;
-    [config colorizeView:self.image];
+    [config colorizeView:image];
 }
 
 %end
 
-
-%hook SPTNowPlayingContentCell
-
--(void)setSelected:(BOOL)selected {
-    %orig;
-    if (selected) {
-        if ([self respondsToSelector:@selector(cellContentRepresentation)]) {
-                [config colorizeView:self.cellContentRepresentation];
-        }
-    }
-}
-
-%end
-
-
-%hook SPTNowPlayingShowsFormatBackgroundViewController
-%property (retain,nonatomic) MSHFView *mshfview;
-
--(void)viewDidLoad{
+%hook SPTVideoDisplayView
+- (void)refreshVideoRect {
     %orig;
 
-    NSLog(@"[Mitsuha]: viewDidLoad");
-    
-    currentBackgroundMusicVC = (SPTUniversalController*)self;
+    AVPlayer *displayView = [self player];
+    AVAsset *asset = displayView.currentItem.asset;
 
-    CGFloat height = CGRectGetHeight(self.view.bounds) - config.waveOffset;
-    
-    [config initializeViewWithFrame:CGRectMake(0, config.waveOffset, self.view.bounds.size.width, height)];
-    self.mshfview = [config view];
-    [self.view addSubview:self.mshfview];
-    [self applyCustomLayout];
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [[config view] start];
-    %orig;
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    %orig;
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        
-        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);
-        
-    } completion:nil];
-    
-    
-    currentBackgroundMusicVC = (SPTUniversalController*)self;
-    
-    //  Copied from NowPlayingImpl
-    if(MSHFColorFlowSpotifyEnabled){
-        CFWSpotifyStateManager *stateManager = [%c(CFWSpotifyStateManager) sharedManager];
-        UIColor *backgroundColor = [stateManager.mainColorInfo.backgroundColor colorWithAlphaComponent:0.5];
-        [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
-    }
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    %orig;
-    [[config view] stop];
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
-    } completion:^(BOOL finished){
-    }];
-}
-
--(void)viewDidLayoutSubviews{
-    %orig;
-    [self applyCustomLayout];
-}
-
-%new
--(void)applyCustomLayout{
-    [self.view bringSubviewToFront:[config view]];
+    AVAssetImageGenerator* generator = [AVAssetImageGenerator assetImageGeneratorWithAsset:asset];
+    generator.appliesPreferredTrackTransform = YES;
+    UIImage* image = [UIImage imageWithCGImage:[generator copyCGImageAtTime:CMTimeMake(0, 1) actualTime:nil error:nil]];
+    if (image) [config colorizeView:image];
 }
 
 %end
@@ -104,10 +40,18 @@ MSHFConfig *config = NULL;
 
     NSLog(@"[Mitsuha]: viewDidLoad");
     
-    CGFloat height = CGRectGetHeight(self.view.bounds) - config.waveOffset;
-    [config initializeViewWithFrame:CGRectMake(0, config.waveOffset, self.view.bounds.size.width, height)];
+    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, config.waveOffset, self.view.bounds.size.width, self.view.bounds.size.height)];
     self.mshfview = [config view];
-    [self.view insertSubview:self.mshfview atIndex:0];
+    [self.mshfview setUserInteractionEnabled:NO];
+
+    [self.view insertSubview:self.mshfview atIndex:1];
+
+    self.mshfview.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.mshfview.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [self.mshfview.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    [self.mshfview.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    [self.mshfview.heightAnchor constraintEqualToConstant:self.mshfview.frame.size.height].active = YES;
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -123,11 +67,13 @@ MSHFConfig *config = NULL;
         
     } completion:nil];
     
-    
-    currentBackgroundMusicVC = (SPTUniversalController*)self;
-    
+    [[config view] resetWaveLayers];
+
+    if (config.colorMode == 1) {
+        [config colorizeView:nil];
+    }
     //  Copied from NowPlayingImpl
-    if(MSHFColorFlowSpotifyEnabled){
+    else if(MSHFColorFlowSpotifyEnabled){
         CFWSpotifyStateManager *stateManager = [%c(CFWSpotifyStateManager) sharedManager];
         UIColor *backgroundColor = [stateManager.mainColorInfo.backgroundColor colorWithAlphaComponent:0.5];
         [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
@@ -144,149 +90,6 @@ MSHFConfig *config = NULL;
 }
 
 %end
-
-%hook SPTNowPlayingBackgroundMusicViewController
-
-%property (retain,nonatomic) MSHFView *mshfview;
-
--(void)viewDidLoad{
-    %orig;
-
-    NSLog(@"[Mitsuha]: viewDidLoad");
-    
-    CGFloat height = CGRectGetHeight(self.view.bounds) - config.waveOffset;
-    [config initializeViewWithFrame:CGRectMake(0, config.waveOffset, self.view.bounds.size.width, height)];
-    self.mshfview = [config view];
-    [self.view addSubview:self.mshfview];
-    [self applyCustomLayout];
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [[config view] start];
-    %orig;
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    %orig;
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        
-        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height/2 + config.waveOffset);
-        
-    } completion:nil];
-    
-    
-    currentBackgroundMusicVC = (SPTUniversalController*)self;
-    
-    //  Copied from NowPlayingImpl
-    if(MSHFColorFlowSpotifyEnabled){
-        CFWSpotifyStateManager *stateManager = [%c(CFWSpotifyStateManager) sharedManager];
-        UIColor *backgroundColor = [stateManager.mainColorInfo.backgroundColor colorWithAlphaComponent:0.5];
-        [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
-    }
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    %orig;
-    [[config view] stop];
-    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height + config.waveOffset);
-    } completion:^(BOOL finished){
-    }];
-}
-
--(void)viewDidLayoutSubviews{
-    %orig;
-    [self applyCustomLayout];
-}
-
-%new
--(void)applyCustomLayout{
-    [self.view bringSubviewToFront:[config view]];
-}
-
-%end
-
-%hook SPTImageBlurView
-
--(void)layoutSubviews{
-    %orig;
-    [self applyCustomLayout];
-}
-
--(void)updateBlurIntensity{
-    %orig;
-    [self applyCustomLayout];
-}
-
--(void)updateFocusIfNeeded{
-    %orig;
-    [self applyCustomLayout];
-}
-
-%new
--(void)applyCustomLayout{
-    if(MSHFColorFlowSpotifyEnabled){
-        if([self viewWithTag:CFWBackgroundViewTagNumber]){
-            [[self viewWithTag:CFWBackgroundViewTagNumber] removeFromSuperview];
-        }
-    }
-}
-
-%new
--(void)updateGradientDark:(BOOL)darkbackground{
-    if(MSHFColorFlowSpotifyEnabled){
-        NSArray<UIColor *> *colors;
-        
-        if(darkbackground){
-            colors = @[(id)[UIColor colorWithWhite:0 alpha:0.6].CGColor, (id)[UIColor colorWithWhite:0 alpha:0.3].CGColor, (id)[UIColor clearColor].CGColor];
-        }else{
-            colors = @[(id)[UIColor colorWithWhite:0 alpha:1].CGColor, (id)[UIColor colorWithWhite:0 alpha:0.5].CGColor, (id)[UIColor colorWithWhite:0 alpha:0.25].CGColor];
-        }
-        
-        for(CALayer *layer in [self.tintView.layer sublayers]){
-            if([layer.name isEqualToString:@"GLayer"]){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    NSLog(@"[Mitsuha]: Dark Background? %d\n%@", darkbackground, colors);
-                    CAGradientLayer *gradient = (CAGradientLayer *)layer;
-                    gradient.colors = colors;
-                    [gradient setNeedsDisplay];
-                });
-            }
-        }
-    }
-}
-
-%end
-
-%hook SPTNowPlayingModel
-
--(void)player:(id)arg1 stateDidChange:(id)arg2 fromState:(id)arg3{
-    %orig;
-    [self applyColorChange];
-}
-
--(void)updateWithPlayerState:(id)arg1{
-    %orig;
-    [self applyColorChange];
-}
-
-%new
--(void)applyColorChange{
-    if(MSHFColorFlowSpotifyEnabled){
-        if(!config.ignoreColorFlow){
-            CFWColorInfo *colorInfo = [[%c(CFWSpotifyStateManager) sharedManager] mainColorInfo];
-            UIColor *backgroundColor = [[colorInfo backgroundColor] colorWithAlphaComponent:0.5];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[config view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
-                // [currentBackgroundMusicVC.backgroundView.backgroundImageBlurView updateGradientDark:colorInfo.backgroundDark];
-            });
-        }
-    }
-}
-
-%end
-
 %end
 
 %group MitsuhaSpotifyCoverArtFix

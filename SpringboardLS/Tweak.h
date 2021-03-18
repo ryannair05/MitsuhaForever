@@ -38,3 +38,15 @@
 @interface QRTMediaModuleViewController : UIViewController
 @property(strong, nonatomic) MSHFView *mshfView;
 @end
+
+@interface SBDashBoardFixedFooterViewController : UIViewController
+
+@property(strong, nonatomic) MSHFView *mshfview;
+
+@end
+
+@interface CSFixedFooterViewController : UIViewController
+
+@property(strong, nonatomic) MSHFView *mshfview;
+
+@end

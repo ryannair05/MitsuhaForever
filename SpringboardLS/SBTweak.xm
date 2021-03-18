@@ -4,7 +4,8 @@
 #import <dlfcn.h>
 
 bool moveIntoPanel = false;
-static MSHFConfig *config = NULL;
+static MSHFConfig *SBconfig = NULL;
+static MSHFConfig *SBLSconfig = NULL;
 
 %group MitsuhaVisualsNotification
 
@@ -14,10 +15,11 @@ static MSHFConfig *config = NULL;
     %orig;
 
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-        NSDictionary *dict = (__bridge NSDictionary *)information;
+        if (information && CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
+            UIImage *imageToColor = [UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)];
 
-        if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-            [config colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+            [SBconfig colorizeView:imageToColor];
+            [SBLSconfig colorizeView:imageToColor];
         }
     });
 }
@@ -34,8 +36,8 @@ static MSHFConfig *config = NULL;
 -(void)loadView {
     %orig;
 
-    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];	
-    self.mshfView = [config view];
+    if (![SBconfig view]) [SBconfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];	
+    self.mshfView = [SBconfig view];
 
     [self.view addSubview:self.mshfView];
     [self.view sendSubviewToBack:self.mshfView];
@@ -44,29 +46,25 @@ static MSHFConfig *config = NULL;
 -(void)setArtworkContainer:(id)arg1 {
 
     %orig;
-    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
-        [[config view] start];
-    }
-    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
+    [[SBconfig view] start];
+    [SBconfig view].center = CGPointMake([SBconfig view].center.x, SBconfig.waveOffset);
 
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-        NSDictionary *dict = (__bridge NSDictionary *)information;
-
-        if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-            [config colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+        if (information && CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
+            [SBconfig colorizeView:[UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)]];
         }
     });
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     %orig;
-    [[config view] stop];
+    [[SBconfig view] stop];
 }
 %end
 
 %end
 
-%group ios13
+%group ios13SB
 
 %hook CSMediaControlsViewController
 
@@ -84,8 +82,8 @@ static MSHFConfig *config = NULL;
     
     if (!pvc) return;
 
-    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];	
-    self.mshfView = [config view];
+    if (![SBconfig view]) [SBconfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];	
+    self.mshfView = [SBconfig view];
 
     if (!moveIntoPanel) {
         [self.view addSubview:self.mshfView];
@@ -107,30 +105,26 @@ static MSHFConfig *config = NULL;
 
 -(void)viewDidAppear:(BOOL)animated {
     %orig;
-    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
-        [[config view] start];
-    }
-    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
+    [[SBconfig view] start];
+    [SBconfig view].center = CGPointMake([SBconfig view].center.x, SBconfig.waveOffset);
 
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-        NSDictionary *dict = (__bridge NSDictionary *)information;
-
-        if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-            [config colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+        if (information && CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
+            [SBconfig colorizeView:[UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)]];
         }
     });
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     %orig;
-    [[config view] stop];
+    [[SBconfig view] stop];
 }
 
 %end
 
 %end
 
-%group old
+%group oldSB
 %hook SBDashBoardMediaControlsViewController
 
 %property (retain,nonatomic) MSHFView *mshfView;
@@ -152,8 +146,8 @@ static MSHFConfig *config = NULL;
 
     if (!mcpvc) return;
     
-    if (![config view]) [config initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];
-    self.mshfView = [config view];
+    if (![SBconfig view]) [SBconfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];
+    self.mshfView = [SBconfig view];
 
     if (!moveIntoPanel) {
         [self.view addSubview:self.mshfView];
@@ -168,19 +162,107 @@ static MSHFConfig *config = NULL;
     self.view.superview.layer.cornerRadius = 13;
     self.view.superview.layer.masksToBounds = TRUE;
 
-    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
-        [[config view] start];
-    }
-    [config view].center = CGPointMake([config view].center.x, config.waveOffset);
+    [[SBconfig view] start];
+
+    MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
+        if (information && CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
+            [SBconfig colorizeView:[UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)]];
+        }
+    });
+
+    [SBconfig view].center = CGPointMake([SBconfig view].center.x, SBconfig.waveOffset);
 }
 
 // -(void)viewDidAppear:(BOOL)animated {
-//     [[config view] start];
+//     [[SBconfig view] start];
 // }
 
 -(void)viewDidDisappear:(BOOL)animated{
     %orig;
-    [[config view] stop];
+    [[SBconfig view] stop];
+}
+
+%end
+
+%end
+
+%group ios13SBLS
+
+%hook CSFixedFooterViewController
+
+%property (strong,nonatomic) MSHFView *mshfview;
+
+-(void)loadView{
+    %orig;
+    SBLSconfig.waveOffsetOffset = self.view.bounds.size.height - 200;
+
+    if (![SBLSconfig view]) [SBLSconfig initializeViewWithFrame:self.view.bounds];
+    self.mshfview = [SBLSconfig view];
+    
+    [self.view addSubview:self.mshfview];
+    [self.view bringSubviewToFront:self.mshfview];
+    
+    self.mshfview.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.mshfview.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [self.mshfview.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    [self.mshfview.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    [self.mshfview.heightAnchor constraintEqualToConstant:self.mshfview.frame.size.height].active = YES;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    %orig;
+    if([SBLSconfig view] && [[%c(SBMediaController) sharedInstance] isPlaying]) {
+        [self.mshfview start];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    %orig;
+    if([SBLSconfig view]) {
+        [self.mshfview stop];
+    }
+}
+
+%end
+
+%end
+
+
+%group oldSBLS
+
+%hook SBDashBoardFixedFooterViewController
+
+%property (strong,nonatomic) MSHFView *mshfview;
+
+-(void)loadView{
+    %orig;
+    SBLSconfig.waveOffsetOffset = self.view.bounds.size.height - 200;
+
+    if (![SBLSconfig view]) [SBLSconfig initializeViewWithFrame:self.view.bounds];
+    self.mshfview = [SBLSconfig view];
+    
+    [self.view addSubview:self.mshfview];
+    [self.view bringSubviewToFront:self.mshfview];
+
+    self.mshfview.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.mshfview.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [self.mshfview.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    [self.mshfview.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    [self.mshfview.heightAnchor constraintEqualToConstant:self.mshfview.frame.size.height].active = YES;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    %orig;
+    if([SBLSconfig view] && [[%c(SBMediaController) sharedInstance] isPlaying]) {
+        [self.mshfview start];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    %orig;
+    if([SBLSconfig view]) {
+        [self.mshfview stop];
+    }
 }
 
 %end
@@ -188,37 +270,61 @@ static MSHFConfig *config = NULL;
 %end
 
 static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStringRef name, const void* object, CFDictionaryRef userInfo) {
-    if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
-        uint64_t state;
-        int token;
-        notify_register_check("com.apple.iokit.hid.displayStatus", &token);
-        notify_get_state(token, &state);
-        notify_cancel(token);
-        if ([config view]) {
-            if (state) {
-                    [[config view] start];
-            } else {
-                [[config view] stop];
-            }
+    uint64_t state;
+    int token;
+    notify_register_check("com.apple.iokit.hid.displayStatus", &token);
+    notify_get_state(token, &state);
+    notify_cancel(token);
+    if (![[%c(SBMediaController) sharedInstance] isPlaying]) {
+        state = false;
+    }
+    if (SBLSconfig.enabled) {
+        if (state) {
+            [[SBLSconfig view] start];
+        } else {
+            [[SBLSconfig view] stop];
         }
-    } else {
-        [[config view] stop];
+    }
+    if (SBconfig.enabled) {
+        if (state) {
+            [[SBconfig view] start];
+        } else {
+            [[SBconfig view] stop];
+        }
     }
 }
 
-%ctor{
-    config = [MSHFConfig loadConfigForApplication:@"Springboard"];
+static void loadPrefs() {
+    [SBLSconfig reload];
+    [SBconfig reload];
+}
 
-    if(config.enabled){
+
+%ctor{
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)loadPrefs, CFSTR("com.ryannair05.mitsuhaforever/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+
+    SBLSconfig = [MSHFConfig loadConfigForApplication:@"LockScreen"];
+    SBconfig = [MSHFConfig loadConfigForApplication:@"Springboard"];
+
+    if (SBLSconfig.enabled || SBconfig.enabled)  %init(MitsuhaVisualsNotification);
+    else return;
+
+    if(SBLSconfig.enabled){
+        if(@available(iOS 13.0, *)) {
+		    %init(ios13SBLS)
+	    } else {
+            %init(oldSBLS)
+        }
+    }
+
+    if(SBconfig.enabled){
         NSFileManager *fileManager = [NSFileManager defaultManager];
 
         bool const flowPresent = [fileManager fileExistsAtPath: FlowTweakDylibFile];
         if(flowPresent) {
             return;
         }
-
-        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)screenDisplayStatus, (CFStringRef)@"com.apple.iokit.hid.displayStatus", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
-        %init(MitsuhaVisualsNotification);
 
         bool quartPresent = [fileManager fileExistsAtPath: QuartTweakDylibFile];
 
@@ -234,10 +340,10 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
             if (quartPresent) {
                 void *Quart = dlopen("/Library/MobileSubstrate/DynamicLibraries/Quart.dylib", RTLD_LAZY);
                 if ([([quartPrefs objectForKey:@"largerMedia"] ?: @(NO)) boolValue]) {
-                    config.waveOffsetOffset = 385;
+                    SBconfig.waveOffsetOffset = 385;
                 }
                 else {
-                    config.waveOffsetOffset = 375;
+                    SBconfig.waveOffsetOffset = 375;
                 }
                 %init(Quart);
                 dlclose(Quart);
@@ -262,11 +368,11 @@ static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStrin
             }
         }
 
-        config.waveOffsetOffset = 500;
+        SBconfig.waveOffsetOffset = 500;
         if (@available(iOS 13.0, *)) {
-            %init(ios13)
+            %init(ios13SB)
         } else {
-            %init(old)
+            %init(oldSB)
         }
     }
 }

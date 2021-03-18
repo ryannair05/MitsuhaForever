@@ -118,10 +118,10 @@
     [settings setObject:value forKey:specifier.properties[@"key"]];
     [settings writeToFile:path atomically:YES];
 
-    NSString *notificationName = specifier.properties[@"PostNotification"];
+    CFStringRef notificationName = (__bridge CFStringRef) specifier.properties[@"PostNotification"];
     if (notificationName) {
         // [[NSNotificationCenter defaultCenter] postNotificationName:@"com.ryannair05.mitsuhaforever/ReloadPrefs" object:nil];
-        // CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), notificationName, NULL, NULL, YES);
+        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), notificationName, NULL, NULL, YES);
     }
 
     NSString const *key = [specifier propertyForKey:@"key"];

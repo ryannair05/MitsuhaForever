@@ -9,11 +9,6 @@
 #import <MitsuhaForever/MSHFConfig.h>
 
 @interface MusicArtworkComponentImageView : UIImageView
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context;
-- (void)readjustWaveColor;
 @end
 
 @interface MusicNowPlayingControlsViewController : UIViewController
@@ -21,5 +16,14 @@
 @end
 
 @interface CFWPrefsManager : NSObject
++ (id)sharedInstance;
+@end
+
+@interface CFWColorInfo : NSObject
+@property (nonatomic, strong, readwrite) UIColor *primaryColor;
+@end
+
+@interface CFWMusicStateManager : NSObject
+@property (atomic, strong, readonly) CFWColorInfo *colorInfo;
 + (id)sharedInstance;
 @end

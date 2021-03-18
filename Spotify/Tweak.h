@@ -7,35 +7,11 @@
 //
 
 #import <MitsuhaForever/MSHFConfig.h>
-
-@interface SPTImageBlurView : UIView
-
-@property(retain, nonatomic) UIView *tintView; // @synthesize tintView=_tintView;
-
-- (void)updateBlurredImageIfNeeded;
-- (void)updateBlurIntensity;
-
--(void)applyCustomLayout;
--(void)updateGradientDark:(BOOL)darkbackground;
-
-@end
+#import <AVKit/AVKit.h>
 
 @interface SPTNowPlayingCoverArtImageView : UIImageView
 -(void)setImage:(UIImage *)image;
 -(void)readjustWaveColor;
-
-@end
-
-@interface SPTUniversalController : UIViewController
-@property (retain,nonatomic) MSHFView *mshfview;
--(void)applyCustomLayout;
-@end
-
-@interface SPTNowPlayingShowsFormatBackgroundViewController : SPTUniversalController
-
-@end
-
-@interface SPTNowPlayingBackgroundMusicViewController : SPTUniversalController
 
 @end
 
@@ -44,20 +20,6 @@
 @property(retain, nonatomic) UIImage *cellContentRepresentation;
 
 @end
-
-@interface SPTNowPlayingCoverArtCell : UIView
-
-@property(nonatomic) CGSize cellSize; // @synthesize cellSize=_cellSize;
-@property(retain, nonatomic) UIView *contentView; // @synthesize contentView=_contentView;
-@property(nonatomic) BOOL selected;
-@property(nonatomic) BOOL shouldShowCoverArtView;
-@property(retain, nonatomic) UIImage *cellContentRepresentation;
-
--(void)setSelected:(BOOL)selected;
--(void)readjustWaveColor;
-
-@end
-
 
 @interface SPTNowPlayingCoverArtView : UIView
 
@@ -72,10 +34,6 @@
 @interface SPTNowPlayingCarouselAreaViewController : UIViewController
 
 @property(retain, nonatomic) SPTNowPlayingCarouselContentUnitView *view; // @dynamic view;
-
-@end
-
-@interface SpotifyAppDelegate : NSObject <UIApplicationDelegate>
 
 @end
 
@@ -94,9 +52,6 @@
 @property(retain, nonatomic) UIColor *secondaryColor; // @synthesize secondaryColor=_secondaryColor;
 @property(retain, nonatomic) UIColor *primaryColor; // @synthesize primaryColor=_primaryColor;
 @property(retain, nonatomic) UIColor *backgroundColor; // @synthesize backgroundColor=_backgroundColor;
-- (void)dealloc;
-- (id)description;
-- (_Bool)isEqual:(id)arg1;
 - (id)initWithAnalyzedInfo:(struct AnalyzedInfo)arg1;
 
 @end
@@ -115,6 +70,11 @@
 
 @end
 
-@interface SPTNowPlayingViewController : SPTUniversalController
+@interface SPTNowPlayingViewController : UIViewController
+@property (retain,nonatomic) MSHFView *mshfview;
+@end
 
+@interface SPTVideoDisplayView : UIView
+@property (nonatomic, strong, readwrite) AVPlayer *player;
+@property(nonatomic) _Bool playbackReady;
 @end

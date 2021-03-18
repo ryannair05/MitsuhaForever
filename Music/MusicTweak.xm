@@ -7,7 +7,7 @@ static bool const colorflow = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%
 
 %hook MusicArtworkComponentImageView
 
--(void)layoutSubviews{
+-(void)setImage:(id)arg1 {
     %orig;
     if ([config view] == NULL) return;
 
@@ -21,24 +21,16 @@ static bool const colorflow = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%
     UIView *me = (UIView *)self;
 
     if ([NSStringFromClass([me.superview class]) isEqualToString:musicString]) {
-        if (config.colorMode != 2) {
-            [self readjustWaveColor];
+        if (colorflow && config.colorMode == 0) {
+            UIColor *color = [[[%c(CFWMusicStateManager) sharedInstance] colorInfo] primaryColor];
+            [[config view] updateWaveColor:color subwaveColor:color];
         }
-
-        [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
+        else if (config.colorMode != 2) {
+            [config colorizeView:((MusicArtworkComponentImageView*)self).image];
+        }
+            
     }
-}
 
-%new;
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"image"] && config.colorMode != 2) {
-        [self readjustWaveColor];
-    }
-}
-
-%new;
--(void)readjustWaveColor{
-    [config colorizeView:((MusicArtworkComponentImageView*)self).image];
 }
 
 %end
@@ -85,11 +77,18 @@ static bool const colorflow = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%
 -(void)viewWillAppear:(BOOL)animated{
     %orig;
     [[config view] start];
-    if(colorflow) {
-        [config view].center = CGPointMake([config view].center.x, 150);
-    } else {
-        [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height);
-    }
+    [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height*2);
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    %orig;
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:3.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        if(colorflow) {
+            [config view].center = CGPointMake([config view].center.x, 150);
+        } else {
+            [config view].center = CGPointMake([config view].center.x, [config view].frame.size.height);
+        }
+    } completion:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

@@ -10,10 +10,8 @@ static MSHFConfig *mshConfig;
 -(void)setNowPlayingInfo:(id)arg1 {
     %orig;
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-        NSDictionary *dict = (__bridge NSDictionary *)information;
-
-        if (dict && dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-            [mshConfig colorizeView:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+        if (information && CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
+            [mshConfig colorizeView:[UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)]];
         }
     });
 }
@@ -37,6 +35,12 @@ static MSHFConfig *mshConfig;
     
     [self addSubview:self.mshfView];
     [self sendSubviewToBack:self.mshfView];
+
+    self.mshfView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.mshfView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+    [self.mshfView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+    [self.mshfView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+    [self.mshfView.heightAnchor constraintEqualToConstant:self.mshfView.frame.size.height].active = YES;
     
 }
 
@@ -75,6 +79,12 @@ static MSHFConfig *mshConfig;
     
     [self.view addSubview:self.mshfView];
     [self.view sendSubviewToBack:self.mshfView];
+
+    self.mshfView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.mshfView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [self.mshfView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    [self.mshfView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    [self.mshfView.heightAnchor constraintEqualToConstant:self.mshfView.frame.size.height].active = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
