@@ -348,9 +348,9 @@
 			<key>key</key>
 			<string>WaveOffset</string>
 			<key>min</key>
-			<real>-150</real>
+			<real>-250</real>
 			<key>max</key>
-			<real>150</real>
+			<real>250</real>
 			<key>showValue</key>
 			<true/>
 			<key>isSegmented</key>
