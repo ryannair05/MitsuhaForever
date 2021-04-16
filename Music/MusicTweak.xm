@@ -38,6 +38,34 @@ static bool const colorflow = [%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%
 %hook MusicNowPlayingControlsViewController
 %property (retain,nonatomic) MSHFView *mshfView;
 
+- (instancetype)init{
+    
+    self = %orig;
+
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMitsuhaApplicationState:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMitsuhaApplicationState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    }
+    
+    return self;
+}
+
+%new
+- (void)handleMitsuhaApplicationState:(NSNotification *)notification{
+    if ([notification.name isEqualToString:UIApplicationDidBecomeActiveNotification]) {
+        [[config view] start];
+        
+    } else {
+        [[config view] stop];
+    }
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    %orig;
+}
+
 -(void)viewDidLoad{
     %orig;
 

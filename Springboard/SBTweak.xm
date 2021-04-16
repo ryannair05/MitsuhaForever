@@ -7,6 +7,29 @@ bool moveIntoPanel = false;
 static MSHFConfig *SBconfig = NULL;
 static MSHFConfig *SBLSconfig = NULL;
 
+%group ColorFlowMitsuhaVisualsNotification
+
+%hook CFWSBMediaController
+
+-(void)setColorInfo:(CFWColorInfo *)colorInfo {
+    %orig;
+
+    UIColor *backgroundColor = [colorInfo.primaryColor colorWithAlphaComponent:0.5];
+
+    if (SBconfig.colorMode == 0) {
+        [[SBconfig view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
+    }
+    
+    if (SBLSconfig.colorMode == 0) {
+        [[SBLSconfig view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
+    }
+
+}
+
+%end
+
+%end
+
 %group MitsuhaVisualsNotification
 
 %hook SBMediaController
@@ -64,6 +87,8 @@ static MSHFConfig *SBLSconfig = NULL;
 
 %end
 
+#import <objc/runtime.h>
+
 %group ios13SB
 
 %hook CSMediaControlsViewController
@@ -77,20 +102,20 @@ static MSHFConfig *SBLSconfig = NULL;
     MRPlatterViewController *pvc = nil;
 
     if ([self valueForKey:@"_platterViewController"]) {
-        pvc = (MRPlatterViewController*)[self valueForKey:@"_platterViewController"];
+        pvc = object_getIvar(self, class_getInstanceVariable([self class], "_platterViewController"));
     }
-    
-    if (!pvc) return;
+    else return;
 
-    if (![SBconfig view]) [SBconfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];	
+    if (![SBconfig view]) [SBconfig initializeViewWithFrame:CGRectMake(-4, 0, self.view.frame.size.width - 8, self.view.frame.size.height)];	
     self.mshfView = [SBconfig view];
 
-    if (!moveIntoPanel) {
-        [self.view addSubview:self.mshfView];
-        [self.view sendSubviewToBack:self.mshfView];
-    } else {
-        [pvc.view insertSubview:self.mshfView atIndex:1];
-    }
+    [pvc.view insertSubview:self.mshfView atIndex:0];
+
+    MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
+        if (information && CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
+            [SBconfig colorizeView:[UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)]];
+        }
+    });
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -107,12 +132,6 @@ static MSHFConfig *SBLSconfig = NULL;
     %orig;
     [[SBconfig view] start];
     [SBconfig view].center = CGPointMake([SBconfig view].center.x, SBconfig.waveOffset);
-
-    MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-        if (information && CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
-            [SBconfig colorizeView:[UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)]];
-        }
-    });
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -120,6 +139,20 @@ static MSHFConfig *SBLSconfig = NULL;
     [[SBconfig view] stop];
 }
 
+- (void)platterViewController:(id)arg1 didReceiveInteractionEvent:(MediaControlsInteractionRecognizer *)arg2 {
+    %orig;
+    
+    if (arg2.state == UIGestureRecognizerStateEnded) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
+                [[SBconfig view] start];
+            }
+            else {
+                [[SBconfig view] stop];
+            }
+        });
+    }
+}
 %end
 
 %end
@@ -146,7 +179,7 @@ static MSHFConfig *SBLSconfig = NULL;
 
     if (!mcpvc) return;
     
-    if (![SBconfig view]) [SBconfig initializeViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 16, self.view.frame.size.height)];
+    if (![SBconfig view]) [SBconfig initializeViewWithFrame:CGRectMake(-4, 0, self.view.frame.size.width - 8, self.view.frame.size.height)];
     self.mshfView = [SBconfig view];
 
     if (!moveIntoPanel) {
@@ -155,6 +188,12 @@ static MSHFConfig *SBLSconfig = NULL;
     } else {
         [mcpvc.view insertSubview:self.mshfView atIndex:1];
     }
+
+    MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
+        if (information && CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
+            [SBconfig colorizeView:[UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)]];
+        }
+    });
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -163,12 +202,6 @@ static MSHFConfig *SBLSconfig = NULL;
     self.view.superview.layer.masksToBounds = TRUE;
 
     [[SBconfig view] start];
-
-    MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-        if (information && CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
-            [SBconfig colorizeView:[UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)]];
-        }
-    });
 
     [SBconfig view].center = CGPointMake([SBconfig view].center.x, SBconfig.waveOffset);
 }
@@ -307,7 +340,25 @@ static void loadPrefs() {
     SBLSconfig = [MSHFConfig loadConfigForApplication:@"LockScreen"];
     SBconfig = [MSHFConfig loadConfigForApplication:@"Springboard"];
 
-    if (SBLSconfig.enabled || SBconfig.enabled)  %init(MitsuhaVisualsNotification);
+    if (SBLSconfig.enabled || SBconfig.enabled) {
+        if ([%c(CFWPrefsManager) class] && MSHookIvar<BOOL>([%c(CFWPrefsManager) sharedInstance], "_lockScreenEnabled")) %init(ColorFlowMitsuhaVisualsNotification);
+        else if (access(OrionTweakDylibFile, F_OK) == 0) {
+            [[NSNotificationCenter defaultCenter] addObserverForName:@"OrionMusicArtworkChanged" object:nil queue:nil usingBlock:^(NSNotification *n){
+
+                UIColor *backgroundColor = [[[%c(OrionColorizer) sharedInstance] primaryColor] colorWithAlphaComponent:0.5];
+
+                if (SBconfig.colorMode == 0) {
+                    [[SBconfig view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
+                }
+                
+                if (SBLSconfig.colorMode == 0) {
+                    [[SBLSconfig view] updateWaveColor:backgroundColor subwaveColor:backgroundColor];
+                }
+
+            }];
+        }
+        else %init(MitsuhaVisualsNotification);
+    }
     else return;
 
     if(SBLSconfig.enabled){
@@ -351,27 +402,29 @@ static void loadPrefs() {
             }
         }
 
-        bool const artsyPresent = [fileManager fileExistsAtPath: ArtsyTweakDylibFile]; // Check if Artsy is installed
-
-        if (artsyPresent) {
-            NSLog(@"[MitsuhaForever] Artsy found");
-            
-            NSDictionary *artsyPrefs = [[NSDictionary alloc] initWithContentsOfFile:ArtsyPreferencesFile];
-            if (artsyPrefs) { //Check if Artsy is enabled
-                bool const artsyEnabled = [([artsyPrefs objectForKey:@"enabled"] ?: @(YES)) boolValue];
-                if (artsyEnabled)
-                    moveIntoPanel = [([artsyPrefs objectForKey:@"lsEnabled"] ?: @(YES)) boolValue];
-            }
-            else { //It's enabled by default when Artsy is installed
-                NSLog(@"[MitsuhaForever: ARTSY] lsEnabled = true");
-                moveIntoPanel = true;
-            }
-        }
-
-        SBconfig.waveOffsetOffset = 500;
         if (@available(iOS 13.0, *)) {
+            SBconfig.waveOffsetOffset = 500;
             %init(ios13SB)
-        } else {
+        }
+        else {
+            bool const artsyPresent = [fileManager fileExistsAtPath: ArtsyTweakDylibFile]; // Check if Artsy is installed
+
+            if (artsyPresent) {
+                NSLog(@"[MitsuhaForever] Artsy found");
+                
+                NSDictionary *artsyPrefs = [[NSDictionary alloc] initWithContentsOfFile:ArtsyPreferencesFile];
+                if (artsyPrefs) { //Check if Artsy is enabled
+                    bool const artsyEnabled = [([artsyPrefs objectForKey:@"enabled"] ?: @(YES)) boolValue];
+                    if (artsyEnabled)
+                        moveIntoPanel = [([artsyPrefs objectForKey:@"lsEnabled"] ?: @(YES)) boolValue];
+                }
+                else { //It's enabled by default when Artsy is installed
+                    NSLog(@"[MitsuhaForever: ARTSY] lsEnabled = true");
+                    moveIntoPanel = true;
+                }
+            }
+
+            SBconfig.waveOffsetOffset = 500;
             %init(oldSB)
         }
     }

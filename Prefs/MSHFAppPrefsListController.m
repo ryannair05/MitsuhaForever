@@ -23,12 +23,6 @@
             [specifier setProperty:[prefix stringByAppendingString:key] forKey:@"key"];
         }
 
-        NSMutableDictionary *dict = [specifier propertyForKey:@"libcolorpicker"];
-        if (dict) {
-            dict[@"key"] = [prefix stringByAppendingString:dict[@"key"]];
-            [specifier setProperty:dict forKey:@"libcolorpicker"];
-        }
-
         if ([specifier.name isEqualToString:@"%APP_NAME%"]) {
             specifier.name = title;
         }
@@ -38,7 +32,7 @@
 		}
     }
 
-    NSMutableArray *extra = [self loadSpecifiersFromPlistName:[NSString stringWithFormat:@"Apps/%@", self.appName] target:self];
+    NSArray *extra = [self loadSpecifiersFromPlistName:[NSString stringWithFormat:@"Apps/%@", self.appName] target:self];
     if (extra) {
         for (PSSpecifier *specifier in extra) {
             [self insertSpecifier:specifier afterSpecifierID:@"otherSettings"];
@@ -80,10 +74,9 @@
 	[super viewDidAppear:animated];
     self.table.separatorColor = [UIColor colorWithWhite:0 alpha:0];
 
-    if ([self.view respondsToSelector:@selector(setTintColor:)]) {
-        
-        UIWindow *keyWindow = [[[UIApplication sharedApplication] windows] firstObject];
-        
+    UIWindow *keyWindow = [[[UIApplication sharedApplication] windows] firstObject];
+
+    if ([keyWindow respondsToSelector:@selector(setTintColor:)]) {
         keyWindow.tintColor = [UIColor colorWithRed:238.0f / 255.0f
                                                 green:100.0f / 255.0f
                                                 blue:92.0f / 255.0f

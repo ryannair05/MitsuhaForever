@@ -7,7 +7,7 @@ export TARGET = iphone:13.5:12.0
 
 include $(THEOS)/makefiles/common.mk
 
-SUBPROJECTS += ASSWatchdog Homescreen Music Prefs Spotify SpringboardLS
+SUBPROJECTS += ASSWatchdog Music Prefs Spotify Springboard
 
 after-install::
 	install.exec "killall -9 SpringBoard"
