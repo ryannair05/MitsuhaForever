@@ -340,21 +340,17 @@
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSSliderCell</string>
+			<string>PSEditTextCell</string>
 			<key>label</key>
 			<string>Wave offset (top)</string>
-			<key>defaults</key>
+			<key>bestGuess</key>
 			<string>com.ryannair05.mitsuhaforever</string>
 			<key>key</key>
 			<string>WaveOffset</string>
-			<key>min</key>
-			<real>-150</real>
-			<key>max</key>
-			<real>150</real>
-			<key>showValue</key>
+			<key>isNumeric</key>
 			<true/>
-			<key>isSegmented</key>
-			<false/>
+			<key>placeholder</key>
+			<string>Enter offset amount (-250,250)</string>
 			<key>PostNotification</key>
 			<string>com.ryannair05.mitsuhaforever/ReloadPrefs</string>
 		</dict>
