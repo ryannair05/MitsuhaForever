@@ -51,9 +51,7 @@ static MSHFConfig *mshConfig;
 
 static void screenDisplayStatus(CFNotificationCenterRef center, void* o, CFStringRef name, const void* object, CFDictionaryRef userInfo) {
     if(@available(iOS 13.0, *)) {
-        if ([[[mshConfig view] audioSource] isRunning]) {
-            [[mshConfig view] stop];
-        }
+        [[mshConfig view] stop];
     }
     else if ([[%c(SBMediaController) sharedInstance] isPlaying]) {
         uint64_t state;

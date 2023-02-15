@@ -101,10 +101,12 @@ static MSHFConfig *SBLSconfig = NULL;
 
     MRPlatterViewController *pvc = nil;
 
-    if ([self valueForKey:@"_platterViewController"]) {
+    if (@available(iOS 15.0, *)) {
+        pvc = object_getIvar(self, class_getInstanceVariable([self class], "_mediaRemoteViewController"));
+    }
+    else {
         pvc = object_getIvar(self, class_getInstanceVariable([self class], "_platterViewController"));
     }
-    else return;
 
     if (![SBconfig view]) [SBconfig initializeViewWithFrame:CGRectMake(-4, 0, self.view.frame.size.width - 8, self.view.frame.size.height)];	
     self.mshfView = [SBconfig view];
