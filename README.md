@@ -47,7 +47,7 @@ Works with Artsy.
 ## How to use
 
 After installing the tweak, you can customize your preferences in the Settings app.
-[Settings page](mitsuha_forever_tweak.625x0-is.jpg)
+![Settings page](mitsuha_forever_tweak.625x0-is.jpg)
 
 # Code contributions
 
